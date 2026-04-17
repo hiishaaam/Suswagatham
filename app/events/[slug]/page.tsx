@@ -1,0 +1,107 @@
+import { createClient } from '@/lib/supabase/server'
+import { notFound } from 'next/navigation'
+import GuestPage from './GuestPage'
+import { headers } from 'next/headers'
+import type { Metadata } from 'next'
+
+type Props = {
+  params: Promise<{ slug: string }>
+  searchParams: Promise<{ t?: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const supabase = await createClient()
+
+  const { data: rawData } = await supabase
+    .from('events')
+    .select('couple_names, couple_photo_url')
+    .eq('event_slug', slug)
+    .single()
+
+  const data = rawData as any
+
+  if (!data) return { title: 'Event Not Found' }
+
+  return {
+    title: `You're Invited — ${data.couple_names}`,
+    openGraph: {
+      images: [data.couple_photo_url || 'https://picsum.photos/seed/wedding/1200/630'],
+    },
+  }
+}
+
+export default async function EventPage({ params, searchParams }: Props) {
+  const { slug } = await params
+  const { t: tokenStr } = await searchParams
+  
+  const supabase = await createClient()
+
+  // Fetch LIVE Event
+  const { data: rawEvent } = await supabase
+    .from('events')
+    .select('*')
+    .eq('event_slug', slug)
+    .eq('status', 'live')
+    .single()
+
+  const event = rawEvent as any
+
+  if (!event) {
+    return notFound()
+  }
+
+  let guestToken = null
+  let existingRsvp = null
+
+  // Process Token if provided
+  if (tokenStr) {
+    const { data: rawTokenData } = await supabase
+      .from('guest_tokens')
+      .select('*')
+      .eq('unique_token', tokenStr)
+      .eq('event_id', event.id)
+      .single()
+
+    const tokenData = rawTokenData as any
+
+    if (tokenData) {
+      guestToken = tokenData
+      const { data: rsvpData } = await (supabase.from('rsvps') as any)
+        .select('*')
+        .eq('token_id', guestToken.id)
+        .single()
+        
+      if (rsvpData) existingRsvp = rsvpData
+    }
+  }
+
+  // Track Link Click
+  try {
+    const headersList = await headers()
+    const userAgent = headersList.get('user-agent') || ''
+    const deviceType = /mobile/i.test(userAgent) ? 'mobile' : 'desktop'
+
+    await (supabase.from('link_clicks') as any).insert({
+      event_id: event.id,
+      token_id: guestToken?.id || null,
+      device_type: deviceType,
+      user_agent: userAgent,
+    })
+  } catch (err) {
+    // Failsafe tracking, do not throw
+    console.error('Click Tracking Error:', err)
+  }
+
+  return (
+    <div className="min-h-screen bg-ivory font-body text-ink">
+      <GuestPage 
+        event={event} 
+        guestToken={guestToken} 
+        existingRsvp={existingRsvp} 
+        tokenStr={tokenStr}
+      />
+    </div>
+  )
+}
+
