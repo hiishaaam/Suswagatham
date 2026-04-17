@@ -1,5 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
+import { verifyDashboardAuth } from '@/lib/supabase/auth-verify'
 
 export async function GET(req: Request, { params }: { params: Promise<{ eventId: string }> }) {
   try {
@@ -9,6 +10,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ eventId:
     // pagination parameters
     const limit = parseInt(searchParams.get('limit') || '20')
     const offset = parseInt(searchParams.get('offset') || '0')
+
+    const auth = await verifyDashboardAuth(eventId)
+    if (!auth.authorized) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
 
     const supabase = createAdminClient()
 
