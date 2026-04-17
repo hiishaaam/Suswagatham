@@ -31,8 +31,8 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     const body = await req.json()
     const supabase = createAdminClient()
 
-    // remove undefined/id/created_at fields before update
-    const { id: _, created_at, ...updates } = body
+    // remove non-updatable fields before sending to Supabase
+    const { id: _, created_at, updated_at, summary, status, ...updates } = body
 
     const { data: event, error } = await (supabase.from('events') as any)
       .update(updates)

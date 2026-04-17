@@ -145,7 +145,7 @@ export default function NewEventPage() {
         alert('Error: ' + data.error)
       }
     } catch (err) {
-      alert('An expected error occurred while submitting')
+      alert('An unexpected error occurred while submitting')
     } finally {
       setIsSubmitting(false)
     }
