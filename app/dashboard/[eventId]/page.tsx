@@ -1,6 +1,7 @@
 import { createAdminClient } from '@/lib/supabase/admin'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import DashboardClient from './DashboardClient'
+import { verifyDashboardAuth } from '@/lib/supabase/auth-verify'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,6 +11,14 @@ type Props = {
 
 export default async function DashboardPage({ params }: Props) {
   const { eventId } = await params
+  
+  // Auth Check
+  const auth = await verifyDashboardAuth(eventId)
+  if (!auth.authorized) {
+    if (auth.status === 401) redirect(`/dashboard/login?redirect=/dashboard/${eventId}`)
+    return <div className="p-10 text-center font-display text-2xl text-error">Access Denied: {auth.error}</div>
+  }
+
   const supabase = createAdminClient()
 
   // Verify event
@@ -78,6 +87,7 @@ export default async function DashboardPage({ params }: Props) {
         initialSummary={initialSummary} 
         initialGuests={initialGuests} 
         eventId={eventId}
+        userPhone={auth.phone || ''}
       />
     </div>
   )

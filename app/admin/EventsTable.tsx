@@ -7,6 +7,11 @@ import { Copy, Eye, Power, CheckCircle2 } from 'lucide-react'
 type EventType = any // Type will be injected
 
 export default function EventsTable({ initialEvents }: { initialEvents: EventType[] }) {
+  const formatDate = (dateStr: string) => {
+    const d = new Date(dateStr)
+    return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`
+  }
+
   const [events, setEvents] = useState(initialEvents)
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null)
 
@@ -60,7 +65,7 @@ export default function EventsTable({ initialEvents }: { initialEvents: EventTyp
                  {getStatusBadge(event.status)}
              </div>
              <h3 className="font-display text-2xl text-ink font-bold mb-1 w-[80%]">{event.couple_names}</h3>
-             <div className="text-sm text-muted mb-4">Date: {new Date(event.event_date).toLocaleDateString()}</div>
+             <div className="text-sm text-muted mb-4">Date: {formatDate(event.event_date)}</div>
              
              <div className="flex gap-2 border-t border-gold-light/40 pt-4">
                 <Link href={`/admin/events/${event.id}`} className="flex-1">
@@ -101,12 +106,18 @@ export default function EventsTable({ initialEvents }: { initialEvents: EventTyp
               <tr key={event.id} className={`border-b border-gray-50 hover:bg-gold-light/20 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-ivory/50'}`}>
                 <td className="p-4 font-display text-lg text-ink font-semibold whitespace-nowrap">{event.couple_names}</td>
                 <td className="p-4 text-muted hidden lg:table-cell whitespace-nowrap">{event.event_slug}</td>
-                <td className="p-4 text-ink hidden md:table-cell whitespace-nowrap">{new Date(event.event_date).toLocaleDateString()}</td>
+                <td className="p-4 text-ink hidden md:table-cell whitespace-nowrap">{(() => {
+                  const d = new Date(event.event_date);
+                  return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
+                })()}</td>
                 <td className="p-4 text-center md:text-left">{getStatusBadge(event.status)}</td>
                 <td className="p-4 hidden xl:table-cell text-muted">{event.summary?.total_clicks || 0}</td>
                 <td className="p-4 hidden xl:table-cell text-muted">{event.summary?.total_responded || 0}</td>
                 <td className="p-4 hidden xl:table-cell text-success font-medium">{event.summary?.attending_count || 0}</td>
-                <td className="p-4 hidden md:table-cell text-muted whitespace-nowrap">{new Date(event.created_at).toLocaleDateString()}</td>
+                <td className="p-4 hidden md:table-cell text-muted whitespace-nowrap">{(() => {
+                  const d = new Date(event.created_at);
+                  return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
+                })()}</td>
                 <td className="p-4 text-right">
                   <div className="flex items-center justify-end gap-2">
                     <button 

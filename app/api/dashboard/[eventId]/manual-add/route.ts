@@ -1,11 +1,17 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
+import { verifyDashboardAuth } from '@/lib/supabase/auth-verify'
 
 export async function POST(req: Request, { params }: { params: Promise<{ eventId: string }> }) {
   try {
     const { eventId } = await params
     const body = await req.json()
     const { family_name, guest_count, food_preference } = body
+
+    const auth = await verifyDashboardAuth(eventId)
+    if (!auth.authorized) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
 
     const supabase = createAdminClient()
 

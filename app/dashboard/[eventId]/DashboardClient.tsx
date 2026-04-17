@@ -42,9 +42,10 @@ type Props = {
   initialSummary: Summary
   initialGuests: Guest[]
   eventId: string
+  userPhone: string
 }
 
-export default function DashboardClient({ event, initialSummary, initialGuests, eventId }: Props) {
+export default function DashboardClient({ event, initialSummary, initialGuests, eventId, userPhone }: Props) {
   const [summary, setSummary] = useState<Summary>(initialSummary)
   const [guests, setGuests] = useState<Guest[]>(initialGuests)
   const [isManualExpanded, setIsManualExpanded] = useState(false)
@@ -206,7 +207,37 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
     return true
   })
 
+  const maskPhone = (phone: string) => {
+    const clean = phone.replace('+91', '').trim()
+    if (clean.length < 10) return phone
+    return `+91 ${clean.slice(0, 5)} xxxxx`
+  }
+
+  const handleLogout = async () => {
+    const { signOut } = await import('@/lib/supabase/auth')
+    await signOut()
+    window.location.href = '/dashboard/login'
+  }
+
   return (
+    <>
+      {/* Session Aware Header */}
+      <div className="w-full bg-white border-b border-gold-light p-4 px-6 flex justify-between items-center sm:px-8 shadow-sm">
+        <div className="flex items-center gap-2">
+          <div className="text-gold font-display text-[10px] font-bold flex items-center justify-center w-6 h-6 rounded border border-gold/50 bg-gold/10">W</div>
+          <span className="font-display text-sm font-bold text-ink">WeddWise Dashboard</span>
+        </div>
+        <div className="flex items-center gap-4 text-xs font-body">
+          <span className="text-muted hidden sm:inline-flex">{maskPhone(userPhone)}</span>
+          <button 
+            onClick={handleLogout}
+            className="text-ink font-bold uppercase tracking-widest hover:text-gold transition-colors text-[10px]"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+
     <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-6 pb-40">
       
       {/* Header */}
@@ -397,5 +428,6 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
       </div>
 
     </div>
+    </>
   )
 }
