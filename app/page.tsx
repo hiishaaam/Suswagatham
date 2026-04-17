@@ -1,157 +1,83 @@
 import Link from 'next/link'
+import { ArrowRight, Users, QrCode, ChefHat, BarChart3 } from 'lucide-react'
 
 export default function Page() {
   return (
-    <div className="flex h-screen overflow-hidden bg-ivory text-ink font-body">
-      {/* Sidebar */}
-      <aside className="w-[260px] bg-ink text-ivory py-10 px-6 flex flex-col h-full border-r border-gold">
-        <Link href="/" className="font-display text-2xl md:text-[28px] font-bold text-gold mb-[60px] tracking-[1px] hover:text-gold-light transition-colors">
-          WeddWise
+    <div className="min-h-screen bg-ivory text-ink font-body flex flex-col">
+      {/* Navigation */}
+      <nav className="w-full flex items-center justify-between px-6 md:px-12 py-6">
+        <div className="flex items-center gap-2">
+          <div className="text-gold font-display text-sm font-bold flex items-center justify-center w-8 h-8 rounded border border-gold/50 bg-gold/10">
+            W
+          </div>
+          <span className="font-display text-xl font-bold text-ink tracking-wide">WeddWise</span>
+        </div>
+        <Link href="/admin/login">
+          <button className="bg-ink text-gold px-6 py-2.5 text-[11px] font-bold uppercase tracking-widest rounded-sm hover:bg-ink/90 transition-colors shadow-sm">
+            Admin Login
+          </button>
         </Link>
-        <nav className="flex flex-col flex-1">
-          <Link href="/admin" className="py-3 text-[14px] text-gold opacity-100 font-semibold border-b border-gold uppercase tracking-[2px] hover:text-gold-light transition">
-            Event Overview
-          </Link>
-          <Link href="/admin" className="py-3 text-[14px] text-gold-light/70 border-b border-gold/10 uppercase tracking-[2px] hover:text-gold-light transition">
-            Guest List
-          </Link>
-          <Link href="/admin" className="py-3 text-[14px] text-gold-light/70 border-b border-gold/10 uppercase tracking-[2px] hover:text-gold-light transition">
-            Logistics & Venue
-          </Link>
-          <Link href="/admin" className="py-3 text-[14px] text-gold-light/70 border-b border-gold/10 uppercase tracking-[2px] hover:text-gold-light transition">
-            Caterer Portal
-          </Link>
-          <Link href="/admin" className="py-3 text-[14px] text-gold-light/70 border-b border-gold/10 uppercase tracking-[2px] hover:text-gold-light transition">
-            Design Settings
-          </Link>
-          <Link href="/admin" className="mt-auto py-3 text-[14px] text-gold-light/70 border-b border-gold/10 uppercase tracking-[2px] hover:text-gold-light transition">
-            Account Settings
-          </Link>
-        </nav>
-      </aside>
+      </nav>
 
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col p-10 md:p-[40px_60px] relative overflow-y-auto">
-        {/* Header Row */}
-        <div className="flex justify-between items-end mb-10">
-          <div>
-            <h1 className="font-display text-4xl md:text-[48px] text-ink leading-[1.1] italic">
-              Arjun & Meera
-            </h1>
-            <p className="text-[14px] uppercase tracking-[3px] text-muted mt-2">
-              Dec 28, 2024 &bull; Le Méridien, Kochi &bull; Live Preview
-            </p>
-          </div>
-          <Link href="/admin">
-            <button className="bg-gold text-ivory border-none py-3 px-7 text-[12px] font-semibold uppercase tracking-[2px] rounded-sm cursor-pointer hover:bg-gold/90 transition shadow-sm">
-              Edit Event Details
-            </button>
-          </Link>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <div className="bg-surface border border-gold-light p-6 rounded-sm shadow-card text-center">
-            <div className="text-[11px] uppercase tracking-[2px] text-muted mb-3">Total RSVPs</div>
-            <div className="font-display text-4xl md:text-[36px] text-gold">428</div>
-          </div>
-          <div className="bg-surface border border-gold-light p-6 rounded-sm shadow-card text-center">
-            <div className="text-[11px] uppercase tracking-[2px] text-muted mb-3">Attending</div>
-            <div className="font-display text-4xl md:text-[36px] text-gold">382</div>
-          </div>
-          <div className="bg-surface border border-gold-light p-6 rounded-sm shadow-card text-center">
-            <div className="text-[11px] uppercase tracking-[2px] text-muted mb-3">Veg / Non-Veg</div>
-            <div className="font-display text-[24px] md:text-[24px] text-gold mt-2 md:mt-3">156 / 226</div>
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="divider-gold my-4" />
-
-        {/* Data Section */}
-        <div className="bg-surface border border-gold-light flex-1 rounded-sm flex flex-col mb-10">
-          {/* Table Header */}
-          <div className="grid grid-cols-[2fr_1fr_1.5fr_1fr] bg-ivory p-[12px_24px] border-b border-gold-light text-[12px] font-semibold uppercase tracking-[1px] text-muted">
-            <div>Guest Name / Family</div>
-            <div>Headcount</div>
-            <div>Status</div>
-            <div>Preference</div>
-          </div>
-          
-          {/* Table Rows */}
-          <div className="grid grid-cols-[2fr_1fr_1.5fr_1fr] p-[16px_24px] border-b border-gold-light/30 items-center">
-            <div className="font-display text-[18px] text-ink">Adv. Rajasekharan Nair</div>
-            <div className="text-[14px]">6 Guests</div>
-            <div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase inline-block bg-success/10 text-success">
-                Confirmed
-              </span>
-            </div>
-            <div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase inline-block bg-ivory text-muted border border-gold-light">
-                Veg Only
-              </span>
-            </div>
+      {/* Hero */}
+      <main className="flex-1 flex flex-col items-center justify-center px-6 text-center -mt-16">
+        <div className="max-w-2xl mx-auto">
+          {/* Decorative motif */}
+          <div className="flex items-center justify-center mb-8">
+            <div className="h-px bg-gold/40 w-12"></div>
+            <div className="w-3 h-3 border border-gold rotate-45 mx-4"></div>
+            <div className="h-px bg-gold/40 w-12"></div>
           </div>
 
-          <div className="grid grid-cols-[2fr_1fr_1.5fr_1fr] p-[16px_24px] border-b border-gold-light/30 items-center">
-            <div className="font-display text-[18px] text-ink">Priya & Rahul Varma</div>
-            <div className="text-[14px]">2 Guests</div>
-            <div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase inline-block bg-success/10 text-success">
-                Confirmed
-              </span>
-            </div>
-            <div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase inline-block bg-ivory text-muted border border-gold-light">
-                Non-Veg
-              </span>
-            </div>
-          </div>
+          <h1 className="font-display text-5xl md:text-7xl italic text-ink leading-[1.1] mb-6">
+            Elegant Wedding
+            <span className="block text-gold">Management</span>
+          </h1>
 
-          <div className="grid grid-cols-[2fr_1fr_1.5fr_1fr] p-[16px_24px] border-b border-gold-light/30 items-center">
-            <div className="font-display text-[18px] text-ink">The Menons (Thrissur)</div>
-            <div className="text-[14px]">4 Guests</div>
-            <div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase inline-block bg-ivory text-muted border border-gold-light">
-                Pending
-              </span>
-            </div>
-            <div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase inline-block bg-ivory text-muted border border-gold-light">
-                TBD
-              </span>
-            </div>
-          </div>
+          <p className="text-muted text-base md:text-lg leading-relaxed max-w-lg mx-auto mb-10">
+            Smart RSVP tracking, real-time guest dashboards, caterer kitchen reports, and beautiful digital invitations — all in one place.
+          </p>
 
-          <div className="grid grid-cols-[2fr_1fr_1.5fr_1fr] p-[16px_24px] border-b border-gold-light/30 items-center">
-            <div className="font-display text-[18px] text-ink">Dr. Lakshmi Menon</div>
-            <div className="text-[14px]">1 Guest</div>
-            <div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase inline-block bg-success/10 text-success">
-                Confirmed
-              </span>
-            </div>
-            <div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase inline-block bg-ivory text-muted border border-gold-light">
-                Veg Only
-              </span>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/admin">
+              <button className="bg-gold text-ivory px-8 py-4 text-[12px] font-bold uppercase tracking-widest rounded-sm hover:bg-gold/90 transition-colors shadow-md flex items-center gap-2 w-full sm:w-auto justify-center group">
+                Open Dashboard
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+            <Link href="/admin/events/new">
+              <button className="border border-gold text-gold px-8 py-4 text-[12px] font-bold uppercase tracking-widest rounded-sm hover:bg-gold/5 transition-colors w-full sm:w-auto">
+                Create New Event
+              </button>
+            </Link>
           </div>
-        </div>
-
-        {/* QR Preview Widget (Fixed bottom right) */}
-        <div className="fixed bottom-10 right-10 w-[140px] h-[140px] border border-gold p-2.5 bg-white flex flex-col items-center justify-center shadow-[0_10px_30px_rgba(0,0,0,0.05)] rounded-sm">
-          <div 
-            className="w-[100px] h-[100px] bg-[#f5f5f5] opacity-80 mix-blend-multiply" 
-            style={{ 
-              backgroundImage: 'radial-gradient(var(--color-ink) 1.5px, transparent 1.5px)', 
-              backgroundSize: '8px 8px' 
-            }}
-          />
-          <p className="text-[9px] mt-2 text-muted uppercase tracking-wider font-semibold">Unique Event Link</p>
         </div>
       </main>
+
+      {/* Feature Cards */}
+      <section className="px-6 md:px-12 pb-16 pt-8">
+        <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { icon: Users, label: 'Smart RSVP', desc: 'Token-based guest tracking' },
+            { icon: BarChart3, label: 'Live Dashboard', desc: 'Real-time headcount updates' },
+            { icon: ChefHat, label: 'Kitchen Reports', desc: 'Caterer-ready PDF exports' },
+            { icon: QrCode, label: 'QR Invites', desc: 'Unique links per family' },
+          ].map((feature, i) => (
+            <div key={i} className="bg-white border border-gold-light/50 rounded-sm p-5 shadow-card text-center group hover:border-gold transition-colors">
+              <feature.icon size={24} className="text-gold mx-auto mb-3 group-hover:scale-110 transition-transform" />
+              <div className="text-[11px] font-bold uppercase tracking-widest text-ink mb-1">{feature.label}</div>
+              <div className="text-[11px] text-muted">{feature.desc}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="text-center py-6 border-t border-gold-light/40">
+        <p className="text-[10px] text-muted uppercase tracking-widest">
+          Suswagatham &middot; Built with WeddWise
+        </p>
+      </footer>
     </div>
   )
 }
