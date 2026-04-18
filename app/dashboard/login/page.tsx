@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { sendOTP, verifyOTP } from '@/lib/supabase/auth'
 import { AlertCircle, ArrowRight } from 'lucide-react'
 
-export default function DashboardLogin() {
+function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirectPath = searchParams.get('redirect') || '/dashboard'
@@ -215,5 +215,13 @@ export default function DashboardLogin() {
 
       </div>
     </div>
+  )
+}
+
+export default function DashboardLogin() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-ivory flex items-center justify-center p-6 text-gold font-body">Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   )
 }
