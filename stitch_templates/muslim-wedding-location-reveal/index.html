@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RSVP Confirmation | The Royal Union</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Serif', serif;
+            background-color: #001711;
+        }
+        .islamic-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l2.5 7.5L40 10l-7.5 2.5L30 20l-2.5-7.5L20 10l7.5-2.5L30 0zm0 40l2.5 7.5L40 50l-7.5 2.5L30 60l-2.5-7.5L20 50l7.5-2.5L30 40zM10 20l2.5 7.5L20 30l-7.5 2.5L10 40l-2.5-7.5L0 30l7.5-2.5L10 20zm40 0l2.5 7.5L60 30l-7.5 2.5L50 40l-2.5-7.5L40 30l7.5-2.5L50 20z' fill='%23e9c349' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .gold-shimmer {
+            background: linear-gradient(45deg, #e9c349 0%, #ffe088 50%, #e5c36a 100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#133b32",
+                        "primary-container": "#544200",
+                        "inverse-surface": "#c1ebdd",
+                        "on-background": "#c1ebdd",
+                        "tertiary-fixed-dim": "#ffb4a9",
+                        "on-tertiary-container": "#ea9e93",
+                        "surface-variant": "#133b32",
+                        "primary": "#e9c349",
+                        "outline-variant": "#404944",
+                        "on-tertiary-fixed": "#380d08",
+                        "tertiary-container": "#6b342d",
+                        "on-surface-variant": "#bfc9c3",
+                        "surface-container": "#00251d",
+                        "background": "#001711",
+                        "surface-bright": "#194036",
+                        "on-secondary": "#3d2e00",
+                        "primary-fixed-dim": "#e9c349",
+                        "inverse-on-surface": "#0e372d",
+                        "on-primary-fixed": "#241a00",
+                        "secondary-fixed-dim": "#e5c36a",
+                        "tertiary-fixed": "#ffdad5",
+                        "on-primary": "#3c2f00",
+                        "on-primary-fixed-variant": "#574500",
+                        "tertiary": "#ffb4a9",
+                        "on-surface": "#c1ebdd",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#00110d",
+                        "surface-container-high": "#053027",
+                        "secondary-container": "#6c5400",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#6e372f",
+                        "on-secondary-container": "#ecca70",
+                        "inverse-primary": "#735c00",
+                        "surface-tint": "#e9c349",
+                        "outline": "#89938d",
+                        "on-secondary-fixed": "#241a00",
+                        "on-tertiary": "#53211b",
+                        "surface-dim": "#001711",
+                        "secondary-fixed": "#ffdf91",
+                        "surface": "#001711",
+                        "error": "#ffb4ab",
+                        "on-error": "#690005",
+                        "primary-fixed": "#ffe088",
+                        "surface-container-low": "#002019",
+                        "on-secondary-fixed-variant": "#594400",
+                        "on-primary-container": "#d3ae36",
+                        "secondary": "#e5c36a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Noto Serif"],
+                        "label": ["Noto Serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen relative islamic-pattern selection:bg-primary/30">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#001711]/90 backdrop-blur-md border-b border-[#e9c349]/20 shadow-[0_10px_30px_rgba(0,23,17,0.8)]">
+<div class="flex justify-between items-center w-full px-6 py-4">
+<button class="text-[#e9c349] transition-transform duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="text-2xl font-noto-serif tracking-[0.05em] text-[#e9c349]">The Royal Union</h1>
+<button class="text-[#e9c349] transition-transform duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-24 pb-32 px-6 flex flex-col items-center">
+<!-- Ornamental Frame Container -->
+<div class="relative w-full max-w-md p-1 border border-primary/20 rounded-sm">
+<!-- Content Wrapper -->
+<div class="bg-surface-container-high p-8 flex flex-col items-center text-center shadow-2xl relative overflow-hidden">
+<!-- Success Icon -->
+<div class="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 border border-primary/30">
+<span class="material-symbols-outlined text-primary text-5xl" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<!-- Confirmation Title -->
+<h2 class="text-4xl font-headline font-bold text-primary mb-2 tracking-tight">RSVP Confirmed</h2>
+<p class="text-on-surface-variant font-body text-sm mb-8 italic uppercase tracking-widest">A Sacred Union Awaits Your Presence</p>
+<!-- Venue & Map Card -->
+<div class="w-full bg-surface-container-lowest rounded-sm border border-outline-variant/30 overflow-hidden mb-8 shadow-inner">
+<div class="h-48 relative">
+<img class="w-full h-full object-cover grayscale brightness-50 contrast-125" data-alt="high-quality stylized map view showing a route to a luxurious royal palace ballroom with gold markers and emerald theme" data-location="Grand Sultan Ballroom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDN8N-YxoB6aZ9EJHJDC7zJWw38FZ0A01rDWw4cqsSDhv4HlBTc0nmSnPhvQtrgHQN7HqfOTWKVhRLefwH4oa3-DTw6AH5g8EbQsIClyVhjySOOQryI4wzETmnEvXHdqs9653OwISVFUZDv9he8AGEER955fxmGoi-SKTHnyLaAyi252gE4fv4F8HApM2iJHaXsH3dOG8bNZtXF2IKEQtUrmmN-WC9yGBxUxEN0TxJQwE2W_IePXd18b6J6TapuVRhL5QHy1ty6ddA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+<span class="text-primary text-xs font-label uppercase tracking-widest">Grand Sultan Ballroom</span>
+</div>
+</div>
+<div class="p-6 text-left space-y-4">
+<div>
+<span class="text-[10px] uppercase tracking-[0.2em] text-primary/60 font-bold block mb-1">Venue Address</span>
+<p class="text-on-surface text-sm leading-relaxed">
+                                12-A Heritage Boulevard,<br/>
+                                The Emerald District, Royal City 40592
+                            </p>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<span class="text-[10px] uppercase tracking-[0.2em] text-primary/60 font-bold block mb-1">Distance</span>
+<p class="text-on-surface text-sm">4.2 km from your location</p>
+</div>
+<button class="text-primary-fixed-dim flex items-center gap-1 text-xs uppercase tracking-widest font-bold">
+                                Get Directions <span class="material-symbols-outlined text-sm" data-icon="north_east">north_east</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Schedule Section -->
+<div class="w-full space-y-6">
+<h3 class="text-primary font-headline text-lg italic border-b border-primary/20 pb-2">Ceremonial Schedule</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-4">
+<span class="text-primary font-bold text-sm min-w-[60px]">17:30</span>
+<div class="text-left">
+<p class="text-on-surface font-bold text-sm uppercase tracking-wide">Arrival of Guests</p>
+<p class="text-on-surface-variant text-xs">Welcoming tea and traditional oud music</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="text-primary font-bold text-sm min-w-[60px]">18:15</span>
+<div class="text-left">
+<p class="text-on-surface font-bold text-sm uppercase tracking-wide">The Nikah Ceremony</p>
+<p class="text-on-surface-variant text-xs">Solemnization of the sacred vows</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="text-primary font-bold text-sm min-w-[60px]">19:45</span>
+<div class="text-left">
+<p class="text-on-surface font-bold text-sm uppercase tracking-wide">Royal Banquet</p>
+<p class="text-on-surface-variant text-xs">A celebration of flavors and family</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-10 w-full space-y-4">
+<button class="w-full py-4 gold-shimmer text-on-primary font-bold uppercase tracking-widest text-sm rounded-sm shadow-lg active:scale-95 transition-transform">
+                        Add to Calendar
+                    </button>
+<button class="w-full py-3 bg-transparent border border-primary/40 text-primary font-bold uppercase tracking-widest text-[10px] rounded-sm active:scale-95 transition-transform">
+                        Download Digital Pass
+                    </button>
+</div>
+</div>
+<!-- Corner Accents -->
+<div class="absolute -top-1 -left-1 w-8 h-8 border-t-2 border-l-2 border-primary"></div>
+<div class="absolute -top-1 -right-1 w-8 h-8 border-t-2 border-r-2 border-primary"></div>
+<div class="absolute -bottom-1 -left-1 w-8 h-8 border-b-2 border-l-2 border-primary"></div>
+<div class="absolute -bottom-1 -right-1 w-8 h-8 border-b-2 border-r-2 border-primary"></div>
+</div>
+<!-- Footer Note -->
+<p class="mt-12 text-on-surface-variant/60 text-[10px] text-center max-w-xs uppercase tracking-widest leading-loose">
+            In accordance with tradition, your presence is requested in formal or cultural attire. We look forward to celebrating this blessed union with you.
+        </p>
+</main>
+<!-- Bottom Navigation Bar (Filtered for RSVP path) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-emerald-950/95 backdrop-blur-md border-t border-[#e9c349]/20 shadow-[0_-10px_40px_rgba(0,23,17,0.9)]">
+<a class="flex flex-col items-center justify-center text-emerald-800 dark:text-emerald-500 pt-2 transition-colors hover:text-[#e5c36a]" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="auto_stories">auto_stories</span>
+<span class="font-noto-serif text-[10px] uppercase tracking-widest">Invitation</span>
+</a>
+<a class="flex flex-col items-center justify-center text-emerald-800 dark:text-emerald-500 pt-2 transition-colors hover:text-[#e5c36a]" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="calendar_month">calendar_month</span>
+<span class="font-noto-serif text-[10px] uppercase tracking-widest">Events</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e9c349] border-t-2 border-[#e9c349] pt-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="how_to_reg" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
+<span class="font-noto-serif text-[10px] uppercase tracking-widest font-bold">RSVP</span>
+</a>
+<a class="flex flex-col items-center justify-center text-emerald-800 dark:text-emerald-500 pt-2 transition-colors hover:text-[#e5c36a]" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="location_on">location_on</span>
+<span class="font-noto-serif text-[10px] uppercase tracking-widest">Location</span>
+</a>
+<a class="flex flex-col items-center justify-center text-emerald-800 dark:text-emerald-500 pt-2 transition-colors hover:text-[#e5c36a]" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="photo_album">photo_album</span>
+<span class="font-noto-serif text-[10px] uppercase tracking-widest">Gallery</span>
+</a>
+</nav>
+</body></html>

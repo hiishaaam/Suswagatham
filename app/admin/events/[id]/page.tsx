@@ -3,8 +3,10 @@
 import { useEffect, useState, use } from 'react'
 import { useRouter } from 'next/navigation'
 import Papa from 'papaparse'
-import { Copy, Check, Upload, Plus, CheckCircle2, ChevronRight, Loader2, Save } from 'lucide-react'
+import { Copy, Check, Upload, Plus, CheckCircle2, ChevronRight, Loader2, Save, MessageCircle, CreditCard } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
+import PaymentModal from '@/components/PaymentModal'
+import WhatsAppDistributor from '@/components/WhatsAppDistributor'
 export default function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = use(params)
   const id = unwrappedParams.id
@@ -14,6 +16,8 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   const [activeTab, setActiveTab] = useState<'overview' | 'tokens' | 'edit'>('overview')
   const [isLoading, setIsLoading] = useState(true)
   const [copyState, setCopyState] = useState<'live'|'preview'|null>(null)
+  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false)
 
   // Tokens Form
   const [newToken, setNewToken] = useState({ family_name: '', phone: '', max_guests: 6 })
@@ -115,8 +119,11 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
     })
   }
 
+  const [isSaving, setIsSaving] = useState(false)
+
   const handleEditSave = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSaving(true)
     try {
       const res = await fetch(`/api/admin/events/${id}`, {
         method: 'PUT',
@@ -130,22 +137,57 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
       } else throw new Error(data.error)
     } catch (err: any) {
       alert('Save failed: ' + err.message)
+    } finally {
+      setIsSaving(false)
     }
   }
 
   if (isLoading) return <div className="p-10 flex justify-center"><Loader2 className="animate-spin text-gold" size={32} /></div>
   if (!event) return <div className="p-10">Event not found.</div>
 
+  const handlePaymentSuccess = () => {
+    setShowPaymentModal(false)
+    fetchEvent() // Reload event data — now status='live'
+  }
+
   const WorkflowButtons = () => {
+    const isPaid = event.payment_status === 'paid'
     switch(event.status) {
       case 'draft': 
-        return <button onClick={() => handleStatusChange('design_pending')} className="bg-amber-600 text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-amber-700">Mark Design Pending</button>
+        return (
+          <button 
+            onClick={() => setShowPaymentModal(true)} 
+            className="bg-gradient-to-r from-gold to-[#D4B96A] text-ink px-5 py-2.5 text-xs font-bold uppercase rounded-sm hover:opacity-90 transition flex items-center gap-2 shadow-sm"
+          >
+            <CreditCard size={14} /> Pay & Go Live
+          </button>
+        )
       case 'design_pending': 
         return <button onClick={() => handleStatusChange('preview_sent')} className="bg-blue-600 text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-blue-700">Send Preview</button>
       case 'preview_sent': 
-        return <button onClick={() => handleStatusChange('live')} className="bg-success text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-success/90">Go Live</button>
+        return (
+          <button 
+            onClick={() => isPaid ? handleStatusChange('live') : setShowPaymentModal(true)} 
+            className="bg-gradient-to-r from-gold to-[#D4B96A] text-ink px-5 py-2.5 text-xs font-bold uppercase rounded-sm hover:opacity-90 transition flex items-center gap-2 shadow-sm"
+          >
+            <CreditCard size={14} /> {isPaid ? 'Go Live' : 'Pay & Go Live'}
+          </button>
+        )
       case 'live': 
-        return <button onClick={() => handleStatusChange('completed')} className="bg-muted text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-muted/90">Mark Completed</button>
+        return (
+          <div className="flex gap-2">
+            <button 
+              onClick={() => {
+                if (tokens.length === 0) fetchTokens()
+                setShowWhatsAppModal(true)
+              }}
+              className="bg-[#25D366] text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-[#1DAF54] flex items-center gap-2 shadow-sm"
+            >
+              <MessageCircle size={14} /> Send Invitations
+            </button>
+            <button onClick={() => handleStatusChange('completed')} className="bg-muted text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-muted/90">Mark Completed</button>
+          </div>
+        )
       default: return null
     }
   }
@@ -301,14 +343,33 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
           </div>
           
           <div className="flex justify-end gap-4 pt-4">
-            <button type="submit" className="bg-ink text-gold flex items-center gap-2 px-8 py-3 rounded-sm uppercase tracking-widest text-xs font-bold shadow-sm hover:bg-ink/90 transition">
-              <Save size={16} /> Save Changes
+            <button type="submit" disabled={isSaving} className="bg-ink text-gold flex items-center gap-2 px-8 py-3 rounded-sm uppercase tracking-widest text-xs font-bold shadow-sm hover:bg-ink/90 transition disabled:opacity-70">
+              {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
+              {isSaving ? 'Saving...' : 'Save Changes'}
             </button>
           </div>
         </motion.form>
       )}
       </AnimatePresence>
 
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        eventId={id}
+        coupleNames={event.couple_names}
+        templateId={event.template_id}
+        onPaymentSuccess={handlePaymentSuccess}
+      />
+
+      {/* WhatsApp Distribution Modal */}
+      <WhatsAppDistributor
+        isOpen={showWhatsAppModal}
+        onClose={() => setShowWhatsAppModal(false)}
+        tokens={tokens}
+        eventSlug={event.event_slug}
+        coupleNames={event.couple_names}
+      />
     </div>
   )
 }

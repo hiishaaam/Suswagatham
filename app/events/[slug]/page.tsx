@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { data: rawData } = await supabase
     .from('events')
-    .select('couple_names, couple_photo_url')
+    .select('couple_names, couple_photo_url, event_date, venue_name')
     .eq('event_slug', slug)
     .single()
 
@@ -23,10 +23,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!data) return { title: 'Event Not Found' }
 
+  const ogImageUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/og/${slug}`
+  const eventDate = data.event_date ? new Date(data.event_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''
+
   return {
     title: `You're Invited — ${data.couple_names}`,
+    description: `Join us for the wedding celebration of ${data.couple_names}${eventDate ? ` on ${eventDate}` : ''}${data.venue_name ? ` at ${data.venue_name}` : ''}. RSVP now!`,
     openGraph: {
-      images: [data.couple_photo_url || 'https://picsum.photos/seed/wedding/1200/630'],
+      title: `You're Invited — ${data.couple_names}`,
+      description: `Wedding celebration${eventDate ? ` · ${eventDate}` : ''}${data.venue_name ? ` · ${data.venue_name}` : ''}`,
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: `${data.couple_names} Wedding Invitation` }],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `You're Invited — ${data.couple_names}`,
+      images: [ogImageUrl],
     },
   }
 }

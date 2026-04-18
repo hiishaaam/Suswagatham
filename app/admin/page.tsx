@@ -40,18 +40,28 @@ export default async function AdminDashboard() {
 
   const totalEvents = events.length
   const liveEvents = events.filter(e => e.status === 'live').length
-  const totalRsvps = events.reduce((sum, e) => sum + (e.summary?.total_responded || 0), 0)
+  const draftEvents = events.filter(e => e.status === 'draft').length
   
+  const recentEvents = events.filter(e => {
+    const diff = new Date().getTime() - new Date(e.created_at).getTime()
+    return diff < 7 * 24 * 60 * 60 * 1000
+  }).length
+
+  const totalRsvps = events.reduce((sum, e) => sum + (e.summary?.total_responded || 0), 0)
   const totalAttending = events.reduce((sum, e) => sum + (e.summary?.attending_count || 0), 0)
+  
+  const isAdmin = user.email === 'admin@achievelog.com'
   const avgResponseRate = totalRsvps > 0 ? Math.round((totalAttending / totalRsvps) * 100) : 0
 
   return (
     <div className="p-6 md:p-10 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
         <div>
-          <h1 className="font-display text-4xl text-ink font-bold tracking-wide">Event Command Center</h1>
+          <h1 className="font-display text-4xl text-ink font-bold tracking-wide">
+            {isAdmin ? 'Event Command Center' : 'My Events Dashboard'}
+          </h1>
           <p className="text-muted text-sm uppercase tracking-widest mt-2 hover:text-gold transition-colors">
-            {user.email === 'admin@achievelog.com' ? 'Global Admin View' : `Logged in as ${user.user_metadata?.full_name || user.email}`}
+            {isAdmin ? 'Global Admin View' : `Logged in as ${user.user_metadata?.full_name || user.email}`}
           </p>
         </div>
         <Link href="/admin/events/new">
@@ -63,21 +73,43 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-        <div className="bg-white p-6 rounded-sm shadow-card border border-gold-light/50 flex flex-col justify-center">
+        <div className="bg-white p-6 rounded-xl shadow-card border border-gold-light/50 flex flex-col justify-center relative overflow-hidden group hover:border-gold/50 transition-colors">
           <div className="text-[10px] text-muted uppercase tracking-[0.2em] font-semibold mb-2">Total Events</div>
-          <div className="font-display text-4xl text-ink">{totalEvents}</div>
+          <div className="flex items-end gap-3">
+            <span className="font-display text-4xl text-ink">{totalEvents}</span>
+            {recentEvents > 0 && (
+              <span className="text-xs font-bold text-success flex items-center mb-1.5 bg-success/10 px-2 py-0.5 rounded-full">
+                ↑ {recentEvents} this week
+              </span>
+            )}
+          </div>
         </div>
-        <div className="bg-white p-6 rounded-sm shadow-card border border-gold-light/50 flex flex-col justify-center">
-          <div className="text-[10px] text-muted uppercase tracking-[0.2em] font-semibold mb-2">Live Events</div>
+        
+        <div className="bg-white p-6 rounded-xl shadow-card border border-gold-light/50 flex flex-col justify-center relative overflow-hidden group hover:border-gold/50 transition-colors">
+          <div className="text-[10px] text-muted uppercase tracking-[0.2em] font-semibold mb-2 flex items-center gap-2">
+            Live Events
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+          </div>
           <div className="font-display text-4xl text-gold">{liveEvents}</div>
         </div>
-        <div className="bg-white p-6 rounded-sm shadow-card border border-gold-light/50 flex flex-col justify-center">
-          <div className="text-[10px] text-muted uppercase tracking-[0.2em] font-semibold mb-2">Total RSVPs</div>
-          <div className="font-display text-4xl text-ink">{totalRsvps}</div>
+        
+        <div className="bg-white p-6 rounded-xl shadow-card border border-gold-light/50 flex flex-col justify-center relative overflow-hidden group hover:border-gold/50 transition-colors">
+          <div className="text-[10px] text-muted uppercase tracking-[0.2em] font-semibold mb-2">Action Required</div>
+          <div className="flex items-end gap-3">
+            <span className="font-display text-4xl text-ink">{draftEvents}</span>
+            <span className="text-[10px] uppercase font-bold text-amber-600 mb-1.5">Drafts Pending</span>
+          </div>
+          {draftEvents > 0 && (
+            <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500/10 rounded-bl-full -mr-4 -mt-4" />
+          )}
         </div>
-        <div className="bg-white p-6 rounded-sm shadow-card border border-gold-light/50 flex flex-col justify-center">
+        
+        <div className="bg-white p-6 rounded-xl shadow-card border border-gold-light/50 flex flex-col justify-center relative overflow-hidden group hover:border-gold/50 transition-colors">
           <div className="text-[10px] text-muted uppercase tracking-[0.2em] font-semibold mb-2">Attending Rate</div>
           <div className="font-display text-4xl text-gold">{avgResponseRate}%</div>
+          <div className="mt-2 h-1 w-full bg-gold-light/20 rounded-full overflow-hidden">
+            <div className="h-full bg-gold rounded-full transition-all" style={{ width: `${avgResponseRate}%` }} />
+          </div>
         </div>
       </div>
 

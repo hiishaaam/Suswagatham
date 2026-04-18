@@ -7,6 +7,7 @@ import { Users, QrCode, ChefHat, BarChart3, Calendar, Share2, CheckCircle2, Arro
 import { useCountUp } from '@/hooks/useCountUp'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import ParticleField from '@/components/ui/ParticleField'
+import TemplatePreviewSection from '@/components/landing/TemplatePreviewSection'
 
 const AnimatedStat = ({ value, label, suffix = '' }: { value: string | number, label: string, suffix?: string }) => {
   const { ref, hasEntered } = useIntersectionObserver()
@@ -254,6 +255,11 @@ export default function LandingPage() {
            <AnimatedStat value="4.9" label="Average Rating" suffix="★" />
         </div>
       </section>
+
+      {/* Multicultural Templates Drag Carousel */}
+      <div className="relative z-20 w-full mb-10 overflow-visible">
+        <TemplatePreviewSection />
+      </div>
 
       {/* 4. Features Section */}
       <section id="features" className="py-32 px-6 relative z-10 -mt-10">

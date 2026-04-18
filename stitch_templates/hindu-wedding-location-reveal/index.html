@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Arrival Confirmed | The Royal Union</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Newsreader:ital,wght@0,300;0,400;0,600;1,400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#ffdad7",
+                    "tertiary": "#ffb3ad",
+                    "on-tertiary-fixed-variant": "#7f2926",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-lowest": "#230404",
+                    "surface-container-high": "#461e1d",
+                    "secondary-container": "#604403",
+                    "error-container": "#93000a",
+                    "surface-tint": "#e9c349",
+                    "inverse-primary": "#735c00",
+                    "on-secondary-container": "#dab36a",
+                    "surface-dim": "#2a0808",
+                    "on-tertiary": "#601212",
+                    "outline": "#a98984",
+                    "on-secondary-fixed": "#261900",
+                    "secondary-fixed": "#ffdea5",
+                    "error": "#ffb4ab",
+                    "surface": "#2a0808",
+                    "primary-fixed": "#ffe088",
+                    "on-error": "#690005",
+                    "secondary": "#e9c176",
+                    "surface-container-low": "#34100f",
+                    "on-secondary-fixed-variant": "#5d4201",
+                    "on-primary-container": "#c7a32c",
+                    "surface-container-highest": "#532827",
+                    "on-background": "#ffdad7",
+                    "primary-container": "#4b3b00",
+                    "inverse-surface": "#ffdad7",
+                    "tertiary-container": "#711f1d",
+                    "on-surface-variant": "#e2bfb9",
+                    "surface-variant": "#532827",
+                    "primary": "#e9c349",
+                    "outline-variant": "#5a413d",
+                    "on-tertiary-fixed": "#410003",
+                    "tertiary-fixed-dim": "#ffb3ad",
+                    "on-tertiary-container": "#f9867e",
+                    "surface-container": "#391413",
+                    "surface-bright": "#582c2b",
+                    "background": "#2a0808",
+                    "on-secondary": "#412d00",
+                    "inverse-on-surface": "#4e2423",
+                    "primary-fixed-dim": "#e9c349",
+                    "on-primary-fixed-variant": "#574500",
+                    "tertiary-fixed": "#ffdad6",
+                    "on-primary": "#3c2f00",
+                    "secondary-fixed-dim": "#e9c176",
+                    "on-primary-fixed": "#241a00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Newsreader"],
+                    "label": ["Newsreader"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-spotlight {
+            background: radial-gradient(circle at top center, #582c2b 0%, #2a0808 70%);
+        }
+        .lotus-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c-2 8-10 12-10 12s2 4 10 4 10-4 10-4-8-4-10-12z' fill='%23e9c349' fill-opacity='0.05'/%3E%3C/svg%3E");
+        }
+        .foil-border {
+            border: 1px solid rgba(233, 195, 73, 0.2);
+            position: relative;
+        }
+        .foil-border::before {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px; right: 2px; bottom: 2px;
+            border: 1px solid rgba(233, 195, 73, 0.1);
+            pointer-events: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="bg-[#2a0808] dark:bg-[#230404] flex justify-between items-center px-6 h-16 w-full docked full-width top-0 z-50">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[#e9c349]">menu</span>
+</div>
+<h1 class="text-2xl font-bold text-[#e9c349] dark:text-[#c7a32c] font-headline tracking-widest uppercase">The Royal Union</h1>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[#e9c349]">settings</span>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center justify-start pt-12 pb-24 px-6 bg-spotlight relative lotus-pattern">
+<!-- Success Message Section -->
+<div class="text-center mb-10 w-full">
+<div class="inline-block mb-4">
+<span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-headline text-4xl text-on-primary-container tracking-tight leading-tight mb-2">
+                Your Arrival is Confirmed!
+            </h2>
+<p class="font-body text-lg italic text-on-surface-variant max-w-xs mx-auto">
+                We await your presence with joy and celebration.
+            </p>
+</div>
+<!-- Venue Information Canvas -->
+<div class="w-full max-w-md bg-surface-container-low p-[2px] rounded-lg shadow-[0px_20px_40px_rgba(35,4,4,0.6)]">
+<div class="bg-surface-container p-6 rounded-[calc(0.25rem-1px)] foil-border">
+<!-- Stylized Map Frame -->
+<div class="relative w-full aspect-video mb-6 rounded-sm overflow-hidden bg-surface-container-highest group">
+<img class="w-full h-full object-cover opacity-80 mix-blend-luminosity grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="stylized elegant map of an upscale urban wedding venue location with gold line accents and warm ambient lighting" data-location="Udaipur, India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGU7s3hXCvhv8WPuEo8lNL61q5pdLiCu5SuLRxJM1KxrIInwD9ysucAtgYGQ7kAaTkbMD6L_gT1Rf63VCVV92pq28iB-it9L7TkXVDtmiN7Zb3gzk6qCbTKoR839GL023kiTgqyB52XlvCmp9H-d44JrVZo98Y5J2aWqGfgwNKxtmHv_OZH3847p11P6zVaVlALf4TD3u_Sb7Em5BtdXQ7VYlVTutV_Zal8kjWCkJo6wQUGgGQSdVdHZo8y7DevWvo-B8Oc5jgOAKh"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 bg-primary/90 px-3 py-1 rounded-sm">
+<span class="text-[10px] font-headline tracking-widest text-on-primary uppercase">Venue Location</span>
+</div>
+</div>
+<!-- Venue Details -->
+<div class="space-y-6">
+<div>
+<span class="text-[10px] font-headline tracking-[0.2em] text-primary uppercase block mb-2">The Destination</span>
+<h3 class="font-headline text-2xl text-on-surface mb-1">Grand Heritage Palace</h3>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed italic">
+                            12 Royal Gardens, Palace District<br/>
+                            Rajasthan, India 313001
+                        </p>
+</div>
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/20">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-sm">local_parking</span>
+<span class="text-[10px] font-headline tracking-widest text-primary uppercase">Parking</span>
+</div>
+<p class="font-body text-xs text-on-surface-variant">Valet service available at main gate.</p>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-sm">schedule</span>
+<span class="text-[10px] font-headline tracking-widest text-primary uppercase">Arrival</span>
+</div>
+<p class="font-body text-xs text-on-surface-variant">Guests expected by 6:00 PM.</p>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-8">
+<button class="w-full bg-gradient-to-r from-primary to-secondary text-on-primary py-4 font-body font-semibold tracking-widest text-sm uppercase rounded-sm shadow-lg hover:brightness-110 active:scale-95 transition-all">
+                        Navigate to Venue
+                    </button>
+<button class="w-full mt-3 text-primary font-body text-xs italic tracking-wide text-center border-b border-transparent hover:border-outline-variant/40 transition-all">
+                        Download Digital Pass
+                    </button>
+</div>
+</div>
+</div>
+<!-- Decorative Element: Brass Lamp -->
+<div class="mt-12 flex flex-col items-center opacity-80">
+<div class="relative">
+<img class="w-24 h-24 object-contain" data-alt="close-up of a traditional brass oil lamp diya with a soft flickering warm flame against a dark maroon background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_nigzvBDJx5flNMtnSj6safkKPQAU5ej0Qy0efqTZR6nmGof0DKyXNUFeS7TyR_Kal4givYUoUAktMvbfL96Wr_J_vVcyvs-OFEZLkd24rEBGPilPRj6RYlnGmZaVoBFv8U31_-Av_Gpl8Y283FnlkngzDg4L7okMLX_I2bHgtHfQpbmzoYMkC5s-g_3JHz9zC6yab-ydri0Y1VaieW2a5ROBF8QAgIgSxonsZv08ehbIeYy0iVIoPrm6SlhV68vsT01JI_z-MQHG"/>
+<div class="absolute inset-0 bg-primary/10 blur-xl rounded-full"></div>
+</div>
+<p class="font-body text-[10px] italic text-on-surface-variant tracking-[0.3em] uppercase mt-2">Shubh Vivah</p>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-4 bg-[#230404]/90 backdrop-blur-md z-50 shadow-[0px_-10px_30px_rgba(35,4,4,0.8)] border-t border-[#5a413d]/20">
+<a class="flex flex-col items-center justify-center text-[#ffdad7]/50 py-1 hover:text-[#e9c176] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-newsreader text-xs tracking-tighter">Invitation</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#ffdad7]/50 py-1 hover:text-[#e9c176] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-newsreader text-xs tracking-tighter">Venue</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e9c349] font-bold py-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
+<span class="font-newsreader text-xs tracking-tighter">RSVP</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#ffdad7]/50 py-1 hover:text-[#e9c176] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">photo_library</span>
+<span class="font-newsreader text-xs tracking-tighter">Gallery</span>
+</a>
+</nav>
+</body></html>
