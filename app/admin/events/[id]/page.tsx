@@ -4,7 +4,7 @@ import { useEffect, useState, use } from 'react'
 import { useRouter } from 'next/navigation'
 import Papa from 'papaparse'
 import { Copy, Check, Upload, Plus, CheckCircle2, ChevronRight, Loader2, Save } from 'lucide-react'
-
+import { motion, AnimatePresence } from 'motion/react'
 export default function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = use(params)
   const id = unwrappedParams.id
@@ -197,9 +197,10 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
         ))}
       </div>
 
+      <AnimatePresence mode="wait">
       {/* OVERVIEW TAB */}
       {activeTab === 'overview' && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 animate-in fade-in">
+        <motion.div key="overview" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {[
             { label: 'Link Opens', value: event.summary?.total_clicks || 0 },
             { label: 'RSVP Responses', value: event.summary?.total_responded || 0 },
@@ -215,12 +216,12 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
               <div className={`font-display text-4xl ${stat.color || 'text-ink'}`}>{stat.value}</div>
             </div>
           ))}
-        </div>
+        </motion.div>
       )}
 
       {/* TOKENS TAB */}
       {activeTab === 'tokens' && (
-        <div className="bg-white border border-gold-light rounded-sm shadow-card p-6 animate-in fade-in">
+        <motion.div key="tokens" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="bg-white border border-gold-light rounded-sm shadow-card p-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b border-gold-light/40 pb-6">
             <div className="flex items-center gap-3">
               <label className="text-[11px] uppercase tracking-widest text-muted font-bold whitespace-nowrap">Add Individual:</label>
@@ -266,12 +267,12 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
               </tbody>
             </table>
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* EDIT TAB */}
       {activeTab === 'edit' && (
-        <form onSubmit={handleEditSave} className="bg-white border border-gold-light rounded-sm shadow-card p-6 md:p-10 animate-in fade-in space-y-6">
+        <motion.form key="edit" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} onSubmit={handleEditSave} className="bg-white border border-gold-light rounded-sm shadow-card p-6 md:p-10 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b border-gold-light/30 pb-6">
             <div>
               <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Couple Names</label>
@@ -304,8 +305,9 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
               <Save size={16} /> Save Changes
             </button>
           </div>
-        </form>
+        </motion.form>
       )}
+      </AnimatePresence>
 
     </div>
   )

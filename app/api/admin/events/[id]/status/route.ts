@@ -1,11 +1,17 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { verifyAuth } from '@/lib/supabase/admin-verify'
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const auth = await verifyAuth()
+    if (!auth.authorized) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
+
     const { id } = await params
     const { status } = await req.json()
-    const supabase = createAdminClient()
+    const supabase = await createClient()
 
     const { error: updateErr, data } = await (supabase.from('events') as any)
       .update({ status })

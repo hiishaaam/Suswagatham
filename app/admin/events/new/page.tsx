@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { MapPin, UploadCloud, ChevronRight, ChevronLeft, Check, Loader2 } from 'lucide-react'
+import { motion, AnimatePresence } from 'motion/react'
 
 export default function NewEventPage() {
   const router = useRouter()
@@ -167,10 +168,10 @@ export default function NewEventPage() {
       </div>
 
       <div className="bg-white border border-gold-light rounded-sm shadow-card p-6 md:p-10">
-        
+        <AnimatePresence mode="wait">
         {/* STEP 1: Basics */}
         {step === 1 && (
-          <div className="space-y-6 animate-in fade-in">
+          <motion.div key="step-1" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="space-y-6">
             <h2 className="font-display text-2xl mb-6 border-b border-gold-light pb-2">Basic Information</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -246,12 +247,12 @@ export default function NewEventPage() {
                 </select>
               </div>
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* STEP 2: Venue */}
         {step === 2 && (
-          <div className="space-y-6 animate-in fade-in">
+          <motion.div key="step-2" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="space-y-6">
             <h2 className="font-display text-2xl mb-6 border-b border-gold-light pb-2">Venue & Logistics</h2>
             
             <div>
@@ -326,12 +327,12 @@ export default function NewEventPage() {
               </div>
             </div>
 
-          </div>
+          </motion.div>
         )}
 
         {/* STEP 3: Design */}
         {step === 3 && (
-          <div className="space-y-6 animate-in fade-in">
+          <motion.div key="step-3" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="space-y-6">
             <h2 className="font-display text-2xl mb-6 border-b border-gold-light pb-2">Design & Imagery</h2>
 
             <div>
@@ -417,9 +418,9 @@ export default function NewEventPage() {
               </div>
             </div>
 
-          </div>
+          </motion.div>
         )}
-
+        </AnimatePresence>
       </div>
 
       {/* Navigation Buttons */}

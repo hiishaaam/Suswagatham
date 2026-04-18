@@ -1,10 +1,16 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { verifyAuth } from '@/lib/supabase/admin-verify'
 
 export async function POST(req: Request) {
   try {
+    const auth = await verifyAuth()
+    if (!auth.authorized || !auth.user) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
+
     const body = await req.json()
-    const supabase = createAdminClient()
+    const supabase = await createClient()
 
     let client_id = body.client_id
     // If it's a new client, we insert them first
@@ -13,6 +19,7 @@ export async function POST(req: Request) {
         .insert({
           name: body.new_client_name,
           phone: body.new_client_phone,
+          user_id: auth.user.id,
         })
         .select()
         .single()
@@ -24,6 +31,7 @@ export async function POST(req: Request) {
     const { data: event, error: eventErr } = await (supabase.from('events') as any)
       .insert({
         client_id,
+        user_id: auth.user.id,
         couple_names: body.couple_names,
         event_slug: body.event_slug,
         event_date: body.event_date,
@@ -56,7 +64,14 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const supabase = createAdminClient()
+    const auth = await verifyAuth()
+    if (!auth.authorized) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
+
+    // Session-scoped client: RLS will automatically filter by user_id
+    // Admin users see all events via is_admin() in the RLS policy
+    const supabase = await createClient()
     const { data, error } = await supabase.from('events').select('*').order('created_at', { ascending: false })
     if (error) throw error
     return NextResponse.json({ success: true, events: data })

@@ -1,14 +1,22 @@
 export const dynamic = 'force-dynamic'
 
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 import EventsTable from './EventsTable'
 import { PlusCircle } from 'lucide-react'
 import Link from 'next/link'
 
 export default async function AdminDashboard() {
-  const supabase = createAdminClient()
+  const supabase = await createClient()
 
-  // Fetch events
+  // Check if user is authenticated
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    redirect('/login')
+  }
+
+  // RLS will automatically scope events to this user
+  // Admin user (admin@achievelog.com) sees all via is_admin() policy
   const { data: eventsData } = await supabase
     .from('events')
     .select('*')
@@ -34,9 +42,6 @@ export default async function AdminDashboard() {
   const liveEvents = events.filter(e => e.status === 'live').length
   const totalRsvps = events.reduce((sum, e) => sum + (e.summary?.total_responded || 0), 0)
   
-  // Avg Response Rate -> (Total Responded / Total Generated Tokens limit...) 
-  // Wait, let's simplify average response rate. Total Responded / Total Links Clicked ?
-  // Or just Total Attending / Total Responded as attendance rate. Let's do that.
   const totalAttending = events.reduce((sum, e) => sum + (e.summary?.attending_count || 0), 0)
   const avgResponseRate = totalRsvps > 0 ? Math.round((totalAttending / totalRsvps) * 100) : 0
 
@@ -45,7 +50,9 @@ export default async function AdminDashboard() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
         <div>
           <h1 className="font-display text-4xl text-ink font-bold tracking-wide">Event Command Center</h1>
-          <p className="text-muted text-sm uppercase tracking-widest mt-2 hover:text-gold transition-colors">Manage WeddWise Workloads</p>
+          <p className="text-muted text-sm uppercase tracking-widest mt-2 hover:text-gold transition-colors">
+            {user.email === 'admin@achievelog.com' ? 'Global Admin View' : `Logged in as ${user.user_metadata?.full_name || user.email}`}
+          </p>
         </div>
         <Link href="/admin/events/new">
           <button className="bg-gold text-ivory px-6 py-3 rounded-sm flex items-center gap-2 font-semibold uppercase tracking-wider text-xs hover:bg-gold/90 transition-colors shadow-sm">

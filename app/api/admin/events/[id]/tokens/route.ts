@@ -1,11 +1,18 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { verifyAuth } from '@/lib/supabase/admin-verify'
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = await params
-    const supabase = createAdminClient()
+    const auth = await verifyAuth()
+    if (!auth.authorized) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
 
+    const { id } = await params
+    const supabase = await createClient()
+
+    // RLS on guest_tokens cascades from event ownership
     const { data: tokens, error } = await supabase
       .from('guest_tokens')
       .select('*')
@@ -37,15 +44,21 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const auth = await verifyAuth()
+    if (!auth.authorized) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
+
     const { id } = await params
     const body = await req.json()
-    const supabase = createAdminClient()
+    const supabase = await createClient()
 
     // Support single or array
     const toInsert = Array.isArray(body) 
       ? body.map(t => ({ ...t, event_id: id }))
       : [{ ...body, event_id: id }]
 
+    // RLS on guest_tokens cascades from event ownership
     const { data, error } = await (supabase.from('guest_tokens') as any)
       .insert(toInsert)
       .select()

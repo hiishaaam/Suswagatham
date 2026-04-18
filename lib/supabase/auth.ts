@@ -1,31 +1,39 @@
 import { createClient } from './client'
 
-export async function sendOTP(phone: string): Promise<{ error: string | null }> {
+export async function signUpWithEmail(
+  email: string,
+  password: string,
+  name: string
+): Promise<{ error: string | null }> {
   try {
     const supabase = createClient()
-    const formattedPhone = phone.startsWith('+91') ? phone : `+91${phone}`
-    
-    const { error } = await supabase.auth.signInWithOtp({
-      phone: formattedPhone,
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: name },
+      },
     })
-    
+
     return { error: error?.message || null }
   } catch (err: any) {
     return { error: err.message || 'An unexpected error occurred' }
   }
 }
 
-export async function verifyOTP(phone: string, token: string): Promise<{ error: string | null }> {
+export async function signInWithEmail(
+  email: string,
+  password: string
+): Promise<{ error: string | null }> {
   try {
     const supabase = createClient()
-    const formattedPhone = phone.startsWith('+91') ? phone : `+91${phone}`
-    
-    const { error } = await supabase.auth.verifyOtp({
-      phone: formattedPhone,
-      token,
-      type: 'sms',
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
     })
-    
+
     return { error: error?.message || null }
   } catch (err: any) {
     return { error: err.message || 'An unexpected error occurred' }

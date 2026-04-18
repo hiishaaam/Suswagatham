@@ -14,6 +14,7 @@ export interface Database {
           id: string
           name: string
           phone: string
+          user_id: string | null
           plan_type: 'b2b_monthly' | 'b2c_basic' | 'b2c_premium' | 'enterprise'
           subscription_status: string
           created_at: string
@@ -22,6 +23,7 @@ export interface Database {
           id?: string
           name: string
           phone: string
+          user_id?: string | null
           plan_type?: 'b2b_monthly' | 'b2c_basic' | 'b2c_premium' | 'enterprise'
           subscription_status?: string
           created_at?: string
@@ -30,6 +32,7 @@ export interface Database {
           id?: string
           name?: string
           phone?: string
+          user_id?: string | null
           plan_type?: 'b2b_monthly' | 'b2c_basic' | 'b2c_premium' | 'enterprise'
           subscription_status?: string
           created_at?: string
@@ -39,6 +42,7 @@ export interface Database {
         Row: {
           id: string
           client_id: string | null
+          user_id: string | null
           couple_names: string
           event_slug: string
           event_date: string
@@ -63,6 +67,7 @@ export interface Database {
         Insert: {
           id?: string
           client_id?: string | null
+          user_id?: string | null
           couple_names: string
           event_slug: string
           event_date: string
@@ -87,6 +92,7 @@ export interface Database {
         Update: {
           id?: string
           client_id?: string | null
+          user_id?: string | null
           couple_names?: string
           event_slug?: string
           event_date?: string

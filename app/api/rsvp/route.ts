@@ -1,8 +1,30 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { rateLimit, getClientIp } from '@/lib/rate-limit'
+
+// RSVP rate limit: 5 submissions per 60 seconds per IP
+const RSVP_RATE_LIMIT = { maxRequests: 5, windowMs: 60 * 1000 }
 
 export async function POST(req: Request) {
   try {
+    // Rate limit check — runs before any DB work
+    const clientIp = getClientIp(req)
+    const limit = rateLimit(`rsvp:${clientIp}`, RSVP_RATE_LIMIT)
+
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { success: false, message: `Too many RSVP submissions. Please try again in ${limit.retryAfterSeconds} seconds.` },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(limit.retryAfterSeconds),
+            'X-RateLimit-Remaining': '0',
+            'X-RateLimit-Reset': String(Math.floor(limit.resetAt / 1000)),
+          },
+        }
+      )
+    }
+
     const body = await req.json()
     const { token, event_id, attending, guest_count, food_preference } = body
 

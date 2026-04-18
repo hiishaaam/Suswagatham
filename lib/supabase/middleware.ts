@@ -32,24 +32,23 @@ export async function updateSession(request: NextRequest) {
   
   const path = request.nextUrl.pathname
 
-  // Dashboard protection logic
-  if (path.startsWith('/dashboard') && !path.startsWith('/dashboard/login')) {
-    if (!user) {
-      const redirectUrl = new URL('/dashboard/login', request.url)
-      redirectUrl.searchParams.set('redirect', path)
-      return NextResponse.redirect(redirectUrl)
-    }
-    // Note: We don't verify the phone belonging to the specific event here
-    // because middleware doesn't know the DB details without an extra query.
-    // The API route / server component will handle the strict client check via Task 4.
+  // Protected routes: require Supabase session
+  // /admin (except /admin/login which we keep for legacy), /dashboard
+  const isProtectedRoute = (
+    (path.startsWith('/admin') && !path.startsWith('/admin/login'))
+    || path.startsWith('/dashboard')
+    || path.startsWith('/api/admin') && !path.startsWith('/api/admin/login')
+  )
+
+  if (isProtectedRoute && !user) {
+    const redirectUrl = new URL('/login', request.url)
+    redirectUrl.searchParams.set('redirect', path)
+    return NextResponse.redirect(redirectUrl)
   }
 
-  // Existing Admin protection logic
-  if (path.startsWith('/admin') && !path.startsWith('/admin/login') && !path.startsWith('/api/admin/login')) {
-    const adminCookie = request.cookies.get('ADMIN_SECRET_COOKIE')
-    if (!adminCookie || adminCookie.value !== 'authenticated') {
-      return NextResponse.redirect(new URL('/admin/login', request.url))
-    }
+  // If the user is logged in and visits /login or /signup, redirect to /admin
+  if (user && (path === '/login' || path === '/signup')) {
+    return NextResponse.redirect(new URL('/admin', request.url))
   }
 
   return supabaseResponse

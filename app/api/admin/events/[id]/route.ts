@@ -1,11 +1,18 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { verifyAuth } from '@/lib/supabase/admin-verify'
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { id } = await params
-    const supabase = createAdminClient()
+    const auth = await verifyAuth()
+    if (!auth.authorized) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
 
+    const { id } = await params
+    const supabase = await createClient()
+
+    // RLS will ensure user can only see their own events (or all if admin)
     const { data: event, error } = await supabase
       .from('events')
       .select('*')
@@ -27,13 +34,19 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const auth = await verifyAuth()
+    if (!auth.authorized) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
+
     const { id } = await params
     const body = await req.json()
-    const supabase = createAdminClient()
+    const supabase = await createClient()
 
     // remove non-updatable fields before sending to Supabase
-    const { id: _, created_at, updated_at, summary, status, ...updates } = body
+    const { id: _, created_at, updated_at, summary, status, user_id, ...updates } = body
 
+    // RLS will ensure user can only update their own events (or all if admin)
     const { data: event, error } = await (supabase.from('events') as any)
       .update(updates)
       .eq('id', id)

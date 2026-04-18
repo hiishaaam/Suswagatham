@@ -5,6 +5,7 @@ import QRCode from 'qrcode'
 import { Plus, Users, Utensils, CheckCircle2, ChevronDown, ChevronUp, Copy, Download, Share2, Search, Link as LinkIcon, Loader2 } from 'lucide-react'
 import { useCountUp } from '@/hooks/useCountUp'
 import { SectionErrorBoundary } from '@/components/ui/SectionErrorBoundary'
+import { motion, AnimatePresence } from 'motion/react'
 
 // Types
 type EventInfo = {
@@ -291,8 +292,9 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
           <span className="flex items-center gap-2"><Plus size={18} className="text-gold" /> Add Guest Manually</span>
           {isManualExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </button>
-        
+        <AnimatePresence>
         {isManualExpanded && (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="overflow-hidden">
           <div className="p-5 pt-0 border-t border-gold-light/20 bg-ivory/20">
             <div className="space-y-4 mt-4">
               <div>
@@ -332,7 +334,9 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
               </button>
             </div>
           </div>
+          </motion.div>
         )}
+        </AnimatePresence>
       </div>
       </SectionErrorBoundary>
 

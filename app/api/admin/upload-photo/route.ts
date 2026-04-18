@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server'
 import { uploadCouplePhoto } from '@/lib/storage'
+import { verifyAuth } from '@/lib/supabase/admin-verify'
 
 export async function POST(req: Request) {
   try {
+    const auth = await verifyAuth()
+    if (!auth.authorized) {
+      return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
+    }
+
     const formData = await req.formData()
     const file = formData.get('file') as File
     const eventSlug = formData.get('eventSlug') as string

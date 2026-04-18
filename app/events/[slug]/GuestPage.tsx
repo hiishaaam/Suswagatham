@@ -210,9 +210,10 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
             {step === 0 && existingRsvp && (
               <motion.div
                 key="step-0"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, translateY: 8, filter: 'blur(4px)' }}
+                animate={{ opacity: 1, translateY: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, translateY: -12, filter: 'blur(4px)' }}
+                transition={{ type: 'spring', duration: 0.45, bounce: 0 }}
                 className="bg-white border border-gold-light p-8 rounded-sm shadow-card text-center"
               >
                 <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -252,9 +253,10 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
             {step === 1 && (
               <motion.div
                 key="step-1"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, translateY: 8, filter: 'blur(4px)' }}
+                animate={{ opacity: 1, translateY: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, translateY: -12, filter: 'blur(4px)' }}
+                transition={{ type: 'spring', duration: 0.45, bounce: 0 }}
                 className="text-center"
               >
                 <h2 className="font-display text-[28px] text-ink mb-8 tracking-wide">Will you be joining us?</h2>
@@ -281,9 +283,10 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
             {step === 2 && (
               <motion.div
                 key="step-2"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, translateY: 8, filter: 'blur(4px)' }}
+                animate={{ opacity: 1, translateY: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, translateY: -12, filter: 'blur(4px)' }}
+                transition={{ type: 'spring', duration: 0.45, bounce: 0 }}
               >
                 <h2 className="font-display text-[28px] text-ink mb-8 text-center tracking-wide">A few details</h2>
                 
@@ -371,16 +374,36 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                 transition={{ duration: 0.7, ease: [0.77, 0, 0.175, 1] }} // smooth curtain wipe
                 className="bg-white border border-gold p-6 md:p-8 rounded-sm shadow-card"
               >
-                <div className="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="text-success stroke-success" width="24" height="24" viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <motion.div 
+                  initial={{ scale: 0, rotate: -45 }}
+                  animate={{ scale: [0, 1.2, 1], rotate: 0 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10, delay: 0.1 }}
+                  className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6 relative"
+                >
+                  <svg className="text-success stroke-success z-10 relative" width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <motion.polyline 
                       initial={{ pathLength: 0 }}
                       animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                      transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
                       points="20 6 9 17 4 12" 
                     />
                   </svg>
-                </div>
+                  
+                  {/* Joyous Particle Pop */}
+                  {[...Array(6)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-2 h-2 bg-success rounded-full"
+                      initial={{ scale: 0, x: 0, y: 0 }}
+                      animate={{ 
+                        scale: [0, 1, 0],
+                        x: Math.cos(i * (Math.PI / 3)) * 45,
+                        y: Math.sin(i * (Math.PI / 3)) * 45,
+                      }}
+                      transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                    />
+                  ))}
+                </motion.div>
                 
                 <h2 className="font-display text-[32px] text-ink mb-6 text-center italic tracking-wide">
                   Here&apos;s how to find us
@@ -442,9 +465,10 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
             {step === 4 && (
               <motion.div
                 key="step-4"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, translateY: 8, filter: 'blur(4px)' }}
+                animate={{ opacity: 1, translateY: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, translateY: -12, filter: 'blur(4px)' }}
+                transition={{ type: 'spring', duration: 0.45, bounce: 0 }}
                 className="text-center bg-white border border-gold-light p-10 rounded-sm shadow-card"
               >
                 <h2 className="font-display text-[32px] text-ink mb-6 italic tracking-wide">

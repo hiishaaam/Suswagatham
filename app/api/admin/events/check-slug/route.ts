@@ -1,12 +1,21 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { verifyAuth } from '@/lib/supabase/admin-verify'
 
 export async function GET(req: Request) {
+  const auth = await verifyAuth()
+  if (!auth.authorized) {
+    return NextResponse.json({ available: false, error: auth.error }, { status: auth.status })
+  }
+
   const { searchParams } = new URL(req.url)
   const slug = searchParams.get('slug')
 
   if (!slug) return NextResponse.json({ available: false })
 
+  // Use admin client for slug check — slugs must be globally unique
+  // regardless of who owns the event
+  const { createAdminClient } = await import('@/lib/supabase/admin')
   const supabase = createAdminClient()
   const { data, error } = await supabase
     .from('events')
