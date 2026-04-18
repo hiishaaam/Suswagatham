@@ -1,8 +1,12 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
+import { requireAdminCookie } from '@/lib/supabase/auth-guard'
 
 export async function POST(req: Request) {
   try {
+    const authError = await requireAdminCookie(req)
+    if (authError) return authError
+
     const formData = await req.formData()
     const file = formData.get('file') as File
     

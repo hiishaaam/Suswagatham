@@ -37,17 +37,28 @@ export default function NewEventPage() {
 
   // Debounced slug check
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     if (!formData.event_slug) {
       setSlugStatus('idle')
       return
     }
-    setSlugStatus('checking')
+    
+    let active = true
     const timer = setTimeout(async () => {
-      const res = await fetch(`/api/admin/events/check-slug?slug=${encodeURIComponent(formData.event_slug)}`)
-      const data = await res.json()
-      setSlugStatus(data.available ? 'available' : 'taken')
+      setSlugStatus('checking')
+      try {
+        const res = await fetch(`/api/admin/events/check-slug?slug=${encodeURIComponent(formData.event_slug)}`)
+        const data = await res.json()
+        if (active) setSlugStatus(data.available ? 'available' : 'taken')
+      } catch (err) {
+        if (active) setSlugStatus('idle')
+      }
     }, 500)
-    return () => clearTimeout(timer)
+    /* eslint-enable react-hooks/set-state-in-effect */
+    return () => {
+      active = false
+      clearTimeout(timer)
+    }
   }, [formData.event_slug])
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -252,95 +263,95 @@ export default function NewEventPage() {
         {/* STEP 2: Venue */}
         {step === 2 && (
           <div className="space-y-6 animate-in fade-in">
-            <h2 className="font-display text-2xl mb-6 border-b border-gold-light pb-2">Venue & Logistics</h2>
-            
-            <div>
-              <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Venue Name</label>
-              <input 
-                type="text" 
-                value={formData.venue_name}
-                onChange={e => setFormData({...formData, venue_name: e.target.value})}
-                className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition" 
-              />
-            </div>
-
-            <div>
-              <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Venue Address</label>
-              <textarea 
-                rows={3}
-                value={formData.venue_address}
-                onChange={e => setFormData({...formData, venue_address: e.target.value})}
-                className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition" 
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Latitude</label>
+             <h2 className="font-display text-2xl mb-6 border-b border-gold-light pb-2">Venue Details</h2>
+             
+             <div>
+                <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Venue Name</label>
                 <input 
-                  type="number" step="any"
-                  value={formData.venue_lat}
-                  onChange={e => setFormData({...formData, venue_lat: e.target.value})}
+                  type="text"
+                  placeholder="e.g. Grand Hyatt Kochi"
+                  value={formData.venue_name}
+                  onChange={e => setFormData({...formData, venue_name: e.target.value})}
                   className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition" 
                 />
               </div>
+
               <div>
-                <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Longitude</label>
-                <input 
-                  type="number" step="any"
-                  value={formData.venue_lng}
-                  onChange={e => setFormData({...formData, venue_lng: e.target.value})}
+                <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Full Address</label>
+                <textarea 
+                  rows={3}
+                  value={formData.venue_address}
+                  onChange={e => setFormData({...formData, venue_address: e.target.value})}
                   className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition" 
                 />
               </div>
-            </div>
-            
-            <div>
-              <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Parking Notes</label>
-              <textarea 
-                rows={2}
-                value={formData.venue_parking_notes}
-                onChange={e => setFormData({...formData, venue_parking_notes: e.target.value})}
-                className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition" 
-              />
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2 flex items-center gap-2"><MapPin size={12}/> Latitude</label>
+                  <input 
+                    type="text"
+                    value={formData.venue_lat}
+                    onChange={e => setFormData({...formData, venue_lat: e.target.value})}
+                    className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition font-mono text-xs" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2 flex items-center gap-2"><MapPin size={12}/> Longitude</label>
+                  <input 
+                    type="text"
+                    value={formData.venue_lng}
+                    onChange={e => setFormData({...formData, venue_lng: e.target.value})}
+                    className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition font-mono text-xs" 
+                  />
+                </div>
+              </div>
+
               <div>
-                <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">RSVP Cutoff (Optional)</label>
+                <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Parking & Entry Notes</label>
                 <input 
-                  type="datetime-local"
-                  value={formData.rsvp_cutoff_at}
-                  onChange={e => setFormData({...formData, rsvp_cutoff_at: e.target.value})}
+                  type="text"
+                  value={formData.venue_parking_notes}
+                  onChange={e => setFormData({...formData, venue_parking_notes: e.target.value})}
                   className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition" 
                 />
               </div>
-              <div>
-                <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Default Max Guests (Open Link)</label>
-                <input 
-                  type="number"
-                  value={formData.max_guests_default}
-                  onChange={e => setFormData({...formData, max_guests_default: parseInt(e.target.value) || 6})}
-                  className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition text-xl text-center" 
-                />
-              </div>
-            </div>
 
+              <div className="pt-4 border-t border-gold-light/40 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">RSVP Cutoff Date</label>
+                  <input 
+                    type="date"
+                    value={formData.rsvp_cutoff_at}
+                    onChange={e => setFormData({...formData, rsvp_cutoff_at: e.target.value})}
+                    className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-2">Default Guest Limit / Family</label>
+                  <input 
+                    type="number"
+                    value={formData.max_guests_default}
+                    onChange={e => setFormData({...formData, max_guests_default: parseInt(e.target.value) || 6})}
+                    className="w-full bg-ivory border border-gold-light p-3 rounded-sm focus:border-gold outline-none transition" 
+                  />
+                </div>
+              </div>
           </div>
         )}
 
         {/* STEP 3: Design */}
         {step === 3 && (
-          <div className="space-y-6 animate-in fade-in">
-            <h2 className="font-display text-2xl mb-6 border-b border-gold-light pb-2">Design & Imagery</h2>
+          <div className="space-y-8 animate-in fade-in">
+            <h2 className="font-display text-2xl mb-6 border-b border-gold-light pb-2">Invitation Design</h2>
 
             <div>
-              <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-4">Template Style</label>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-4">Choose Template</label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {[
                   { id: 'kerala_traditional', name: 'Kerala Traditional' },
                   { id: 'modern_minimal', name: 'Modern Minimal' },
-                  { id: 'floral_garden', name: 'Floral Garden' }
+                  { id: 'royal_gold', name: 'Royal Gold' }
                 ].map(t => (
                   <div 
                     key={t.id}
@@ -365,7 +376,11 @@ export default function NewEventPage() {
                 />
                 
                 {formData.couple_photo_url ? (
-                  <img src={formData.couple_photo_url} alt="Couple" className="mx-auto h-32 object-cover rounded shadow-sm" />
+                  <div className="relative">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={formData.couple_photo_url} alt="Couple" className="mx-auto h-32 object-cover rounded shadow-sm" />
+                    <p className="mt-2 text-[10px] text-gold uppercase tracking-widest font-bold">Click or drag to change</p>
+                  </div>
                 ) : (
                   <div className="flex flex-col items-center gap-2 opacity-60 group-hover:opacity-100 transition">
                     <UploadCloud size={32} className="text-gold" />
@@ -443,14 +458,13 @@ export default function NewEventPage() {
           <button 
             onClick={handleSubmit}
             disabled={isSubmitting || slugStatus === 'taken'}
-            className="px-8 py-3 bg-ink text-gold uppercase tracking-widest text-xs font-bold rounded-sm hover:bg-ink/90 transition shadow-sm disabled:opacity-70 flex items-center gap-2"
+            className="px-10 py-3 bg-ink text-gold uppercase tracking-widest text-xs font-bold rounded-sm hover:bg-black transition shadow-lg flex items-center gap-2"
           >
-            {isSubmitting ? <Loader2 className="animate-spin" size={16} /> : <Check size={16} />}
+            {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
             Create Event
           </button>
         )}
       </div>
-
     </div>
   )
 }

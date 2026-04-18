@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Check, Loader2, MapPin, Map, Calendar, ChevronDown } from 'lucide-react'
 import { Database } from '@/lib/supabase/types'
@@ -32,9 +32,23 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
   const maxAllowedGuests = guestToken ? guestToken.max_guests : event.max_guests_default
 
   // Intersection observer bindings
-  const heroObserver = useIntersectionObserver()
-  const inviteTextObserver = useIntersectionObserver({ threshold: 0.2 })
-  const rsvpFlowObserver = useIntersectionObserver({ threshold: 0.1 })
+  const { ref: heroRef, hasEntered: heroHasEntered } = useIntersectionObserver()
+  const { ref: inviteTextRef, hasEntered: inviteHasEntered } = useIntersectionObserver({ threshold: 0.2 })
+  const { ref: rsvpFlowRef, hasEntered: rsvpHasEntered } = useIntersectionObserver({ threshold: 0.1 })
+  const [hasEnteredInvite, setHasEnteredInvite] = useState(false)
+  const [hasEnteredRSVP, setHasEnteredRSVP] = useState(false)
+
+  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    if (inviteHasEntered) setHasEnteredInvite(true)
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, [inviteHasEntered])
+
+  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
+    if (rsvpHasEntered) setHasEnteredRSVP(true)
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, [rsvpHasEntered])
 
   const handleAttendanceSelect = (isAttending: boolean) => {
     setAttending(isAttending)
@@ -118,14 +132,17 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
   return (
     <div className="flex flex-col min-h-screen">
       {/* 1. Hero Section */}
-      <section 
-        className="relative w-full h-[100dvh] flex flex-col justify-end items-center pb-20 px-6 overflow-hidden"
-        style={{
-          backgroundImage: `url(${event.couple_photo_url || 'https://picsum.photos/seed/kearala_wedding/1200/1600'})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      >
+      <section className="h-[90vh] relative overflow-hidden bg-[#0F0C07] flex flex-col items-center justify-center px-6">
+        <div ref={heroRef as any} className="absolute inset-0 z-0">
+          {event.couple_photo_url && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img 
+              src={event.couple_photo_url} 
+              alt={event.couple_names}
+              className={`w-full h-full object-cover opacity-40 transition-all duration-2000 ${heroHasEntered ? 'scale-100 blur-0' : 'scale-110 blur-sm'}`}
+            />
+          )}
+        </div>
         {/* Dark warm gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent" />
         
@@ -160,10 +177,9 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
 
       {/* 2. Invitation Text */}
       <section 
-        ref={inviteTextObserver.ref}
-        className={`bg-ivory relative py-16 px-6 transition-all duration-1000 delay-100 transform ${inviteTextObserver.hasEntered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+        className={`bg-ivory relative py-16 px-6 transition-all duration-1000 delay-100 transform ${hasEnteredInvite ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
       >
-        <div className="max-w-[480px] mx-auto text-center">
+        <div ref={inviteTextRef as any} className="max-w-[480px] mx-auto text-center">
           {/* Top Divider Motif */}
           <div className="flex items-center justify-center my-8">
             <div className="h-px bg-gold/40 flex-1 max-w-[80px]"></div>
@@ -200,10 +216,9 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
 
       {/* 3. RSVP Flow */}
       <section 
-        ref={rsvpFlowObserver.ref}
-        className={`bg-ivory pb-24 px-4 flex-1 transition-all duration-1000 delay-300 transform ${rsvpFlowObserver.hasEntered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+        className={`bg-ivory pb-24 px-4 flex-1 transition-all duration-1000 delay-300 transform ${hasEnteredRSVP ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
       >
-        <div className="max-w-md mx-auto relative min-h-[400px]">
+        <div ref={rsvpFlowRef as any} className="max-w-md mx-auto relative min-h-[400px]">
           <AnimatePresence mode="wait">
 
             {/* STEP 0: Existing RSVP View */}

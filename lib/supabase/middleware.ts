@@ -1,0 +1,64 @@
+import { createServerClient } from '@supabase/ssr'
+import { NextResponse, type NextRequest } from 'next/server'
+
+export async function updateSession(request: NextRequest) {
+  let supabaseResponse = NextResponse.next({
+    request,
+  })
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
+          supabaseResponse = NextResponse.next({
+            request,
+          })
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
+          )
+        },
+      },
+    }
+  )
+
+  // This will refresh session if expired
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  const path = request.nextUrl.pathname
+
+  // Dashboard protection logic
+  if (path.startsWith('/dashboard') && !path.startsWith('/dashboard/login')) {
+    if (!user) {
+      const redirectUrl = new URL('/dashboard/login', request.url)
+      redirectUrl.searchParams.set('redirect', path)
+      return NextResponse.redirect(redirectUrl)
+    }
+    // Note: We don't verify the phone belonging to the specific event here
+    // because middleware doesn't know the DB details without an extra query.
+    // The API route / server component will handle the strict client check via Task 4.
+  }
+
+  // Existing Admin protection logic
+  if (path.startsWith('/admin') && !path.startsWith('/admin/login') && !path.startsWith('/api/admin/login')) {
+    const useSupabaseAuth = process.env.NEXT_PUBLIC_USE_SUPABASE_ADMIN_AUTH !== 'false'
+    
+    if (useSupabaseAuth) {
+      if (!user) {
+        return NextResponse.redirect(new URL('/admin/login', request.url))
+      }
+    } else {
+      const adminCookie = request.cookies.get('ADMIN_SECRET_COOKIE')
+      if (!adminCookie || adminCookie.value !== 'authenticated') {
+        return NextResponse.redirect(new URL('/admin/login', request.url))
+      }
+    }
+  }
+
+  return supabaseResponse
+}

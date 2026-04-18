@@ -1,8 +1,12 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
+import { requireAdminCookie } from '@/lib/supabase/auth-guard'
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const authError = await requireAdminCookie(req)
+    if (authError) return authError
+
     const { id } = await params
     const supabase = createAdminClient()
 
@@ -27,6 +31,9 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const authError = await requireAdminCookie(req)
+    if (authError) return authError
+
     const { id } = await params
     const body = await req.json()
     const supabase = createAdminClient()

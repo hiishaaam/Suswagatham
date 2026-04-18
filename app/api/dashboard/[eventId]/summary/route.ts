@@ -1,9 +1,14 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
+import { requireEventAccess } from '@/lib/supabase/rbac'
 
 export async function GET(req: Request, { params }: { params: Promise<{ eventId: string }> }) {
   try {
     const { eventId } = await params
+    
+    const authError = await requireEventAccess(eventId)
+    if (authError) return authError
+
     const supabase = createAdminClient()
 
     // Fetch summary

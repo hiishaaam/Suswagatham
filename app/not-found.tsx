@@ -13,7 +13,7 @@ export default function NotFound() {
       </div>
       
       <p className="font-display text-2xl italic text-ink mt-4 mb-8">
-        This invitation wasn't found
+        This invitation wasn&apos;t found
       </p>
 
       {/* Small botanical SVG divider */}

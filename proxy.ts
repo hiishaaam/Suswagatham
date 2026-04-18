@@ -17,5 +17,14 @@ const proxy = (request: NextRequest) => {
 export default proxy;
 
 export const config = {
+<<<<<<< Updated upstream
   matcher: ['/admin/:path*'],
+=======
+  matcher: [
+    '/admin/:path*',
+    '/api/admin/:path*',
+    '/dashboard/:path*',
+    '/api/dashboard/:path*'
+  ],
+>>>>>>> Stashed changes
 }

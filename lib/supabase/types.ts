@@ -260,20 +260,84 @@ export interface Database {
           created_at?: string
         }
       }
-    }
-    Views: {
-      event_summary: {
+      profiles: {
         Row: {
-          event_id: string
-          total_clicks: number
-          total_responded: number
-          attending_count: number
-          not_attending_count: number
-          total_headcount: number
-          veg_count: number
-          non_veg_count: number
+          id: string
+          phone: string | null
+          full_name: string | null
+          is_platform_admin: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          phone?: string | null
+          full_name?: string | null
+          is_platform_admin?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          phone?: string | null
+          full_name?: string | null
+          is_platform_admin?: boolean
+          created_at?: string
+          updated_at?: string
         }
       }
+      client_memberships: {
+        Row: {
+          user_id: string
+          client_id: string
+          role: 'client_owner' | 'client_staff'
+          created_at: string
+        }
+        Insert: {
+          user_id: string
+          client_id: string
+          role: 'client_owner' | 'client_staff'
+          created_at?: string
+        }
+        Update: {
+          user_id?: string
+          client_id?: string
+          role?: 'client_owner' | 'client_staff'
+          created_at?: string
+        }
+      }
+      event_memberships: {
+        Row: {
+          user_id: string
+          event_id: string
+          role: 'event_manager' | 'caterer'
+          created_at: string
+        }
+        Insert: {
+          user_id: string
+          event_id: string
+          role: 'event_manager' | 'caterer'
+          created_at?: string
+        }
+        Update: {
+          user_id?: string
+          event_id?: string
+          role?: 'event_manager' | 'caterer'
+          created_at?: string
+        }
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
     }
   }
 }

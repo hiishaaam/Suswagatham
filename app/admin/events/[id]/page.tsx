@@ -1,9 +1,23 @@
 'use client'
 
-import { useEffect, useState, use } from 'react'
+import { useState, useEffect, use, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Papa from 'papaparse'
 import { Copy, Check, Upload, Plus, CheckCircle2, ChevronRight, Loader2, Save } from 'lucide-react'
+
+const WorkflowButtons = ({ status, onStatusChange }: { status: string, onStatusChange: (s: string) => void }) => {
+  switch(status) {
+    case 'draft': 
+      return <button onClick={() => onStatusChange('design_pending')} className="bg-amber-600 text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-amber-700">Mark Design Pending</button>
+    case 'design_pending': 
+      return <button onClick={() => onStatusChange('preview_sent')} className="bg-blue-600 text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-blue-700">Send Preview</button>
+    case 'preview_sent': 
+      return <button onClick={() => onStatusChange('live')} className="bg-success text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-success/90">Go Live</button>
+    case 'live': 
+      return <button onClick={() => onStatusChange('completed')} className="bg-muted text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-muted/90">Mark Completed</button>
+    default: return null
+  }
+}
 
 export default function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = use(params)
@@ -18,32 +32,34 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   // Tokens Form
   const [newToken, setNewToken] = useState({ family_name: '', phone: '', max_guests: 6 })
 
-  useEffect(() => {
-    fetchEvent()
-  }, [id])
-
-  useEffect(() => {
-    if (activeTab === 'tokens' && tokens.length === 0) {
-      fetchTokens()
-    }
-  }, [activeTab])
-
-  const fetchEvent = async () => {
+  const fetchEvent = useCallback(async () => {
     const res = await fetch(`/api/admin/events/${id}`)
     const data = await res.json()
     if (data.success) {
       setEvent(data.event)
     }
     setIsLoading(false)
-  }
+  }, [id])
 
-  const fetchTokens = async () => {
+  const fetchTokens = useCallback(async () => {
     const res = await fetch(`/api/admin/events/${id}/tokens`)
     const data = await res.json()
     if (data.success) {
       setTokens(data.tokens)
     }
-  }
+  }, [id])
+
+  /* eslint-disable react-hooks/set-state-in-effect */
+  useEffect(() => {
+    fetchEvent()
+  }, [fetchEvent])
+
+  useEffect(() => {
+    if (activeTab === 'tokens' && tokens.length === 0) {
+      fetchTokens()
+    }
+  }, [activeTab, tokens.length, fetchTokens])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const handleStatusChange = async (newStatus: string) => {
     const oldStatus = event.status
@@ -136,20 +152,6 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   if (isLoading) return <div className="p-10 flex justify-center"><Loader2 className="animate-spin text-gold" size={32} /></div>
   if (!event) return <div className="p-10">Event not found.</div>
 
-  const WorkflowButtons = () => {
-    switch(event.status) {
-      case 'draft': 
-        return <button onClick={() => handleStatusChange('design_pending')} className="bg-amber-600 text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-amber-700">Mark Design Pending</button>
-      case 'design_pending': 
-        return <button onClick={() => handleStatusChange('preview_sent')} className="bg-blue-600 text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-blue-700">Send Preview</button>
-      case 'preview_sent': 
-        return <button onClick={() => handleStatusChange('live')} className="bg-success text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-success/90">Go Live</button>
-      case 'live': 
-        return <button onClick={() => handleStatusChange('completed')} className="bg-muted text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-muted/90">Mark Completed</button>
-      default: return null
-    }
-  }
-
   return (
     <div className="p-6 md:p-10 max-w-7xl mx-auto font-body text-ink pb-20">
       {/* Header */}
@@ -177,7 +179,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
               {copyState === 'preview' ? <CheckCircle2 size={16} className="text-success" /> : <Copy size={16} />} 
               Copy Preview Link
             </button>
-            <WorkflowButtons />
+            <WorkflowButtons status={event.status} onStatusChange={handleStatusChange} />
           </div>
         </div>
       </div>

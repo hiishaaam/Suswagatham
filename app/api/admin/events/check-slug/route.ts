@@ -1,7 +1,11 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
+import { requireAdminCookie } from '@/lib/supabase/auth-guard'
 
 export async function GET(req: Request) {
+  const authError = await requireAdminCookie(req)
+  if (authError) return authError
+
   const { searchParams } = new URL(req.url)
   const slug = searchParams.get('slug')
 

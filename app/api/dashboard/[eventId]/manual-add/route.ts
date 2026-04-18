@@ -1,9 +1,14 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextResponse } from 'next/server'
+import { requireEventAccess } from '@/lib/supabase/rbac'
 
 export async function POST(req: Request, { params }: { params: Promise<{ eventId: string }> }) {
   try {
     const { eventId } = await params
+    
+    const authError = await requireEventAccess(eventId)
+    if (authError) return authError
+
     const body = await req.json()
     const { family_name, guest_count, food_preference } = body
 

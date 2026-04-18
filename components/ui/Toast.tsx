@@ -75,7 +75,8 @@ const ToastItem = ({ toast, onRemove }: { toast: Toast, onRemove: () => void }) 
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    setIsVisible(true)
+    const timer = setTimeout(() => setIsVisible(true), 10)
+    return () => clearTimeout(timer)
   }, [])
 
   const handleRemove = () => {

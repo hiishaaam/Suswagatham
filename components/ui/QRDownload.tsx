@@ -32,6 +32,7 @@ export default function QRDownload({ url, filename = 'qr-code.png', label = 'Dow
 
   return (
     <div className="flex flex-col items-center gap-4 p-5 border border-gold-light rounded-sm bg-white shadow-sm w-full max-w-sm mx-auto">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={dataUrl} alt="QR Code Preview" className="w-[100px] h-[100px] object-cover rounded-sm shadow-inner" />
       <button 
         onClick={handleDownload}

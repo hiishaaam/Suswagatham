@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import QRCode from 'qrcode'
 import { Plus, Users, Utensils, CheckCircle2, ChevronDown, ChevronUp, Copy, Download, Share2, Search, Link as LinkIcon, Loader2 } from 'lucide-react'
 import { useCountUp } from '@/hooks/useCountUp'
@@ -44,7 +44,25 @@ type Props = {
   eventId: string
 }
 
-export default function DashboardClient({ event, initialSummary, initialGuests, eventId }: Props) {
+// Countup animation component
+const StatCard = ({ label, value, colorAccent = '', main = false, prefix = '' }: any) => {
+  // Only animate raw numbers
+  const isNum = typeof value === 'number'
+  const animatedValue = useCountUp(isNum ? value : 0)
+  const displayValue = isNum ? animatedValue : value
+
+  return (
+    <div className={`bg-white rounded-2xl shadow-card p-5 flex flex-col justify-center relative overflow-hidden ${main ? 'col-span-2 border border-gold' : ''}`}>
+      {colorAccent && <div className={`absolute left-0 top-0 bottom-0 w-1 ${colorAccent}`}></div>}
+      <div className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.15em] font-bold mb-1 opacity-80">{label}</div>
+      <div className="font-display text-3xl sm:text-4xl text-ink font-semibold mt-1">
+        {prefix}{displayValue ?? '-'}
+      </div>
+    </div>
+  )
+}
+
+export default function DashboardClient({ event, initialSummary, initialGuests, eventId, userPhone }: Props) {
   const [summary, setSummary] = useState<Summary>(initialSummary)
   const [guests, setGuests] = useState<Guest[]>(initialGuests)
   const [isManualExpanded, setIsManualExpanded] = useState(false)
@@ -73,24 +91,6 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
     const pollTimer = setInterval(poll, 60000)
     return () => clearInterval(pollTimer)
   }, [eventId])
-
-  // Countup animation component inline
-  const StatCard = ({ label, value, colorAccent = '', main = false, prefix = '' }: any) => {
-    // Only animate raw numbers
-    const isNum = typeof value === 'number'
-    const animatedValue = useCountUp(isNum ? value : 0)
-    const displayValue = isNum ? animatedValue : value
-
-    return (
-      <div className={`bg-white rounded-2xl shadow-card p-5 flex flex-col justify-center relative overflow-hidden ${main ? 'col-span-2 border border-gold' : ''}`}>
-        {colorAccent && <div className={`absolute left-0 top-0 bottom-0 w-1 ${colorAccent}`}></div>}
-        <div className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.15em] font-bold mb-1 opacity-80">{label}</div>
-        <div className="font-display text-3xl sm:text-4xl text-ink font-semibold mt-1">
-          {prefix}{displayValue ?? '-'}
-        </div>
-      </div>
-    )
-  }
 
   // Quick Add State
   const [manualForm, setManualForm] = useState({ family_name: '', guest_count: 1, food_preference: 'both' })
@@ -166,14 +166,14 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
   const noReplyCount = Math.max(0, (summary?.totalTokens || 0) - (summary?.total_responded || 0))
   const progressPercent = summary?.totalTokens > 0 ? Math.min(100, Math.round(((summary?.total_responded || 0) / summary.totalTokens) * 100)) : 0
 
-  const timeAgo = (dateStr: string) => {
+  const timeAgo = useCallback((dateStr: string) => {
     const minDiff = Math.round((Date.now() - new Date(dateStr).getTime()) / 60000)
     if (minDiff < 1) return 'Just now'
     if (minDiff < 60) return `${minDiff}m ago`
     const hrDiff = Math.floor(minDiff/60)
     if (hrDiff < 24) return `${hrDiff}h ago`
     return `${Math.floor(hrDiff/24)}d ago`
-  }
+  }, [])
 
   // Guest list filters & pagination
   const [searchTerm, setSearchTerm] = useState('')
@@ -206,7 +206,36 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
     return true
   })
 
+  const maskPhone = (phone: string) => {
+    const clean = phone.replace('+91', '').trim()
+    if (clean.length < 10) return phone
+    return `+91 ${clean.slice(0, 5)} xxxxx`
+  }
+
+  const handleLogout = async () => {
+    const { signOut } = await import('@/lib/supabase/auth')
+    await signOut()
+    window.location.href = '/dashboard/login'
+  }
+
   return (
+    <>
+      {/* Session Aware Header */}
+      <div className="w-full bg-white border-b border-gold-light p-4 px-6 flex justify-between items-center sm:px-8 shadow-sm">
+        <div className="flex items-center gap-2">
+          <div className="text-gold font-display text-[10px] font-bold flex items-center justify-center w-6 h-6 rounded border border-gold/50 bg-gold/10">W</div>
+          <span className="font-display text-sm font-bold text-ink">WeddWise Dashboard</span>
+        </div>
+        <div className="flex items-center gap-4 text-xs font-body">
+          <span className="text-muted hidden sm:inline-flex">{maskPhone(userPhone)}</span>
+          <button 
+            onClick={handleLogout}
+            className="text-ink font-bold uppercase tracking-widest hover:text-gold transition-colors text-[10px]"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
     <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-6 pb-40">
       
       {/* Header */}
@@ -214,14 +243,13 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
         <div className="text-gold font-display text-xl font-bold flex items-center justify-center w-8 h-8 rounded border border-gold/50 bg-gold/10 mb-4">
           W
         </div>
-        <h1 className="font-display text-3xl sm:text-4xl text-ink font-bold mb-2">{event.couple_names}'s Wedding</h1>
-        <div className="flex items-center gap-2">
+        <h1 className="font-display text-3xl sm:text-4xl text-ink font-bold mb-2">{event.couple_names}&apos;s Wedding</h1>
+        <div className="flex flex-col items-center gap-3 bg-white border border-gold-light/40 p-4 sm:p-6 rounded-2xl shadow-card relative overflow-hidden group">
           <p className="text-muted text-sm sm:text-base">{new Date(event.event_date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'})}</p>
-          <span className="w-1 h-1 bg-gold rounded-full"></span>
-          <span className="bg-success/10 text-success text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full flex items-center gap-1">
-            <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></span>
-            LIVE
-          </span>
+          <div className="flex items-center gap-3">
+            <a href={eventUrl} target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm text-ink font-bold uppercase tracking-widest group-hover:text-gold transition-colors hover:underline flex items-center gap-2">Visit Guest Link <LinkIcon size={16} /></a>
+            <div className="w-2 h-2 bg-success rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+          </div>
         </div>
       </div>
 
@@ -397,5 +425,6 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
       </div>
 
     </div>
+    </>
   )
 }
