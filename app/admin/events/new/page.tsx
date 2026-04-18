@@ -9,6 +9,7 @@ export default function NewEventPage() {
   const router = useRouter()
   const [step, setStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false)
   const [slugStatus, setSlugStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle')
   
   const [formData, setFormData] = useState({
@@ -28,13 +29,23 @@ export default function NewEventPage() {
     rsvp_cutoff_at: '',
     max_guests_default: 6,
     
-    template_id: 'kerala_traditional',
+    template_id: 'ivory-luxe',
     couple_photo_url: '',
     invitation_text_en: '',
     invitation_text_ml: '',
     host_whatsapp: '',
     show_host_contact: true
   })
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const template = params.get('template')
+    if (template) {
+      setFormData(prev => ({ ...prev, template_id: template }))
+      // Auto-skip to Step 3 if template is pre-selected and they are coming from the landing page?
+      // Actually, better to keep them at Step 1 to fill out basics first.
+    }
+  }, [])
 
   // Debounced slug check
   useEffect(() => {
@@ -110,6 +121,7 @@ export default function NewEventPage() {
     const slug = formData.event_slug || Date.now().toString()
     
     try {
+      setIsUploadingPhoto(true)
       const compressedFile = await compressImage(file)
       const fd = new FormData()
       fd.append('file', compressedFile)
@@ -128,6 +140,8 @@ export default function NewEventPage() {
     } catch (err) {
       console.error(err)
       alert('Upload failed')
+    } finally {
+      setIsUploadingPhoto(false)
     }
   }
 
@@ -144,10 +158,10 @@ export default function NewEventPage() {
         router.push(`/admin/events/${data.event.id}`)
       } else {
         alert('Error: ' + data.error)
+        setIsSubmitting(false) // Only stop spinning if there's an error
       }
     } catch (err) {
       alert('An unexpected error occurred while submitting')
-    } finally {
       setIsSubmitting(false)
     }
   }
@@ -337,19 +351,21 @@ export default function NewEventPage() {
 
             <div>
               <label className="block text-[11px] uppercase tracking-widest text-muted font-bold mb-4">Template Style</label>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {[
-                  { id: 'kerala_traditional', name: 'Kerala Traditional' },
-                  { id: 'modern_minimal', name: 'Modern Minimal' },
-                  { id: 'floral_garden', name: 'Floral Garden' }
+                  { id: 'emerald-islamic', name: 'Midnight Bloom' },
+                  { id: 'ivory-luxe', name: 'Kerala Gold' },
+                  { id: 'amethyst-dream', name: 'Maroon Royale' },
+                  { id: 'warm-rustic', name: 'Sapphire Night' },
+                  { id: 'ivory-garden', name: 'Garden Bloom' }
                 ].map(t => (
                   <div 
                     key={t.id}
                     onClick={() => setFormData({...formData, template_id: t.id})}
-                    className={`border p-4 rounded-sm cursor-pointer transition ${formData.template_id === t.id ? 'border-gold bg-gold/5' : 'border-gold-light/50 bg-ivory'}`}
+                    className={`border p-4 rounded-sm cursor-pointer transition ${formData.template_id === t.id ? 'border-gold bg-gold/5 shadow-[0_0_10px_rgba(202,168,103,0.3)]' : 'border-gold-light/50 bg-ivory hover:border-gold/50'}`}
                   >
-                    <div className="h-20 bg-black/5 mb-3 rounded-sm overflow-hidden flex items-center justify-center text-xs text-muted">Preview</div>
-                    <div className="font-semibold text-sm">{t.name}</div>
+                    <div className="h-16 bg-gradient-to-br from-gold/10 to-transparent mb-3 rounded-sm overflow-hidden flex items-center justify-center text-[10px] text-muted tracking-widest uppercase">Select</div>
+                    <div className="font-semibold text-sm text-center">{t.name}</div>
                   </div>
                 ))}
               </div>
@@ -365,7 +381,12 @@ export default function NewEventPage() {
                   className="absolute inset-0 opacity-0 cursor-pointer z-10" 
                 />
                 
-                {formData.couple_photo_url ? (
+                {isUploadingPhoto ? (
+                  <div className="flex flex-col items-center gap-2 opacity-100 transition">
+                    <Loader2 size={32} className="text-gold animate-spin" />
+                    <span className="text-sm font-semibold uppercase tracking-widest text-gold animate-pulse">Uploading...</span>
+                  </div>
+                ) : formData.couple_photo_url ? (
                   <img src={formData.couple_photo_url} alt="Couple" className="mx-auto h-32 object-cover rounded shadow-sm" />
                 ) : (
                   <div className="flex flex-col items-center gap-2 opacity-60 group-hover:opacity-100 transition">

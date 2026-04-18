@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guest List Confirmation - The Wedding Venue</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Be+Vietnam+Pro:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#3c2f00",
+                        "background": "#001232",
+                        "surface-bright": "#223862",
+                        "secondary-fixed-dim": "#e9c349",
+                        "on-primary-fixed": "#261a00",
+                        "on-primary-fixed-variant": "#5b4300",
+                        "tertiary-fixed": "#ffdada",
+                        "on-primary": "#3f2e00",
+                        "primary-fixed-dim": "#fabd00",
+                        "inverse-on-surface": "#192f59",
+                        "primary-container": "#362600",
+                        "inverse-surface": "#d8e2ff",
+                        "on-background": "#d8e2ff",
+                        "surface-container-highest": "#1e345d",
+                        "surface-container": "#031e47",
+                        "surface-variant": "#1e345d",
+                        "primary": "#fabd00",
+                        "outline-variant": "#444650",
+                        "on-tertiary-fixed": "#40000b",
+                        "tertiary-fixed-dim": "#ffb3b5",
+                        "on-tertiary-container": "#f25d6b",
+                        "tertiary-container": "#590013",
+                        "on-surface-variant": "#c5c6d2",
+                        "surface": "#001232",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#ffe088",
+                        "surface-container-low": "#001a42",
+                        "on-secondary-fixed-variant": "#574500",
+                        "on-primary-container": "#b68800",
+                        "secondary": "#e9c349",
+                        "on-error": "#690005",
+                        "primary-fixed": "#ffdf9e",
+                        "surface-container-lowest": "#000d28",
+                        "surface-container-high": "#112952",
+                        "secondary-container": "#af8d11",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#8e0f28",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#ffb3b5",
+                        "on-surface": "#d8e2ff",
+                        "outline": "#8e909c",
+                        "on-secondary-fixed": "#241a00",
+                        "surface-dim": "#001232",
+                        "on-tertiary": "#680018",
+                        "inverse-primary": "#785900",
+                        "on-secondary-container": "#342800",
+                        "surface-tint": "#fabd00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .paisley-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0c-15 10-30 25-30 45s15 35 30 35 30-15 30-35S65 10 50 0zm0 60c-8 0-15-7-15-15s7-15 15-15 15 7 15 15-7 15-15 15z' fill='%23af8d11' fill-opacity='0.1'/%3E%3C/svg%3E");
+        }
+        .gold-emboss {
+            text-shadow: 0.5px 0.5px 0px #b68800, 1px 1px 2px rgba(0,0,0,0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#001232] flex items-center justify-between px-6 py-4 w-full tonal-shift bg-[#001a42]">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[#fabd00]">menu</span>
+</div>
+<h1 class="font-['Noto_Serif'] font-bold text-2xl tracking-wide text-[#fabd00] italic tracking-tighter">The Wedding Venue</h1>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[#fabd00]">notifications</span>
+</div>
+</header>
+<main class="pt-24 px-6 relative overflow-hidden">
+<!-- Ornate Background Elements -->
+<div class="absolute -top-10 -right-10 w-48 h-48 paisley-pattern opacity-30 transform rotate-45 pointer-events-none"></div>
+<div class="absolute top-1/2 -left-20 w-64 h-64 paisley-pattern opacity-20 pointer-events-none"></div>
+<!-- Success Message -->
+<section class="text-center mb-10 relative z-10">
+<div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary-container border border-primary/30 mb-6 shadow-[0_0_20px_rgba(250,189,0,0.2)]">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-headline text-4xl font-bold text-primary mb-2 gold-emboss">You are on the Guest List!</h2>
+<p class="text-on-primary-container font-medium tracking-wide uppercase text-sm">Confirmation for the Anand Karaj</p>
+</section>
+<!-- Asymmetric Venue Card -->
+<section class="relative mb-8">
+<div class="absolute inset-0 border-2 border-secondary-container/40 rounded-xl transform translate-x-2 translate-y-2 pointer-events-none"></div>
+<div class="bg-surface-container-low rounded-xl p-6 relative overflow-hidden shadow-2xl">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline text-2xl text-primary font-bold mb-1">Gurdwara Sahib</h3>
+<p class="text-on-surface-variant text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span>
+                            Southall, London
+                        </p>
+</div>
+<div class="bg-primary/10 p-2 rounded-lg border border-primary/20">
+<span class="material-symbols-outlined text-primary">temple_hindu</span>
+</div>
+</div>
+<!-- Stylized Map Placeholder -->
+<div class="w-full h-48 rounded-lg overflow-hidden mb-6 relative">
+<img alt="Stylized map showing venue location" class="w-full h-full object-cover grayscale brightness-50 contrast-125" data-alt="Modern artistic map representation of an urban area with gold and navy blue accents and a wedding icon marker" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC22r12jY8zWTXSP9ijnujvXEj1EsqlCC74zKRb8ov2RB11TyXej0zpvoMXPsekNI2ngB8OiU8WqFDF4oZiiX_ZqQeLtuSKoMBq0KwQqVgPUjXMKl4m7HPCUuxIeI93IITJ-dUXq7jtnoIv5gaNND8Gz_RPMLnsLYrBqkwVUlHNkosCKZFt5KjN0Kuo7RBRFrJxKm6VrIGEDv6iv0JXwoPyo3O0_dcfdc8y5XNDGh1QLfF2ybqguajsKITBK6NKmFadoSQNi6Iy76we"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-primary text-on-primary px-4 py-2 rounded-full font-bold shadow-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">directions</span>
+                            Open Maps
+                        </div>
+</div>
+</div>
+<!-- Event Details -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-highest/40 p-4 rounded-lg">
+<p class="text-[10px] uppercase tracking-widest text-on-primary-container mb-1">Arrival</p>
+<p class="font-bold text-primary">09:30 AM</p>
+</div>
+<div class="bg-surface-container-highest/40 p-4 rounded-lg">
+<p class="text-[10px] uppercase tracking-widest text-on-primary-container mb-1">Milni</p>
+<p class="font-bold text-primary">10:15 AM</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Parking & Protocol Cards (Bento Style) -->
+<div class="grid grid-cols-1 gap-4 mb-8">
+<div class="bg-surface-container-high rounded-xl p-5 border-l-4 border-primary shadow-lg flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary">local_parking</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Ample Parking Available</h4>
+<p class="text-sm text-on-surface-variant">Designated guest parking is located at the north gate of the Gurdwara complex.</p>
+</div>
+</div>
+<div class="bg-surface-container-high rounded-xl p-5 border-l-4 border-tertiary-container shadow-lg flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-tertiary">styler</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Cultural Protocol</h4>
+<p class="text-sm text-on-surface-variant">Please ensure heads are covered inside the Darbar Sahib. Headscarves will be provided.</p>
+</div>
+</div>
+</div>
+<!-- The Ceremonial Countdown -->
+<section class="bg-primary-container/30 border border-primary/20 rounded-2xl p-8 text-center relative overflow-hidden">
+<div class="absolute inset-0 paisley-pattern opacity-10 pointer-events-none"></div>
+<div class="relative z-10">
+<p class="font-headline text-lg italic text-secondary mb-4 italic">Countdown to the Joy</p>
+<div class="flex justify-center gap-6">
+<div class="text-center">
+<p class="text-4xl font-headline font-bold text-primary">14</p>
+<p class="text-[10px] uppercase tracking-tighter text-on-primary-container">Days</p>
+</div>
+<div class="text-center">
+<p class="text-4xl font-headline font-bold text-primary">08</p>
+<p class="text-[10px] uppercase tracking-tighter text-on-primary-container">Hours</p>
+</div>
+<div class="text-center">
+<p class="text-4xl font-headline font-bold text-primary">22</p>
+<p class="text-[10px] uppercase tracking-tighter text-on-primary-container">Mins</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Decorative Spacer -->
+<div class="flex justify-center my-12">
+<div class="flex items-center gap-4">
+<div class="h-px w-12 bg-primary/30"></div>
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">loyalty</span>
+<div class="h-px w-12 bg-primary/30"></div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-2xl border-t border-[#fabd00]/20 bg-[#001232]/80 backdrop-blur-xl flex justify-around items-center w-full px-4 pb-4 pt-2 shadow-[0_-4px_24px_rgba(0,13,40,0.6)]">
+<div class="flex flex-col items-center justify-center text-[#fabd00]/50 p-2 hover:text-[#fabd00] transition-all scale-105 duration-200 ease-out">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-semibold">Invite</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#fabd00]/50 p-2 hover:text-[#fabd00] transition-all scale-105 duration-200 ease-out">
+<span class="material-symbols-outlined">temple_hindu</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-semibold">Venue</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#362600] text-[#fabd00] rounded-xl p-2 scale-110 shadow-[0_0_8px_#fabd00] transition-all duration-200 ease-out">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-semibold">RSVP</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#fabd00]/50 p-2 hover:text-[#fabd00] transition-all scale-105 duration-200 ease-out">
+<span class="material-symbols-outlined">loyalty</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-semibold">Tradition</span>
+</div>
+</nav>
+</body></html>

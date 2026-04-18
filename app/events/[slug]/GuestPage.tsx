@@ -5,6 +5,12 @@ import { motion, AnimatePresence } from 'motion/react'
 import { Check, Loader2, MapPin, Map, Calendar, ChevronDown } from 'lucide-react'
 import { Database } from '@/lib/supabase/types'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
+import WeddingEnvelope from '@/components/ui/WeddingEnvelope'
+import MidnightBloom from '@/components/templates/templates/MidnightBloom'
+import KeralaGold from '@/components/templates/templates/KeralaGold'
+import SapphireNight from '@/components/templates/templates/SapphireNight'
+import GardenBloom from '@/components/templates/templates/GardenBloom'
+import MaroonRoyale from '@/components/templates/templates/MaroonRoyale'
 
 type Event = Database['public']['Tables']['events']['Row']
 type GuestToken = Database['public']['Tables']['guest_tokens']['Row']
@@ -20,6 +26,25 @@ interface GuestPageProps {
 
 export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, previewMode = false }: GuestPageProps) {
   const [step, setStep] = useState<number>(existingRsvp ? 0 : 1)
+  const [envelopeOpened, setEnvelopeOpened] = useState(false)
+  
+  const templateEventDetails = {
+    coupleNames: event.couple_names,
+    date: new Date(event.event_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+    venue: event.venue_name,
+    photoUrl: event.couple_photo_url || undefined,
+  };
+
+  const getTemplateHero = () => {
+    switch (event.template_id) {
+      case 'emerald-islamic': return <MidnightBloom isPreview={false} eventDetails={templateEventDetails} />;
+      case 'ivory-luxe': return <KeralaGold isPreview={false} eventDetails={templateEventDetails} />;
+      case 'amethyst-dream': return <MaroonRoyale isPreview={false} eventDetails={templateEventDetails} />;
+      case 'warm-rustic': return <SapphireNight isPreview={false} eventDetails={templateEventDetails} />;
+      case 'ivory-garden': return <GardenBloom isPreview={false} eventDetails={templateEventDetails} />;
+      default: return <KeralaGold isPreview={false} eventDetails={templateEventDetails} />;
+    }
+  }
   
   const [attending, setAttending] = useState<boolean | null>(null)
   const [guestCount, setGuestCount] = useState<number>(1)
@@ -116,46 +141,36 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* 1. Hero Section */}
-      <section 
-        className="relative w-full h-[100dvh] flex flex-col justify-end items-center pb-20 px-6 overflow-hidden"
-        style={{
-          backgroundImage: `url(${event.couple_photo_url || 'https://picsum.photos/seed/kearala_wedding/1200/1600'})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
+    <>
+      {!envelopeOpened && (
+        <WeddingEnvelope 
+          coupleNames={event.couple_names || ''} 
+          date={new Date(event.event_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+          onOpenComplete={() => setEnvelopeOpened(true)} 
+        />
+      )}
+      
+      {/* We keep the tree rendered but visually hidden until the envelope opens so images can preload */}
+      <motion.div 
+        animate={{ opacity: envelopeOpened ? 1 : 0 }}
+        initial={{ opacity: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className={`flex flex-col min-h-screen bg-[#0F0C07] relative items-center sm:py-12 ${!envelopeOpened ? 'h-screen overflow-hidden pointer-events-none' : 'overflow-x-hidden'}`}
       >
-        {/* Dark warm gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent" />
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative z-10 text-center w-full max-w-lg mx-auto"
-        >
-          <h1 className="font-display font-medium text-[52px] italic text-white tracking-[2px] leading-none mb-6">
-            {event.couple_names}
-          </h1>
-          
-          <div className="w-[80px] h-[3px] bg-gold mx-auto mb-6 opacity-80" />
-          
-          <div className="font-body text-[16px] text-gold-light uppercase tracking-[4px] mb-2 font-medium">
-            {new Date(event.event_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-          </div>
-          <div className="font-body text-[14px] text-white/70 tracking-[1px]">
-            {event.venue_name}
-          </div>
-        </motion.div>
+        {/* Subtle Ambient Background glow behind the entire card */}
+        <div className="fixed inset-0 pointer-events-none flex justify-center">
+          <div className="w-[80vw] h-[80vh] max-w-2xl bg-gold/10 blur-[150px] rounded-full mix-blend-screen opacity-60"></div>
+        </div>
 
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="absolute bottom-8 text-gold/60"
-        >
-          <ChevronDown size={28} strokeWidth={1.5} />
-        </motion.div>
+        {/* --- THE LONG INVITATION CARD WRAPPER --- */}
+        <div className="w-full max-w-[480px] mx-auto bg-ivory shadow-[0_30px_100px_rgba(0,0,0,0.8)] sm:rounded-[20px] border-x sm:border border-gold/30 flex flex-col relative z-20 min-h-screen sm:min-h-0 overflow-hidden">
+        
+        {/* Internal Ornamental Border (Frames the whole card) */}
+        <div className="absolute inset-x-2 inset-y-2 border border-gold/20 rounded-md sm:rounded-[12px] pointer-events-none z-50"></div>
+
+      {/* 1. Dynamic Hero Section Layout based on checkout Selection */}
+      <section className="relative w-full overflow-hidden flex flex-col justify-end items-center">
+        {getTemplateHero()}
       </section>
 
       {/* 2. Invitation Text */}
@@ -376,7 +391,7 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
               >
                 <motion.div 
                   initial={{ scale: 0, rotate: -45 }}
-                  animate={{ scale: [0, 1.2, 1], rotate: 0 }}
+                  animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10, delay: 0.1 }}
                   className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6 relative"
                 >
@@ -489,6 +504,10 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
           </AnimatePresence>
         </div>
       </section>
-    </div>
+        
+        {/* End of Card Wrapper */}
+        </div>
+      </motion.div>
+    </>
   )
 }

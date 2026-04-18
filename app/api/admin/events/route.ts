@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         host_whatsapp: body.host_whatsapp,
         show_host_contact: body.show_host_contact ?? true,
         status: 'draft',
-        template_id: body.template_id || 'kerala_traditional',
+        template_id: body.template_id || 'ivory-luxe',
         language: body.language || 'english',
         couple_photo_url: body.couple_photo_url,
         invitation_text_en: body.invitation_text_en,

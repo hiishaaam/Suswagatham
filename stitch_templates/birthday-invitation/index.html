@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Leo's Wild 2nd Birthday Invitation</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts for Playful Typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="custom-typography">
+    body {
+      font-family: 'Fredoka', sans-serif;
+    }
+  </style>
+<style data-purpose="layout-styles">
+    /* Subtle background texture or decorative elements */
+    .bg-dots {
+      background-image: radial-gradient(#fbbf24 2px, transparent 2px);
+      background-size: 30px 30px;
+      background-opacity: 0.1;
+    }
+  </style>
+</head>
+<body class="bg-[#FFF9E5] text-[#4A4A4A] min-h-screen flex flex-col items-center">
+<!-- BEGIN: MainContainer -->
+<main class="w-full max-w-md mx-auto min-h-screen flex flex-col px-6 py-8 relative overflow-hidden bg-dots">
+<!-- BEGIN: HeaderSection -->
+<header class="text-center mb-6" data-purpose="invitation-header">
+<span class="inline-block px-4 py-1 bg-white rounded-full text-[#5A9BD5] font-semibold text-sm uppercase tracking-widest shadow-sm mb-4">
+        You're Invited!
+      </span>
+<h1 class="text-4xl md:text-5xl font-bold leading-tight text-[#FF8B3D] drop-shadow-sm">
+        Leo's Wild <br/>
+<span class="text-[#76A855]">2nd Birthday!</span>
+</h1>
+</header>
+<!-- END: HeaderSection -->
+<!-- BEGIN: HeroImageSection -->
+<section class="mb-8 flex justify-center" data-purpose="hero-image-container">
+<div class="relative w-full aspect-square max-w-[320px] rounded-3xl overflow-hidden shadow-xl border-8 border-white transform -rotate-1">
+<img alt="Watercolor illustrations of a lion, monkey, and elephant with balloons for Leo's 2nd birthday" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcqOKyG4hTRNH6QReJlM-W4KMKh_NxyAOc-txrvdCOi2X_F2hxYlyVWbIdhZ635m7lFzCjSHN-005KJe43w50XIYYdtJSCXozeRg0v9qZYg1rKL-e-9xvjskm6il4pDmp0hzhtZnj9fRZajinXw_-sDDEM6ufDW4bpNVQj2TCxC83FghQ-ilryoaEvC2WHsR1NIWSqy16suxuwuO8OBsXiOcPevde1DVPr1hsNLyrMqrcGN9CQ7HHKnatdiM_QlxxhvvRGOUXrdut2"/>
+</div>
+</section>
+<!-- END: HeroImageSection -->
+<!-- BEGIN: EventDetailsSection -->
+<section class="bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg space-y-6 text-center" data-purpose="event-details">
+<!-- Date and Time -->
+<div class="space-y-1">
+<div class="flex items-center justify-center gap-2 text-[#5A9BD5]">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<h2 class="text-xl font-bold">When</h2>
+</div>
+<p class="text-lg font-medium text-gray-700">Saturday, July 27th</p>
+<p class="text-md text-gray-500 italic">Starting at 10:00 AM</p>
+</div>
+<!-- Divider -->
+<div class="border-t-2 border-dashed border-[#FFF9E5] w-1/2 mx-auto"></div>
+<!-- Location -->
+<div class="space-y-1">
+<div class="flex items-center justify-center gap-2 text-[#76A855]">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<h2 class="text-xl font-bold">Where</h2>
+</div>
+<p class="text-lg font-medium text-gray-700">The Jungle House</p>
+<p class="text-md text-gray-500">123 Party Lane, Adventure City</p>
+</div>
+</section>
+<!-- END: EventDetailsSection -->
+<!-- BEGIN: FooterActionSection -->
+<footer class="mt-auto pt-8 pb-4 w-full" data-purpose="invitation-footer">
+<button class="w-full bg-[#FF8B3D] hover:bg-[#ff7b24] text-white text-xl font-bold py-4 rounded-2xl shadow-lg transform active:scale-95 transition-all duration-150" id="rsvp-button" type="button">
+        RSVP to Sarah by July 13th
+      </button>
+<p class="text-center mt-4 text-sm text-gray-400">
+        Can't wait to see you there! 🦒🦓🐘
+      </p>
+</footer>
+<!-- END: FooterActionSection -->
+</main>
+<!-- END: MainContainer -->
+<script data-purpose="event-handlers">
+    // Simple interaction for the RSVP button
+    document.getElementById('rsvp-button').addEventListener('click', function() {
+      alert('Opening RSVP contact for Sarah...');
+    });
+  </script>
+</body></html>

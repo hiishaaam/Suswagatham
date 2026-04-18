@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "tertiary-dim": "#00635d",
+                    "surface-container-low": "#fcfae3",
+                    "secondary-fixed": "#abf4ac",
+                    "error": "#be2d06",
+                    "error-dim": "#b92902",
+                    "inverse-primary": "#fd8863",
+                    "surface-dim": "#e5e4c7",
+                    "tertiary": "#007169",
+                    "on-tertiary-fixed-variant": "#005d57",
+                    "surface-container-high": "#f1efd5",
+                    "tertiary-fixed": "#7fe6db",
+                    "surface-bright": "#ffffd3",
+                    "background": "#ffffd3",
+                    "tertiary-container": "#7fe6db",
+                    "on-surface-variant": "#656554",
+                    "on-tertiary-container": "#00534d",
+                    "surface-variant": "#ebeace",
+                    "outline-variant": "#bbbaa6",
+                    "surface-container-highest": "#ebeace",
+                    "primary-container": "#fd8863",
+                    "inverse-surface": "#0e0f04",
+                    "primary-fixed": "#fd8863",
+                    "secondary": "#2e7238",
+                    "primary-dim": "#973b1d",
+                    "on-secondary-fixed-variant": "#246830",
+                    "on-primary-container": "#531300",
+                    "secondary-dim": "#21652d",
+                    "surface": "#ffffd3",
+                    "surface-tint": "#a74727",
+                    "on-secondary-container": "#185e27",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#82816f",
+                    "on-secondary-fixed": "#004a18",
+                    "on-surface": "#38392a",
+                    "on-error-container": "#520c00",
+                    "error-container": "#f95630",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#abf4ac",
+                    "inverse-on-surface": "#9f9e8b",
+                    "primary-fixed-dim": "#ec7b58",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#621800",
+                    "on-primary-fixed": "#1e0300",
+                    "secondary-fixed-dim": "#9ee59f",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#71d7cd",
+                    "primary": "#a74727",
+                    "on-tertiary-fixed": "#003e39",
+                    "surface-container": "#f6f5dc",
+                    "on-background": "#38392a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watercolor-blob {
+            filter: blur(40px);
+            opacity: 0.15;
+            z-index: -1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body text-on-background min-h-screen overflow-x-hidden relative">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#ffffd3] dark:bg-slate-900 px-4 py-2 flex justify-between items-center w-full max-w-screen-xl mx-auto">
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-[#FFD54F]/20 transition-colors scale-95 active:bounce">
+<span class="material-symbols-outlined text-[#a74727] dark:text-[#FFD54F]">arrow_back</span>
+</button>
+<h1 class="text-2xl font-black text-[#a74727] dark:text-[#FFD54F] font-['Plus_Jakarta_Sans'] tracking-tight">Birthday Adventure</h1>
+</div>
+<div class="p-2">
+<span class="material-symbols-outlined text-[#a74727] dark:text-[#FFD54F]">more_vert</span>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="pt-20 pb-32 px-6 flex flex-col items-center">
+<!-- Decorative Hero Graphics -->
+<div class="relative w-full max-w-sm flex justify-center items-end h-48 mb-6">
+<!-- Watercolor blobs for depth -->
+<div class="absolute inset-0 watercolor-blob bg-primary-container rounded-full scale-110"></div>
+<div class="flex items-end justify-center -space-x-8">
+<!-- Baby Elephant -->
+<div class="w-32 h-32 relative z-10 transform -rotate-3 hover:rotate-0 transition-transform">
+<img alt="Cute baby elephant" class="w-full h-full object-contain drop-shadow-sm" data-alt="cute watercolor baby elephant with happy expression, soft pastel blue and grey tones, whimsical storybook illustration style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoDs4GO_tfk7773jn8gtJoAbgnB9Xthly7O4yrGQ0bDyUbHjxLgYTat88IsvEqQZeJ6rI6XVbydBTLk-mR9albzHQdVFDSjK8ZGqmpCQ73DI8QlXMLXxBCSe-XXz0e0hJ4IXI9hequWqXIYBkin4pKoyDX79eICLCp3ngfDM2qce8FNw0w0toByR63VUjGy29Jbuf2D4yKClBwEsX8w1LKIUnX4hPM3XZh2JFoX4e1A1WA0oV3fo7Yn_a3tui_6MgPQWSkC2-CFT8g"/>
+</div>
+<!-- Baby Lion -->
+<div class="w-40 h-40 relative z-20 transform rotate-6 hover:rotate-0 transition-transform">
+<img alt="Cheerful baby lion" class="w-full h-full object-contain drop-shadow-sm" data-alt="happy watercolor baby lion with a fluffy orange mane, cheering with paws up, soft textures, whimsical children's book aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCZkUtuePvUbywW6cb3y6A_YagThP0pMM_CMCbi7VJvnomWGPcdHG90ZGkd8lMtveJaF7py6QtlR68XZsZb2-sBnFiWN7kM9FgZuL02QYR_VOZ-dEU6Uj-DfbYlsWk0swLFhAbiuiMmPTz3MIiBHe21Gi6ArNsiEMeJERdKASCtC0z0EXTUUddNYL8lcarFP53Jk1Lnj-OhTLg9f-d8U8KKIzS8dScSmmPRvSa5hwCnUkBaFsQcAe3_EpWeTcyFOaXzT5OKuXTW1gR"/>
+</div>
+</div>
+</div>
+<!-- Success Message -->
+<div class="text-center mb-8 px-4">
+<h2 class="text-4xl font-extrabold tracking-tight text-on-surface mb-2 leading-tight">See You at the Party!</h2>
+<p class="text-secondary font-semibold text-lg">Hooray! You're officially on the guest list.</p>
+</div>
+<!-- Bento Layout Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-md">
+<!-- Venue Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_10px_40px_-10px_rgba(56,57,42,0.06)] relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-primary text-6xl">temple_buddhist</span>
+</div>
+<h3 class="text-secondary font-bold text-sm uppercase tracking-widest mb-2">The Venue</h3>
+<p class="text-2xl font-extrabold text-on-surface leading-tight mb-1">Leo's Jungle Palace</p>
+<p class="text-on-surface-variant text-md">42 Savannah Lane, Green Valley</p>
+</div>
+<!-- Map Card -->
+<div class="bg-surface-container-highest rounded-xl h-48 relative overflow-hidden shadow-[0_10px_40px_-10px_rgba(56,57,42,0.06)]">
+<div class="absolute inset-0 bg-secondary-container/20">
+<img alt="Map location" class="w-full h-full object-cover grayscale-[20%] opacity-80" data-alt="a bright and friendly stylized map showing local park area with green spaces and colorful icons for a children's party location" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBADcWL6EzTwHLt3oXNPC8wyuXwAuprCbdq-QgrCkHrWcLkLNSjqIlcD3GCSxLyV-qy5lc50Ta5dJBKI06xlDK5Q28173VdujuRNqMj8w0KVrnQ8qgztwvKhOoqTLbcXSMqk-NNPZbS7rUKUYPgUGg5Tsmb_z1pHcqpa8kl6CKrI8EAfvq3tjbmp-Ss_aH8CQkpQCnnqzR12P-TP-kx6Cmv9PUwWcvMv8WAoH-OIuTDbgK_1rJ7ViM4bux38_UqBTiZWuGj5E_LSbsm"/>
+</div>
+<div class="absolute bottom-4 left-4 right-4">
+<button class="w-full bg-primary text-on-primary py-3 rounded-full font-bold shadow-lg flex items-center justify-center gap-2 hover:scale-105 transition-transform active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions</span>
+                        Get Directions
+                    </button>
+</div>
+</div>
+<!-- Drop-off Info Card -->
+<div class="md:col-span-2 bg-secondary-container/50 border-2 border-dashed border-secondary/30 p-6 rounded-xl flex items-start gap-4">
+<div class="bg-secondary p-3 rounded-full text-white">
+<span class="material-symbols-outlined">child_care</span>
+</div>
+<div>
+<h3 class="font-bold text-on-secondary-container text-lg">Drop-off Details</h3>
+<p class="text-on-secondary-container/80 text-sm leading-relaxed">
+                        Drop-off starts at 2:00 PM. Parents are welcome to stay for tea in the garden or return at 4:30 PM for the cake ceremony!
+                    </p>
+</div>
+</div>
+<!-- Add to Calendar -->
+<div class="md:col-span-2 flex gap-3">
+<button class="flex-1 bg-surface-container-low text-on-surface-variant py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-surface-variant transition-colors border border-outline-variant/15">
+<span class="material-symbols-outlined">calendar_add_on</span>
+                    Add to Calendar
+                </button>
+<button class="p-4 bg-tertiary-container text-on-tertiary-container rounded-xl hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<!-- Fun Note -->
+<p class="mt-8 text-on-surface-variant text-sm font-medium italic text-center max-w-xs">
+            "Don't forget to bring your favorite animal mask for the jungle parade!" 🦁🐘
+        </p>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl z-50 rounded-t-[3rem] px-6 pb-6 pt-2 shadow-[0_-10px_40px_-10px_rgba(56,57,42,0.06)]">
+<a class="flex flex-col items-center justify-center text-[#2e7238] opacity-70 hover:scale-105 transition-transform spring-bounce-effect" href="#">
+<span class="material-symbols-outlined text-2xl">celebration</span>
+<span class="font-['Plus_Jakarta_Sans'] text-xs font-bold">Invite</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2e7238] opacity-70 hover:scale-105 transition-transform spring-bounce-effect" href="#">
+<span class="material-symbols-outlined text-2xl">map</span>
+<span class="font-['Plus_Jakarta_Sans'] text-xs font-bold">Location</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#2e7238] text-white rounded-full px-5 py-2 hover:scale-105 transition-transform spring-bounce-effect" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">mail</span>
+<span class="font-['Plus_Jakarta_Sans'] text-xs font-bold">RSVP</span>
+</a>
+</nav>
+</body></html>
