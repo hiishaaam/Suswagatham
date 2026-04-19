@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nikah Invitation - Layla &amp; Yusuf</title>
+<!-- Tailwind CSS v3 CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts for Elegant Typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Great+Vibes&amp;family=Montserrat:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="custom-config">
+    /* Custom tailwind configuration for specific colors */
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              950: '#062e21', // Custom deep emerald
+            },
+            gold: {
+              DEFAULT: '#d4af37',
+              light: '#f1e5ac',
+              dark: '#996515'
+            }
+          }
+        }
+      }
+    }
+  </style>
+<style data-purpose="typography">
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-script { font-family: 'Great Vibes', cursive; }
+    .font-sans { font-family: 'Montserrat', sans-serif; }
+    
+    .gold-text {
+      background: linear-gradient(to right, #d4af37, #f1e5ac, #d4af37);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+  </style>
+<style data-purpose="background-patterns">/* Subtle geometric pattern for the background */
+.bg-pattern {
+    background-color: #062e21;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCiXDOsmzzLd0sDD9LgeaUyJOdd2Uv9-P1mxaPJ-C88ECdWkG7LBhc3EJbs3bL62KjPotuLRkHgJux9szuWInmF0zbt0X0A9j1jWmmu43b8xdvUUMo7XrA2zu5c4GRxuOEhrN_UAZfeJaAg9kLbDDNhgcYJGndZVVpyuycr8St6d7-vSTHMRfmcJ63AhL8FxXPlQF_xzZCalMitbWbSDpcQZatHojCXiGyX_zSGsh5PH5cefaSSphHkDdavDOwiopxuny85HSDIAB8X);
+    /* This is a subtle pattern texture to give depth to the emerald background */
+    }
+.gold-border {
+    border: 2px solid transparent;
+    border-image: linear-gradient(45deg, #996515, #f1e5ac, #d4af37) 1
+    }
+.decorative-hr {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d4af37, transparent);
+    width: 100%;
+    margin: 1.5rem 0
+    }</style>
+</head>
+<body class="bg-emerald-950 text-white min-h-screen flex flex-col items-center overflow-x-hidden font-sans pb-12">
+<!-- BEGIN: HeroSection -->
+<header class="relative w-full aspect-square md:max-w-md" data-purpose="hero-image-container">
+<!-- Main Wedding Image -->
+<img alt="Regal Muslim Wedding Invitation with Gold Calligraphy" class="w-full h-full object-cover shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAatZTpZXeo4VqlHdcgoG7i3vdffWkF0hhXFwiEJEjxlIEac_H8qScBvLQiIfPfTHKY4g1nt1_LzM6uvQ1Hp4T-pECJO1r06acn3nYO-XOtfAvNVSG_OnOLTB5cOGrH4lymFJc7PMivkLQ5AsgwOi1KKwmzfxfE8H1pbQPgMriVzjw_ZQuvxDUBpatwHelnKMo53B0iDYhts5EwQZFBu4VmnFiZ1Ls2t_lntCD3iVr0Mus9Kdm_fUvpSsVG0yt_ibCYOwYFHM8e1Gim"/>
+<!-- Overlay for smooth transition -->
+<div class="absolute inset-0 bg-gradient-to-t from-emerald-950 via-transparent to-transparent opacity-80"></div>
+</header>
+<!-- END: HeroSection -->
+<!-- BEGIN: InvitationContent -->
+<main class="w-full max-w-md px-6 -mt-12 relative z-10 text-center" data-purpose="invitation-details">
+<!-- BEGIN: Bismillah -->
+<div class="mb-6" data-purpose="religious-opening">
+<p class="font-script text-3xl gold-text">In the name of Allah, the Most Gracious, the Most Merciful</p>
+<p class="text-xs uppercase tracking-[0.3em] text-gold-light mt-2 opacity-80">Bismillah-ir-Rahman-ir-Rahim</p>
+</div>
+<!-- END: Bismillah -->
+<!-- BEGIN: Announcement -->
+<section class="mb-10" data-purpose="announcement-text">
+<p class="text-sm uppercase tracking-widest text-white/80 mb-2">With joyful hearts, we invite you to celebrate the Nikah of</p>
+<h1 class="font-script text-6xl gold-text py-4">Layla &amp; Yusuf</h1>
+<div class="decorative-hr"></div>
+</section>
+<!-- END: Announcement -->
+<!-- BEGIN: CeremonyDetails -->
+<section class="space-y-8" data-purpose="event-schedule">
+<!-- Nikah Section -->
+<div class="gold-border p-6 bg-emerald-900/40 backdrop-blur-sm rounded-sm" data-purpose="nikah-card">
+<h2 class="font-cinzel text-xl text-gold mb-3 tracking-widest">The Nikah Ceremony</h2>
+<p class="text-lg font-medium mb-1">Saturday, 24th August 2024</p>
+<p class="text-white/70 mb-4">11:00 AM Sharp</p>
+<p class="text-sm font-light leading-relaxed">
+          The Grand Ballroom, Royal Emerald Hotel<br/>
+          123 Elegance Boulevard, London
+        </p>
+<div class="mt-6 flex justify-center gap-4">
+<button class="bg-gold hover:bg-gold-dark text-emerald-950 font-bold py-2 px-6 rounded-full text-sm uppercase tracking-tighter transition-all">
+            View Location
+          </button>
+</div>
+</div>
+<!-- Walima Section -->
+<div class="p-6" data-purpose="walima-details">
+<h2 class="font-cinzel text-xl text-gold mb-3 tracking-widest uppercase">The Walima Banquet</h2>
+<p class="text-lg font-medium mb-1">Sunday, 25th August 2024</p>
+<p class="text-white/70 mb-2">Starts at 7:00 PM</p>
+<p class="text-sm font-light">
+          Same Venue: The Grand Ballroom
+        </p>
+</div>
+</section>
+<!-- END: CeremonyDetails -->
+<!-- BEGIN: RSVPAction -->
+<section class="mt-12" data-purpose="rsvp-section">
+<p class="italic text-sm text-white/60 mb-6">Your presence and prayers are the greatest gifts we could receive.</p>
+<div class="flex flex-col gap-4">
+<button class="w-full bg-transparent border border-gold text-gold hover:bg-gold hover:text-emerald-950 font-bold py-4 px-8 rounded-sm uppercase tracking-widest transition-all duration-300">
+          Confirm Your RSVP
+        </button>
+<p class="text-[10px] uppercase tracking-widest text-gold-light/50">Kindly respond by July 15th, 2024</p>
+</div>
+</section>
+<!-- END: RSVPAction -->
+</main>
+<!-- END: InvitationContent -->
+<!-- BEGIN: Footer -->
+<footer class="mt-16 text-center px-8" data-purpose="page-footer">
+<div class="decorative-hr"></div>
+<p class="font-cinzel text-xs tracking-widest text-gold-light opacity-60">
+      #LaylaAndYusuf2024
+    </p>
+</footer>
+<!-- END: Footer -->
+</body></html>

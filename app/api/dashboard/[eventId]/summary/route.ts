@@ -1,4 +1,4 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import { verifyDashboardAuth } from '@/lib/supabase/auth-verify'
 
@@ -11,7 +11,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ eventId:
       return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
     }
 
-    const supabase = createAdminClient()
+    const supabase = await createClient()
 
     // Fetch summary
     const { data: summary, error } = await (supabase.from('event_summary') as any)

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Anand Karaj Invitation</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&amp;family=Great+Vibes&amp;family=Montserrat:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="custom-typography">
+    .font-decorative { font-family: 'Cinzel Decorative', cursive; }
+    .font-script { font-family: 'Great Vibes', cursive; }
+    .font-body { font-family: 'Montserrat', sans-serif; }
+  </style>
+<style data-purpose="theme-colors">
+    :root {
+      --royal-blue: #0047AB;
+      --mustard-yellow: #FFDB58;
+      --gold: #D4AF37;
+    }
+    .bg-royal-blue { background-color: var(--royal-blue); }
+    .text-royal-blue { color: var(--royal-blue); }
+    .bg-mustard { background-color: var(--mustard-yellow); }
+    .text-mustard { color: var(--mustard-yellow); }
+    .text-gold { color: var(--gold); }
+    .border-gold { border-color: var(--gold); }
+  </style>
+</head>
+<body class="bg-gray-100 font-body text-gray-800">
+<!-- BEGIN: Main Invitation Container -->
+<main class="max-w-md mx-auto min-h-screen bg-white relative overflow-hidden shadow-2xl">
+<!-- BEGIN: Hero Section -->
+<section class="relative h-[45vh] overflow-hidden" data-purpose="hero-image">
+<img alt="Sikh Wedding Invitation Card with Paisley Motifs" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmWQLnRJ4HOoTnqEiLX0b9yMXdV53j0JQCjZ7AVPJH_AMFt_exQ5ahyvC1qim_X7HN5wPmvTwQxrmMrjWYibp2N9GdxIQ5_fbwk5L8YkXszU2p6AwzIez32xbbOf58Ue4s-UWyVopXj-w7AsO_0E-hmxkeqv83XtxsUnw20anDEBEsf_8-XVCCZ-C6RFOHsIMANVMx9MDyFXIAxcpko33iu4Z5MrlUhmGs_iUfXaiCexOPRXZ6Z_VoqGscz7ga4BeQex7NH2_NCdV1"/>
+<!-- Overlay Gradient for better text readability if needed -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<!-- Ek Onkar Symbol Placeholder -->
+<div class="absolute top-6 left-1/2 -translate-x-1/2 bg-white/90 p-3 rounded-full shadow-lg" data-purpose="sacred-symbol">
+<span class="font-decorative text-2xl text-royal-blue font-bold">ੴ</span>
+</div>
+</section>
+<!-- END: Hero Section -->
+<!-- BEGIN: Invitation Content -->
+<section class="relative -mt-12 bg-white rounded-t-[3rem] px-8 pt-10 pb-20 shadow-inner" data-purpose="invitation-details">
+<!-- Decorative Paisley Accents (Simulated with SVG or Unicode) -->
+<div class="flex justify-center gap-4 mb-4 text-gold opacity-60">
+<span class="text-4xl">❧</span>
+<span class="text-4xl">❧</span>
+</div>
+<header class="text-center mb-8">
+<p class="uppercase tracking-[0.2em] text-xs font-semibold text-gray-500 mb-2">Waheguru Ji Ka Khalsa, Waheguru Ji Ki Fateh</p>
+<h2 class="font-decorative text-xl text-royal-blue mb-4">Together with their families</h2>
+<!-- Couple's Names -->
+<div class="flex flex-col items-center py-4 border-y border-mustard/30">
+<h1 class="font-script text-5xl text-royal-blue mb-2">Gurpreet</h1>
+<p class="font-decorative text-gold text-2xl font-bold">&amp;</p>
+<h1 class="font-script text-5xl text-royal-blue mt-2">Simran</h1>
+</div>
+</header>
+<!-- Event Details Block -->
+<article class="space-y-8 text-center mb-10" data-purpose="ceremony-details">
+<!-- Anand Karaj Section -->
+<div class="bg-mustard/10 p-6 rounded-2xl border border-mustard/20">
+<h3 class="font-decorative text-gold text-lg font-bold mb-2">ANAND KARAJ</h3>
+<p class="text-gray-700 font-semibold italic mb-3">The Blissful Union</p>
+<div class="space-y-1 text-sm">
+<p>SUNDAY, 15TH OCTOBER 2023</p>
+<p>10:00 AM BARAAT ARRIVAL</p>
+<p>11:00 AM CEREMONY BEGINS</p>
+</div>
+</div>
+<!-- Venue Section -->
+<div>
+<h3 class="font-decorative text-royal-blue text-md font-bold mb-2 uppercase tracking-wider">Venue</h3>
+<p class="text-gray-600 font-medium leading-relaxed">
+            The Golden Palms Gurdwara Sahib<br/>
+            456 Heritage Lane, Oakville<br/>
+            Punjab, India
+          </p>
+</div>
+<!-- Guru Ka Langar Section -->
+<div class="border-t border-mustard/30 pt-6">
+<h3 class="font-decorative text-gold text-lg font-bold mb-2">GURU KA LANGAR</h3>
+<p class="text-sm text-gray-600 italic">
+            Langar will be served immediately following the ceremony.
+          </p>
+</div>
+</article>
+<!-- BEGIN: Action Button -->
+<div class="flex flex-col items-center gap-4" data-purpose="cta-section">
+<button class="w-full bg-royal-blue text-white font-decorative tracking-widest py-4 rounded-full shadow-xl hover:bg-blue-800 transition-colors transform active:scale-95">
+          RSVP NOW
+        </button>
+<p class="text-[10px] text-gray-400 uppercase tracking-widest">Kindly respond by September 20th</p>
+</div>
+<!-- END: Action Button -->
+</section>
+<!-- END: Invitation Content -->
+<!-- Decorative Bottom Motif -->
+<div class="absolute bottom-0 left-0 w-full h-2 bg-mustard"></div>
+<div class="absolute bottom-2 left-0 w-full h-1 bg-royal-blue opacity-50"></div>
+</main>
+<!-- END: Main Invitation Container -->
+</body></html>

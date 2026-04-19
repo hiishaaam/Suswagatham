@@ -61,6 +61,10 @@ export interface Database {
           invitation_text_ml: string | null
           max_guests_default: number
           rsvp_cutoff_at: string | null
+          payment_status: 'pending' | 'paid' | 'failed' | 'refunded'
+          razorpay_order_id: string | null
+          razorpay_payment_id: string | null
+          amount_paid: number
           created_at: string
           updated_at: string
         }
@@ -86,6 +90,10 @@ export interface Database {
           invitation_text_ml?: string | null
           max_guests_default?: number
           rsvp_cutoff_at?: string | null
+          payment_status?: 'pending' | 'paid' | 'failed' | 'refunded'
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          amount_paid?: number
           created_at?: string
           updated_at?: string
         }
@@ -111,6 +119,10 @@ export interface Database {
           invitation_text_ml?: string | null
           max_guests_default?: number
           rsvp_cutoff_at?: string | null
+          payment_status?: 'pending' | 'paid' | 'failed' | 'refunded'
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          amount_paid?: number
           created_at?: string
           updated_at?: string
         }

@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { createAdminClient } from './admin'
+import { createClient } from './server'
 
 export async function verifyDashboardAuth(eventId: string) {
   const cookieStore = await cookies()
@@ -20,10 +20,8 @@ export async function verifyDashboardAuth(eventId: string) {
     return { authorized: false, error: 'Unauthorized', status: 401, phone: null }
   }
 
-  // Check event's client phone using admin client to bypass RLS if needed,
-  // or just regular client if RLS allows it. Admin is safer for explicit checks.
-  const supabaseAdmin = createAdminClient()
-  const { data: rawEvent, error } = await supabaseAdmin
+  const supabase = await createClient()
+  const { data: rawEvent, error } = await supabase
     .from('events')
     .select(`
       id,

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hindu Wedding Invitation</title>
+<!-- Tailwind CSS v3 CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts for Elegant Serif Typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: {
+              DEFAULT: '#4A0404',
+              dark: '#2D0202',
+              light: '#6B0606',
+            },
+            gold: {
+              DEFAULT: '#D4AF37',
+              light: '#F4CF63',
+              dark: '#996515',
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            display: ['"Cinzel"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-decorations">/* Subtle texture for the background */
+.bg-texture {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBrv89bcYsD7ouXSExKp8_-cAybY2CwVB6iDylpio3qdWlRGnmaroTYuaTK8Ib3DBK4wFrSHoHtCOOAiGFq1lznGEFJj0Y3t8tDFUnGwibq8Wh2BDP8HBo7Y_pm0pgACrh5uVV1us26a5d1bj9WUVDRpxtMWIwT3JYcFx5QrGGwE-1GXyCuBdycWhTUww2t0RnjXuecPs1C317wmqRH9AyRtPn7cFdo7DPeNpnpIRumOT0BuaKy7G0M8b39-2oCc-dTKn1pM-ANBtHb)
+    }
+/* Elegant gold border for the invitation card container */
+.card-border {
+    border: 2px solid transparent;
+    border-image: linear-gradient(to bottom right, #D4AF37, #F4CF63, #996515) 1
+    }
+/* Soft shadow to give depth */
+.invitation-shadow {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5)
+    }</style>
+</head>
+<body class="bg-maroon-dark min-h-screen font-serif text-gold-light selection:bg-gold-dark selection:text-white">
+<!-- BEGIN: Main Invitation Container -->
+<main class="flex flex-col items-center justify-start min-h-screen p-6 max-w-md mx-auto relative overflow-hidden bg-texture">
+<!-- BEGIN: Decorative Background Elements -->
+<div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-maroon to-transparent opacity-50 pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-maroon-dark to-transparent opacity-80 pointer-events-none"></div>
+<!-- END: Decorative Background Elements -->
+<!-- BEGIN: Header Section -->
+<header class="text-center mt-8 mb-6 z-10" data-purpose="header">
+<p class="font-display tracking-[0.2em] text-xs uppercase text-gold/80 mb-2">We Invite You To The Wedding Of</p>
+<h1 class="font-display text-3xl md:text-4xl text-gold drop-shadow-sm">Anu &amp; Vikram</h1>
+</header>
+<!-- END: Header Section -->
+<!-- BEGIN: Central Card Display -->
+<section class="w-full relative z-10 mb-8" data-purpose="central-invitation-image">
+<div class="card-border invitation-shadow rounded-sm overflow-hidden bg-maroon">
+<img alt="Traditional Hindu wedding invitation card featuring deep maroon paper and gold foil" class="w-full h-auto block" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5WSCydcbYNFaN6_1MPDjAL9A_F9Th7XmcoofqC8kc-GfmKHHW70yohHbnEl43cZcrMFyorXpFkcLKj4Pr4pM-pctV8kqrfq1kCOqkVI-_UmKbcFHG6W3bCep5M9eoS2Kj4wzgG8QmLRSw8mtMfGuv_hirE8XlU9A9fcUgBUVyv4zsefF7IBEsXXQ0Y2sPZijWZJTHkv4cOETNFVEtsXPA4g4RKwm9QoQ3-5p59enM1i09L_Iljj4-e0a_sxk3VPtAA0FyvcJV1cs2"/>
+</div>
+</section>
+<!-- END: Central Card Display -->
+<!-- BEGIN: Event Details -->
+<section class="text-center space-y-6 z-10 w-full" data-purpose="event-details">
+<!-- Date and Time -->
+<div class="flex flex-col items-center">
+<div class="h-[1px] w-12 bg-gold/50 mb-3"></div>
+<div class="space-y-1">
+<time class="block text-xl font-semibold tracking-wide" datetime="2023-02-17">Friday, February 17, 2023</time>
+<p class="text-gold/90 italic">Auspicious Muhurtham: 9:00 AM - 10:30 AM</p>
+</div>
+<div class="h-[1px] w-12 bg-gold/50 mt-3"></div>
+</div>
+<!-- Venue Information -->
+<div class="px-4" data-purpose="venue-address">
+<h2 class="font-display text-sm tracking-[0.15em] text-gold mb-2">VENUE</h2>
+<address class="not-italic text-sm leading-relaxed text-gold-light/90">
+          The Grand Ballroom, Nilavilakku Heritage Resort<br/>
+          Chunranre Highlands, Kochi<br/>
+          Kerala, India
+        </address>
+</div>
+<!-- RSVP Action -->
+<div class="pt-4" data-purpose="rsvp-action">
+<button class="bg-gold hover:bg-gold-light text-maroon-dark font-display font-bold py-3 px-12 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg tracking-widest text-sm" id="rsvp-button">
+          RSVP NOW
+        </button>
+</div>
+</section>
+<!-- END: Event Details -->
+<!-- BEGIN: Footer Section -->
+<footer class="mt-12 mb-8 text-center z-10" data-purpose="invitation-footer">
+<div class="flex items-center justify-center space-x-2 mb-4">
+<div class="w-8 h-[1px] bg-gold/30"></div>
+<span class="text-gold/40 text-[10px] tracking-widest uppercase">With Love, The Families</span>
+<div class="w-8 h-[1px] bg-gold/30"></div>
+</div>
+<p class="text-[10px] text-gold/40">© 2023 Wedding Celebrations</p>
+</footer>
+<!-- END: Footer Section -->
+</main>
+<!-- END: Main Invitation Container -->
+<script data-purpose="interactivity">
+    // Simple button interaction feedback
+    document.getElementById('rsvp-button').addEventListener('click', function() {
+      alert('Thank you! Redirecting to RSVP form...');
+    });
+  </script>
+</body></html>
