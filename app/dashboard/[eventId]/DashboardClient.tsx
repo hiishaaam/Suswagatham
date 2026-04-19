@@ -46,6 +46,24 @@ type Props = {
   userPhone: string
 }
 
+// Countup animation component inline
+const StatCard = ({ label, value, colorAccent = '', main = false, prefix = '' }: any) => {
+  // Only animate raw numbers
+  const isNum = typeof value === 'number'
+  const animatedValue = useCountUp(isNum ? value : 0)
+  const displayValue = isNum ? animatedValue : value
+
+  return (
+    <div className={`bg-white rounded-2xl shadow-card p-5 flex flex-col justify-center relative overflow-hidden ${main ? 'col-span-2 border border-gold' : ''}`}>
+      {colorAccent && <div className={`absolute left-0 top-0 bottom-0 w-1 ${colorAccent}`}></div>}
+      <div className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.15em] font-bold mb-1 opacity-80">{label}</div>
+      <div className="font-display text-3xl sm:text-4xl text-ink font-semibold mt-1">
+        {prefix}{displayValue ?? '-'}
+      </div>
+    </div>
+  )
+}
+
 export default function DashboardClient({ event, initialSummary, initialGuests, eventId, userPhone }: Props) {
   const [summary, setSummary] = useState<Summary>(initialSummary)
   const [guests, setGuests] = useState<Guest[]>(initialGuests)
@@ -76,23 +94,6 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
     return () => clearInterval(pollTimer)
   }, [eventId])
 
-  // Countup animation component inline
-  const StatCard = ({ label, value, colorAccent = '', main = false, prefix = '' }: any) => {
-    // Only animate raw numbers
-    const isNum = typeof value === 'number'
-    const animatedValue = useCountUp(isNum ? value : 0)
-    const displayValue = isNum ? animatedValue : value
-
-    return (
-      <div className={`bg-white rounded-2xl shadow-card p-5 flex flex-col justify-center relative overflow-hidden ${main ? 'col-span-2 border border-gold' : ''}`}>
-        {colorAccent && <div className={`absolute left-0 top-0 bottom-0 w-1 ${colorAccent}`}></div>}
-        <div className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.15em] font-bold mb-1 opacity-80">{label}</div>
-        <div className="font-display text-3xl sm:text-4xl text-ink font-semibold mt-1">
-          {prefix}{displayValue ?? '-'}
-        </div>
-      </div>
-    )
-  }
 
   // Quick Add State
   const [manualForm, setManualForm] = useState({ family_name: '', guest_count: 1, food_preference: 'both' })

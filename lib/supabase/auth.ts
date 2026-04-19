@@ -1,5 +1,34 @@
 import { createClient } from './client'
 
+export async function sendOTP(phone: string): Promise<{ error: string | null }> {
+  try {
+    const supabase = createClient()
+    const { error } = await supabase.auth.signInWithOtp({
+      phone: `+91${phone}`,
+    })
+    return { error: error?.message || null }
+  } catch (err: any) {
+    return { error: err.message || 'Failed to send OTP' }
+  }
+}
+
+export async function verifyOTP(
+  phone: string,
+  token: string
+): Promise<{ error: string | null }> {
+  try {
+    const supabase = createClient()
+    const { error } = await supabase.auth.verifyOtp({
+      phone: `+91${phone}`,
+      token,
+      type: 'sms',
+    })
+    return { error: error?.message || null }
+  } catch (err: any) {
+    return { error: err.message || 'Failed to verify OTP' }
+  }
+}
+
 export async function signUpWithEmail(
   email: string,
   password: string,

@@ -22,7 +22,7 @@ export default function Error({
       
       <h2 className="font-display text-3xl font-bold text-ink mb-3">Something went wrong</h2>
       <p className="font-body text-muted text-sm max-w-md mx-auto mb-8 leading-relaxed">
-        We've encountered an unexpected issue. Please try reloading the page, or contact support if the problem persists.
+        We&apos;ve encountered an unexpected issue. Please try reloading the page, or contact support if the problem persists.
       </p>
 
       <button

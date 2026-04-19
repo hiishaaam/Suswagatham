@@ -443,7 +443,7 @@ export default function LandingPage() {
                      <h2 className="font-display text-3xl text-ink mb-6 text-center leading-snug pt-4">Will you be<br/>joining us?</h2>
                      <div className="space-y-4 mt-auto mb-4 w-full">
                        <motion.div whileHover={{ scale: 1.02 }} className="w-full py-4 border border-gold/40 bg-gold/5 backdrop-blur-[40px] text-ink font-display text-xl italic rounded-2xl shadow-sm flex justify-center items-center cursor-pointer hover:bg-gold/20 hover:border-gold transition-all">
-                         Yes, I'll be there
+                         Yes, I&apos;ll be there
                        </motion.div>
                        <motion.div whileHover={{ scale: 1.02 }} className="w-full py-4 border-[0.5px] border-ink/20 bg-black/5 backdrop-blur-[40px] text-ink/70 font-display text-xl italic rounded-2xl shadow-sm flex justify-center items-center cursor-pointer hover:bg-black/10 transition-all">
                          I cannot attend
@@ -626,8 +626,8 @@ export default function LandingPage() {
                 whileHover={{ y: -10 }}
                 className="bg-white/20 backdrop-blur-[40px] p-10 rounded-[40px] shadow-[0_20px_60px_rgba(0,0,0,0.05)] border-[0.5px] border-white/50 flex flex-col relative transition-all duration-500 hover:bg-white/30 hover:shadow-[0_30px_60px_rgba(201,168,76,0.08)] group overflow-hidden"
               >
-                <div className="text-gold font-display text-7xl absolute top-4 left-6 opacity-20 leading-none select-none drop-shadow-sm">"</div>
-                <p className="font-display text-xl text-ink italic leading-relaxed mb-10 relative z-10 pt-6">"{t.quote}"</p>
+                <div className="text-gold font-display text-7xl absolute top-4 left-6 opacity-20 leading-none select-none drop-shadow-sm">&quot;</div>
+                <p className="font-display text-xl text-ink italic leading-relaxed mb-10 relative z-10 pt-6">&quot;{t.quote}&quot;</p>
                 <div className="mt-auto pt-6 border-t border-ink/5 flex items-center justify-between relative z-10">
                   <div>
                     <div className="font-bold text-sm text-ink uppercase tracking-wider">{t.name}</div>

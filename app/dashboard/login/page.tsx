@@ -92,8 +92,10 @@ function LoginContent() {
   // Auto-submit when last digit is entered
   useEffect(() => {
     if (step === 2 && otp.every(digit => digit !== '')) {
-      handleVerifySubmit()
+      const timer = setTimeout(() => handleVerifySubmit(), 10)
+      return () => clearTimeout(timer)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otp])
 
   const handleResend = async () => {
