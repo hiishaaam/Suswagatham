@@ -7,7 +7,7 @@ export function useIsMobile() {
 
   React.useEffect(() => {
     // Initial check
-     
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
     
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)

@@ -76,9 +76,9 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
   const maxAllowedGuests = guestToken ? guestToken.max_guests : event.max_guests_default
 
   // Intersection observer bindings
-  const heroObserver = useIntersectionObserver()
-  const inviteTextObserver = useIntersectionObserver({ threshold: 0.2 })
-  const rsvpFlowObserver = useIntersectionObserver({ threshold: 0.1 })
+  const { ref: heroObserverRef } = useIntersectionObserver()
+  const { ref: inviteRef, hasEntered: inviteHasEntered } = useIntersectionObserver({ threshold: 0.2 })
+  const { ref: rsvpRef, hasEntered: rsvpHasEntered } = useIntersectionObserver({ threshold: 0.1 })
 
   const handleAttendanceSelect = (isAttending: boolean) => {
     setAttending(isAttending)
@@ -205,8 +205,9 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
 
       {/* 2. Invitation Text */}
       <section 
-        ref={inviteTextObserver.ref}
-        className={`bg-ivory relative py-16 px-6 transition-all duration-1000 delay-100 transform ${inviteTextObserver.hasEntered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+        // @ts-ignore
+        ref={inviteRef}
+        className={`bg-ivory relative py-16 px-6 transition-all duration-1000 delay-100 transform ${inviteHasEntered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
       >
         <div className="max-w-[480px] mx-auto text-center">
           {/* Top Divider Motif */}
@@ -245,8 +246,9 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
 
       {/* 3. RSVP Flow */}
       <section 
-        ref={rsvpFlowObserver.ref}
-        className={`bg-ivory pb-24 px-4 flex-1 transition-all duration-1000 delay-300 transform ${rsvpFlowObserver.hasEntered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+        // @ts-ignore
+        ref={rsvpRef}
+        className={`bg-ivory pb-24 px-4 flex-1 transition-all duration-1000 delay-300 transform ${rsvpHasEntered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
       >
         <div className="max-w-md mx-auto relative min-h-[400px]">
           <AnimatePresence mode="wait">

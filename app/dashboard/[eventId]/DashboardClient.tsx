@@ -47,6 +47,7 @@ type Props = {
 }
 
 export const StatCard = React.memo(({ label, value, colorAccent = '', main = false, prefix = '' }: any) => {
+  // Only animate raw numbers
   const isNum = typeof value === 'number'
   const animatedValue = useCountUp(isNum ? value : 0)
   const displayValue = isNum ? animatedValue : value
@@ -108,7 +109,7 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
     return () => clearInterval(pollTimer)
   }, [eventId])
 
-// Removed internal StatCard definition
+
 
   // Quick Add State
   const [manualForm, setManualForm] = useState({ family_name: '', guest_count: 1, food_preference: 'both' })
