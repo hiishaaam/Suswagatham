@@ -50,7 +50,7 @@ export default async function AdminDashboard() {
   const totalRsvps = events.reduce((sum, e) => sum + (e.summary?.total_responded || 0), 0)
   const totalAttending = events.reduce((sum, e) => sum + (e.summary?.attending_count || 0), 0)
   
-  const isAdmin = user.email === 'admin@achievelog.com'
+  const isAdmin = (user.app_metadata as any)?.is_admin === true
   const avgResponseRate = totalRsvps > 0 ? Math.round((totalAttending / totalRsvps) * 100) : 0
 
   return (

@@ -22,7 +22,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     const event = rawEvent as any
     if (fetchErr || !event) throw new Error('Event not found')
 
-    const newStatus = event.status === 'live' ? 'draft' : 'live'
+    const newStatus = event.status === 'live' ? 'completed' : 'live'
 
     const { error: updateErr } = await (supabase.from('events') as any)
       .update({ status: newStatus })

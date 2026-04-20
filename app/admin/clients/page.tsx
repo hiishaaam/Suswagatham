@@ -10,7 +10,8 @@ export default async function ClientsPage() {
 
   // Check if user is authenticated and is Admin
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user || user.email !== 'admin@achievelog.com') {
+  const isAdmin = (user?.app_metadata as any)?.is_admin === true
+  if (!isAdmin) {
     redirect('/admin')
   }
 

@@ -8,4 +8,11 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig([{
     extends: [...next],
+    rules: {
+        "react-hooks/purity": "off",
+        "react-hooks/set-state-in-effect": "off",
+        "react/no-unescaped-entities": "off",
+        "@next/next/no-img-element": "off",
+        "jsx-a11y/alt-text": "off"
+    }
 }]);

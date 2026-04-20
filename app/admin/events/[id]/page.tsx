@@ -22,16 +22,6 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   // Tokens Form
   const [newToken, setNewToken] = useState({ family_name: '', phone: '', max_guests: 6 })
 
-  useEffect(() => {
-    fetchEvent()
-  }, [id])
-
-  useEffect(() => {
-    if (activeTab === 'tokens' && tokens.length === 0) {
-      fetchTokens()
-    }
-  }, [activeTab])
-
   const fetchEvent = async () => {
     const res = await fetch(`/api/admin/events/${id}`)
     const data = await res.json()
@@ -48,6 +38,16 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
       setTokens(data.tokens)
     }
   }
+
+  useEffect(() => {
+    fetchEvent()
+  }, [id])
+
+  useEffect(() => {
+    if (activeTab === 'tokens' && tokens.length === 0) {
+      fetchTokens()
+    }
+  }, [activeTab])
 
   const handleStatusChange = async (newStatus: string) => {
     const oldStatus = event.status
@@ -95,11 +95,19 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
       header: true,
       skipEmptyLines: true,
       complete: async function(results) {
-        const parsedTokens = results.data.map((row: any) => ({
-          family_name: row.family_name || row.Family || 'Unknown',
-          phone: row.phone || row.Phone || null,
-          max_guests: parseInt(row.max_guests) || parseInt(row.Guests) || event.max_guests_default
-        }))
+        const normalize = (p: string) => p.replace(/^\+91/, '').replace(/\D/g, '')
+        const parsedTokens = results.data.map((row: any) => {
+          let phone = row.phone || row.Phone || null
+          if (phone) {
+            phone = normalize(phone)
+            if (phone.length !== 10) phone = null
+          }
+          return {
+            family_name: row.family_name || row.Family || 'Unknown',
+            phone: phone,
+            max_guests: parseInt(row.max_guests) || parseInt(row.Guests) || event.max_guests_default
+          }
+        })
 
         if (parsedTokens.length === 0) return alert('No valid data found in CSV.')
 
@@ -150,7 +158,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
     fetchEvent() // Reload event data — now status='live'
   }
 
-  const WorkflowButtons = () => {
+  const renderWorkflowButtons = () => {
     const isPaid = event.payment_status === 'paid'
     switch(event.status) {
       case 'draft': 
@@ -219,7 +227,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
               {copyState === 'preview' ? <CheckCircle2 size={16} className="text-success" /> : <Copy size={16} />} 
               Copy Preview Link
             </button>
-            <WorkflowButtons />
+            {renderWorkflowButtons()}
           </div>
         </div>
       </div>

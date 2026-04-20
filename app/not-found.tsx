@@ -13,6 +13,7 @@ export default function NotFound() {
       </div>
       
       <p className="font-display text-2xl italic text-ink mt-4 mb-8">
+        { }
         This invitation wasn't found
       </p>
 

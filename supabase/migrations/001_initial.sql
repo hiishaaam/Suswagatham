@@ -141,14 +141,5 @@ ALTER TABLE guest_tokens ENABLE ROW LEVEL SECURITY;
 -- which can be done in RLS but adds overhead.
 -- For true token scope, an anon user with a unique_token can read the event associated with that token.
 -- Admin operations bypass RLS using the service_role key.
-CREATE POLICY "events_anon_read_scope" ON events
-  FOR SELECT TO anon USING (true);
-
-CREATE POLICY "rsvps_anon_read_scope" ON rsvps
-  FOR SELECT TO anon USING (true);
-
-CREATE POLICY "rsvps_anon_insert" ON rsvps
-  FOR INSERT TO anon WITH CHECK (true);
-
-CREATE POLICY "rsvps_anon_update" ON rsvps
-  FOR UPDATE TO anon USING (true);
+-- Notice: Insecure open anon policies have been removed from this file.
+-- Refer to 001_rls_user_scoping.sql for the proper RLS rules.

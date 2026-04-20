@@ -75,6 +75,7 @@ const ToastItem = ({ toast, onRemove }: { toast: Toast, onRemove: () => void }) 
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
+     
     setIsVisible(true)
   }, [])
 

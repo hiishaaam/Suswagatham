@@ -35,6 +35,7 @@ export default function BirthdayRsvp() {
 <div className="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
 <img alt="Lion Avatar" className="w-8 h-8" data-alt="Whimsical watercolor illustration of a friendly baby lion with a soft orange mane and a sweet smiling face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdo-7FN0oTlDd6S2WzVK_VtnDRi70dDnu2YMaFrYAOCDBXpsGZvLx-eeE4K6Lt6dWaajdMKJEiR35dUg_KKrt4a0Zh6f7k7FxU0yrDyIwIjgOnDQZcLSqK4WWc1b9p_Jzs8DEk7ds86Is_5aG-Z55WJRGzb1uWH1TN4LbIhfx9lTshz_UQDt7ykfwZNsoyGCukLQv3je0HYGlqZJYSht9cCbWshimFNCsPEQJqk2vc6QczR68vxHF9i3VzNIl6aJ54tVMsnBgykHWQ"/>
 </div>
+{ }
 <span className="text-2xl font-black text-[#a74727] dark:text-orange-300 font-plus-jakarta-sans font-bold tracking-tight">Roar! You're Invited</span>
 </div>
 <button className="text-[#a74727] hover:opacity-80 transition-opacity">
@@ -53,8 +54,10 @@ export default function BirthdayRsvp() {
 <div className="relative z-10 space-y-8">
 <section className="space-y-2">
 <h1 className="text-4xl font-extrabold tracking-tight text-on-background leading-tight">
+                    { }
                     Let's Party!
                 </h1>
+{ }
 <p className="text-lg text-secondary font-medium">Join us for Leo's 3rd Jungle Safari</p>
 </section>
 

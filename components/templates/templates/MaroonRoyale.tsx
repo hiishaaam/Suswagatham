@@ -4,6 +4,7 @@ import { demoEvent, TemplateProps } from './shared';
 
 export default function MaroonRoyale({ isPreview = true, eventDetails }: TemplateProps) {
   const [mounted, setMounted] = React.useState(false);
+   
   React.useEffect(() => setMounted(true), []);
   const data = eventDetails || demoEvent;
 
@@ -48,8 +49,10 @@ export default function MaroonRoyale({ isPreview = true, eventDetails }: Templat
             <motion.div 
                key={i}
                animate={{ y: [0, -20, 0], opacity: [0, 1, 0] }}
+                
                transition={{ duration: 3 + Math.random() * 2, repeat: Infinity, delay: Math.random() * 2 }}
                className="absolute text-white text-[10px]"
+                
                style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 60 + 20}%` }}
             >
                ✨

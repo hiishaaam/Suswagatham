@@ -53,10 +53,10 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     const body = await req.json()
     const supabase = await createClient()
 
-    // Support single or array
+    // Support single or array, strip unique_token to prevent override
     const toInsert = Array.isArray(body) 
-      ? body.map(t => ({ ...t, event_id: id }))
-      : [{ ...body, event_id: id }]
+      ? body.map(({ unique_token: _, ...t }) => ({ ...t, event_id: id }))
+      : [{ ...(() => { const { unique_token: _, ...rest } = body; return rest })(), event_id: id }]
 
     // RLS on guest_tokens cascades from event ownership
     const { data, error } = await (supabase.from('guest_tokens') as any)

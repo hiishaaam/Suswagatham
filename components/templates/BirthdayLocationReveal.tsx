@@ -62,6 +62,7 @@ export default function BirthdayLocationReveal() {
 
 <div className="text-center mb-8 px-4">
 <h2 className="text-4xl font-extrabold tracking-tight text-on-surface mb-2 leading-tight">See You at the Party!</h2>
+{ }
 <p className="text-secondary font-semibold text-lg">Hooray! You're officially on the guest list.</p>
 </div>
 
@@ -72,6 +73,7 @@ export default function BirthdayLocationReveal() {
 <span className="material-symbols-outlined text-primary text-6xl">temple_buddhist</span>
 </div>
 <h3 className="text-secondary font-bold text-sm uppercase tracking-widest mb-2">The Venue</h3>
+{ }
 <p className="text-2xl font-extrabold text-on-surface leading-tight mb-1">Leo's Jungle Palace</p>
 <p className="text-on-surface-variant text-md">42 Savannah Lane, Green Valley</p>
 </div>
@@ -112,6 +114,7 @@ export default function BirthdayLocationReveal() {
 </div>
 
 <p className="mt-8 text-on-surface-variant text-sm font-medium italic text-center max-w-xs">
+            { }
             "Don't forget to bring your favorite animal mask for the jungle parade!" 🦁🐘
         </p>
 </main>

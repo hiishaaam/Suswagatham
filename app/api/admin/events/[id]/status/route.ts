@@ -13,6 +13,39 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     const { status } = await req.json()
     const supabase = await createClient()
 
+    const VALID_STATUSES = [
+      'draft', 'design_pending', 'preview_sent', 'live', 'completed'
+    ] as const
+    
+    const ALLOWED_TRANSITIONS: Record<string, string[]> = {
+      draft:          ['design_pending', 'live'], // Allowing live directly for ease of use in some flows if needed, but per prompt:
+      design_pending: ['preview_sent', 'draft'],
+      preview_sent:   ['live', 'design_pending'],
+      live:           ['completed', 'preview_sent'],
+      completed:      [],
+    }
+    // Update ALLOWED_TRANSITIONS per prompt exact spec:
+    ALLOWED_TRANSITIONS.draft = ['design_pending']
+    
+    if (!VALID_STATUSES.includes(status)) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid status' }, 
+        { status: 400 }
+      )
+    }
+    
+    const { data: current } = await (supabase.from('events') as any)
+      .select('status')
+      .eq('id', id)
+      .single()
+    
+    if (current && !ALLOWED_TRANSITIONS[current.status as keyof typeof ALLOWED_TRANSITIONS]?.includes(status)) {
+      return NextResponse.json(
+        { success: false, error: `Cannot transition from ${current.status} to ${status}` },
+        { status: 400 }
+      )
+    }
+
     const { error: updateErr, data } = await (supabase.from('events') as any)
       .update({ status })
       .eq('id', id)

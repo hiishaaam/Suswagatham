@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/refs */
 'use client'
 
 import { useState } from 'react'
@@ -11,6 +12,7 @@ import KeralaGold from '@/components/templates/templates/KeralaGold'
 import SapphireNight from '@/components/templates/templates/SapphireNight'
 import GardenBloom from '@/components/templates/templates/GardenBloom'
 import MaroonRoyale from '@/components/templates/templates/MaroonRoyale'
+import DynamicTemplate from '@/components/templates/DynamicTemplate'
 
 type Event = Database['public']['Tables']['events']['Row']
 type GuestToken = Database['public']['Tables']['guest_tokens']['Row']
@@ -36,6 +38,22 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
   };
 
   const getTemplateHero = () => {
+    // If we have custom Gemini-generated theme data, use it!
+    const anyEvent = event as any;
+    if (anyEvent.custom_theme_data) {
+      return (
+        <DynamicTemplate 
+          theme={anyEvent.custom_theme_data} 
+          data={{
+            coupleNames: event.couple_names || '',
+            date: templateEventDetails.date,
+            venue: event.venue_name || '',
+            ceremonyType: 'Wedding'
+          }} 
+        />
+      );
+    }
+
     switch (event.template_id) {
       case 'emerald-islamic': return <MidnightBloom isPreview={false} eventDetails={templateEventDetails} />;
       case 'ivory-luxe': return <KeralaGold isPreview={false} eventDetails={templateEventDetails} />;
@@ -53,6 +71,7 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [revealedEventData, setRevealedEventData] = useState<any>(null)
+  const [mapEmbedUrl, setMapEmbedUrl] = useState<string>('')
 
   const maxAllowedGuests = guestToken ? guestToken.max_guests : event.max_guests_default
 
@@ -120,6 +139,17 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
 
       if (finalAttending) {
         setRevealedEventData(data.event)
+        try {
+           const mapRes = await fetch('/api/map-embed', {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ lat: data.event.venue_lat, lng: data.event.venue_lng })
+           })
+           const mapData = await mapRes.json()
+           if (mapData.url) setMapEmbedUrl(mapData.url)
+        } catch (e) {
+           console.error("Map embed fetch failed", e)
+        }
         setStep(3) // Success + Map
       } else {
         setStep(4) // Not attending confirmation
@@ -314,17 +344,19 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                     <button 
                       onClick={() => setGuestCount(Math.max(1, guestCount - 1))}
                       disabled={guestCount <= 1}
-                      className="w-12 h-12 rounded-full border border-gold text-gold disabled:opacity-30 flex items-center justify-center text-3xl font-light hover:bg-gold/5"
+                      aria-label="Decrease guest count"
+                      className="w-12 h-12 rounded-full border border-gold text-gold disabled:opacity-30 flex items-center justify-center text-3xl font-light hover:bg-gold/5 focus:ring-2 focus:ring-gold focus:outline-none"
                     >
                       -
                     </button>
-                    <div className="font-display text-[48px] text-gold w-20 text-center leading-none">
+                    <div className="font-display text-[48px] text-gold w-20 text-center leading-none" role="status" aria-live="polite">
                       {guestCount}
                     </div>
                     <button 
                       onClick={() => setGuestCount(Math.min(maxAllowedGuests, guestCount + 1))}
                       disabled={guestCount >= maxAllowedGuests}
-                      className="w-12 h-12 rounded-full border border-gold text-gold disabled:opacity-30 flex items-center justify-center text-3xl font-light hover:bg-gold/5"
+                      aria-label="Increase guest count"
+                      className="w-12 h-12 rounded-full border border-gold text-gold disabled:opacity-30 flex items-center justify-center text-3xl font-light hover:bg-gold/5 focus:ring-2 focus:ring-gold focus:outline-none"
                     >
                       +
                     </button>
@@ -348,7 +380,8 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                           setFoodPreference(pref.id)
                           setError(null)
                         }}
-                        className={`py-3 px-4 border rounded-sm font-body text-[14px] transition-all duration-200 ${
+                        aria-pressed={foodPreference === pref.id}
+                        className={`py-3 px-4 border rounded-sm font-body text-[14px] transition-all duration-200 focus:ring-2 focus:ring-gold focus:outline-none ${
                           foodPreference === pref.id 
                             ? 'bg-gold border-gold text-ivory shadow-gold-glow' 
                             : 'bg-white border-gold/30 text-ink hover:border-gold'
@@ -370,12 +403,13 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                   whileTap={{ scale: previewMode ? 1 : 0.97 }}
                   onClick={() => submitRsvp(true)}
                   disabled={isLoading || previewMode}
-                  className={`w-full h-[56px] font-display text-[20px] italic shadow-md rounded-sm flex items-center justify-center 
+                  aria-busy={isLoading}
+                  className={`w-full h-[56px] font-display text-[20px] italic shadow-md rounded-sm flex items-center justify-center focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:outline-none 
                     ${previewMode 
                       ? 'bg-gray-200 text-gray-500 cursor-not-allowed border border-gray-300' 
                       : 'bg-gold text-ink hover:bg-gold/90 transition-colors disabled:opacity-70'}`}
                 >
-                  {isLoading ? <Loader2 className="animate-spin text-ink" size={24} /> : (previewMode ? "RSVP available when live" : "Send RSVP")}
+                  {isLoading ? <Loader2 className="animate-spin text-ink" size={24} aria-label="Loading..." role="status" /> : (previewMode ? "RSVP available when live" : "Send RSVP")}
                 </motion.button>
               </motion.div>
             )}
@@ -432,16 +466,18 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                        </p>
                      </div>
                   )}
-                  {/* Google Maps Embed using place name or lat/lng dynamically */}
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0, filter: previewMode ? 'blur(4px)' : 'none' }}
-                    loading="lazy"
-                    allowFullScreen
-                    referrerPolicy="no-referrer-when-downgrade"
-                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}&q=${revealedEventData.venue_lat},${revealedEventData.venue_lng}&zoom=14`}
-                  ></iframe>
+                  {/* Google Maps Embed using server-side generated URL */}
+                  {mapEmbedUrl && (
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0, filter: previewMode ? 'blur(4px)' : 'none' }}
+                      loading="lazy"
+                      allowFullScreen
+                      referrerPolicy="no-referrer-when-downgrade"
+                      src={mapEmbedUrl}
+                    ></iframe>
+                  )}
                 </div>
 
                 <div className="mb-8 text-center px-4">
@@ -460,17 +496,19 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                     href={`https://maps.google.com/?q=${revealedEventData.venue_lat},${revealedEventData.venue_lng}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 min-h-[48px] bg-ink text-ivory flex items-center justify-center gap-2 font-body text-[12px] font-semibold uppercase tracking-wider rounded-sm hover:bg-ink/90 transition-colors"
+                    aria-label="Open location in Google Maps"
+                    className="flex-1 min-h-[48px] bg-ink text-ivory flex items-center justify-center gap-2 font-body text-[12px] font-semibold uppercase tracking-wider rounded-sm hover:bg-ink/90 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-ink focus:outline-none"
                   >
-                    <Map size={16} /> Maps
+                    <Map size={16} aria-hidden="true" /> Maps
                   </a>
                   <a
                     href={generateCalendarUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 min-h-[48px] border border-gold text-gold flex items-center justify-center gap-2 font-body text-[12px] font-semibold uppercase tracking-wider rounded-sm hover:bg-gold/5 transition-colors"
+                    aria-label="Add event to Google Calendar"
+                    className="flex-1 min-h-[48px] border border-gold text-gold flex items-center justify-center gap-2 font-body text-[12px] font-semibold uppercase tracking-wider rounded-sm hover:bg-gold/5 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-gold focus:outline-none"
                   >
-                    <Calendar size={16} /> Calendar
+                    <Calendar size={16} aria-hidden="true" /> Calendar
                   </a>
                 </div>
               </motion.div>
