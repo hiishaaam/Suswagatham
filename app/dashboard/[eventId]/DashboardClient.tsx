@@ -61,6 +61,7 @@ export const StatCard = React.memo(({ label, value, colorAccent = '', main = fal
     </div>
   )
 })
+StatCard.displayName = 'StatCard'
 
 const timeAgo = (dateStr: string) => {
   const minDiff = Math.round((Date.now() - new Date(dateStr).getTime()) / 60000)
