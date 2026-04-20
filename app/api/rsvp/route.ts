@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { rateLimit, getClientIp } from '@/lib/rate-limit'
+import { sendRsvpHostNotification } from '@/lib/email/resend'
 
 // RSVP rate limit: 5 submissions per 60 seconds per IP
 const RSVP_RATE_LIMIT = { maxRequests: 5, windowMs: 60 * 1000 }
@@ -48,6 +49,7 @@ export async function POST(req: Request) {
     }
 
     let tokenIdToUse = null
+    let guestTokenData: any = null
 
     if (token) {
       const { data: guestToken } = await supabase
@@ -58,10 +60,20 @@ export async function POST(req: Request) {
         .single() // auto-typed by Supabase depending on generated types, but sometimes falls back to 'never' if types.ts isn't perfectly mapped to the query. 
         // We'll safely type it.
 
+      guestTokenData = guestToken
+
       if (!guestToken) {
         return NextResponse.json(
           { success: false, message: 'Invalid invitation token.' },
           { status: 400 }
+        )
+      }
+      
+      const gt = guestToken as any
+      if (gt.expires_at && new Date(gt.expires_at) < new Date()) {
+        return NextResponse.json(
+          { success: false, message: 'This invitation link has expired.' },
+          { status: 410 }
         )
       }
 
@@ -112,6 +124,24 @@ export async function POST(req: Request) {
       )
 
     if (rsvpError) throw rsvpError
+
+    // Asynchronously lookup Host Email & Fire Resend Notification 
+    // We don't await the email to block the guest's UI success rendering
+    if (event.user_id) {
+      supabase.auth.admin.getUserById(event.user_id).then(userRes => {
+         const hostEmail = userRes.data?.user?.email
+         if (hostEmail) {
+            sendRsvpHostNotification({
+              hostEmail,
+              coupleNames: event.couple_names,
+              guestName: guestTokenData ? guestTokenData.family_name : 'An Open Guest',
+              attending,
+              guestCount: attending ? guest_count : undefined,
+              foodPreference: attending ? food_preference : undefined
+            }).catch(e => console.error("Resend error (async):", e))
+         }
+      }).catch(e => console.error("User lookup for email failed:", e))
+    }
 
     return NextResponse.json({
       success: true,

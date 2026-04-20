@@ -16,10 +16,11 @@ interface PaymentModalProps {
   eventId: string
   coupleNames: string
   templateId: string
+  hostWhatsApp?: string
   onPaymentSuccess: () => void
 }
 
-export default function PaymentModal({ isOpen, onClose, eventId, coupleNames, templateId, onPaymentSuccess }: PaymentModalProps) {
+export default function PaymentModal({ isOpen, onClose, eventId, coupleNames, templateId, hostWhatsApp, onPaymentSuccess }: PaymentModalProps) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'processing' | 'success' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -98,7 +99,9 @@ export default function PaymentModal({ isOpen, onClose, eventId, coupleNames, te
             setStatus('idle')
           },
         },
-        prefill: {},
+        prefill: {
+          contact: hostWhatsApp || undefined,
+        },
         theme: {
           color: '#CAA867',
         },

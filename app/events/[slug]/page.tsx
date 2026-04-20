@@ -4,6 +4,8 @@ import GuestPage from './GuestPage'
 import { headers } from 'next/headers'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 type Props = {
   params: Promise<{ slug: string }>
   searchParams: Promise<{ t?: string }>
@@ -105,8 +107,31 @@ export default async function EventPage({ params, searchParams }: Props) {
     console.error('Click Tracking Error:', err)
   }
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: `${event.couple_names} Wedding Celebration`,
+    startDate: event.event_date ? new Date(event.event_date).toISOString() : undefined,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      name: event.venue_name || 'Wedding Venue',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: event.venue_address || 'Address provided upon RSVP',
+      }
+    },
+    image: event.couple_photo_url || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/og/${slug}`,
+    description: `You are invited to celebration of ${event.couple_names}`,
+  };
+
   return (
     <div className="min-h-screen bg-ivory font-body text-ink">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <GuestPage 
         event={event} 
         guestToken={guestToken} 

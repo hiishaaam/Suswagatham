@@ -38,13 +38,16 @@ export async function verifyDashboardAuth(eventId: string) {
     return { authorized: false, error: 'Event not found', status: 404, phone: user.phone }
   }
 
-  // Type assertion since postgrest-js might map clients to an array or object depending on relationship
   const clientData = Array.isArray(event.clients) ? event.clients[0] : event.clients
   
   // Normalize both phones to 10-digit format before comparing.
   // Supabase stores phone in E.164 (+91XXXXXXXXXX), clients.phone is 10 digits.
+  if (!clientData?.phone) {
+    return { authorized: false, error: 'No client phone configured', status: 403, phone: user.phone }
+  }
+
   const normalize = (p: string) => p.replace(/^\+91/, '').replace(/\D/g, '')
-  if (!clientData || normalize(clientData.phone) !== normalize(user.phone)) {
+  if (normalize(clientData.phone) !== normalize(user.phone)) {
     return { authorized: false, error: 'Forbidden. Phone mismatch.', status: 403, phone: user.phone }
   }
 

@@ -9,32 +9,33 @@
 
 ## 📖 Project Overview
 
-**WeddWise** is a sophisticated full-stack web application designed for comprehensive wedding event management. Built with modern web technologies, it features an elegant user interface, powerful administrative capabilities, and secure token-based access. The platform caters to different roles including Admins, Clients, Guests, and Caterers, aiming to provide a high-end, seamless RSVP and planning experience.
+**WeddWise** is a sophisticated full-stack wedding management platform designed to handle the complexity of modern celebrations. It provides an end-to-end solution for event planning, guest tracking, and logistics, specifically tailored for the scale of Indian weddings.
+
+### Key Features
+- **Magic Link RSVPs**: Token-based access for guests—no login required.
+- **Multi-Event Support**: Track Reception, Haldi, Sangeet, etc., under a single parent event.
+- **Headcount Analytics**: Real-time RSVP monitoring with dietary preference tracking.
+- **Caterer Portal**: Automated PDF reports for kitchen staff including a 10% safety buffer.
+- **QR Code Invites**: Instant QR generation for digital and physical venue displays.
+- **WhatsApp Integration**: Perfectly formatted sharing links for guest distribution.
+- **Secure Payments**: Integrated Razorpay flow for premium feature unlocking.
+- **Automated Emails**: Confirmation and notification system via Resend.
 
 ## 🚀 Tech Stack
 
-### Frontend Core
+### Frontend & UI
 - **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
 - **Library**: [React 19](https://react.dev/)
-- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4 (using the @tailwindcss/postcss plugin)
+- **Animations**: `motion` (Framer Motion)
+- **Design System**: A luxury-focused palette utilizing `Ivory`, `Ink`, `Gold`, and `Success/Error` tokens.
 
-### Styling & UI
-- **CSS Framework**: Tailwind CSS v4
-- **Animations**: `motion` (Framer Motion API), `tw-animate-css`
-- **Icons**: `lucide-react`
-- **Class Merging**: `tailwind-merge`, `clsx`, `cva`
-- **Design System**: Strict luxury palette heavily utilizing `ivory`, `ink`, `gold`, and `muted` variables, leveraging global CSS custom properties and Next.js CSS variables.
-
-### Backend & Database
+### Backend & Infrastructure
 - **Database**: PostgreSQL (via Supabase)
-- **Client Library**: `@supabase/supabase-js`, `@supabase/ssr`
-- **Authentication/Security**: Row-Level Security (RLS), custom Base64URL token generation for secure scoped access.
-
-### Additional Utilities
-- **AI Integration**: `@google/genai`
-- **Data Handling**: `papaparse` (CSV), `pdf-lib` (Document generation)
-- **Forms**: `react-hook-form` + `@hookform/resolvers`
-- **Tools**: `qrcode` for RSVP links and ticket management.
+- **Auth & Security**: Supabase Auth + Granular Row-Level Security (RLS).
+- **Payments**: Razorpay Node.js SDK
+- **Email**: Resend API
+- **AI**: Google Generative AI (Gemini) for template assistance.
 
 ---
 
@@ -42,77 +43,77 @@
 
 ```
 /
-├── app/                  # Next.js App Router (Pages, Layouts, API Routes)
-│   ├── [slug]/           # Dynamic public guest-facing pages
-│   ├── admin/            # Central Command Center for managing all clients/events
-│   ├── api/              # Server-side API logic
-│   ├── caterer/          # Scoped access portals for caterers
-│   ├── dashboard/        # Event-specific dashboard for tracking RSVP analytics
-│   └── globals.css       # Global stylesheet with custom page transitions
+├── app/                  # Next.js App Router
+│   ├── admin/            # Client management & administrative control
+│   ├── api/              # Backend services (Payments, Email, RSVP logic)
+│   ├── caterer/          # Scoped portals for food logistics
+│   ├── dashboard/        # Event-specific owner dashboards
+│   ├── events/[slug]/    # High-end public guest-facing RSVP pages
+│   ├── preview/          # Real-time state-based event previews
+│   └── template-preview/ # UI testing for invitation templates
 ├── components/           
-│   └── ui/               # Reusable modular UI components (Skeletons, StatusBadge, Toasts, etc.)
-├── hooks/                # Custom React Hooks
-├── lib/                  # Utilities, Supabase Config, Admin Clients, Database helpers
+│   ├── landing/          # Luxury landing page sections
+│   ├── templates/        # Modular invitation themes (MidnightBloom, etc.)
+│   └── ui/               # Reusable premium components (Toasts, Skeletons)
+├── hooks/                # Custom React hooks (useCountUp, useIntersectionObserver)
+├── lib/                  # Service clients (Supabase, Razorpay, Resend)
 ├── supabase/
-│   └── migrations/       # SQL version control for the database schema (001_initial.sql)
-└── public/               # Static assets
+│   └── migrations/       # SQL migrations (RLS, Schema, Payment columns)
+└── public/               # Static assets & brand media
 ```
 
 ---
 
 ## 🗄 Database Schema (Supabase)
 
-The database incorporates strong relational mapping and real-time triggers:
+The database uses a relational model with strong enforcement of data integrity and owner scoping:
 
-- **`clients`**: Handles B2B and B2C client bases and subscription tiers.
-- **`events`**: Core table housing logistical data, visual preferences (templates), languages, and cutoffs.
-- **`sub_events`**: Enables tracking multi-stage events (e.g., Reception, Haldi) against a single parent event.
-- **`guest_tokens`**: Facilitates magic-link RSVP logic bounding guest limits.
-- **`rsvps`**: Granular headcount tracking including food preferences (`veg`, `non_veg`, `both`).
-- **`link_clicks`**: Traffic and interactivity analysis.
-- **`caterer_access`**: Secure portals restricted to caterer views.
-- **`event_summary`**: A powerful SQL View to pull aggregated RSVP statistics at minimal compute cost.
+- **`clients`**: B2B client accounts and subscription tracking.
+- **`events`**: Core configuration including templates, slugs, and status.
+- **`sub_events`**: Child events mapped to a parent celebration.
+- **`guest_tokens`**: Encrypted Base64 tokens for secure guest verification.
+- **`rsvps`**: Granular headcount (Veg/Non-Veg) and guest details.
+- **`payment_history`**: Tracking Razorpay orders and verification status.
+- **`event_summary`**: SQL View for low-latency dashboard analytics.
 
 ---
 
-## 🔍 Validation Analysis & Recommendations
+## 🔍 Validation Report (Current State)
 
-Upon an extensive analysis of the application's structure, files, and architecture, here is a validation report:
+Following a comprehensive project audit, here is the current validation status:
 
-### Strengths & Code Quality
-1. **Design Excellence**: The project perfectly executes a premium brand identity. The CSS architecture incorporates luxury typography and fluid layouts matching high-end event expectations.
-2. **Robust Data Security**: You've smartly enabled Row Level Security (RLS) across all core tables and effectively implemented custom JWT-like `guest_tokens` allowing server-side validation without requiring guests to formally create accounts.
-3. **Advanced Integrations**: The presence of PDF generation (`pdf-lib`), CSV manipulation (`papaparse`), QR-code ticketing, and AI integrations showcases the app's capability to operate as a full B2B/SaaS platform.
-4. **App Router Mastery**: Deeply integrated with Next.js specific advantages (server components to connect to Supabase `ssr` libraries and dynamic route scopes like `[eventId]` and `[slug]`).
+### ✅ Verified Strengths
+1. **Premium Aesthetic**: The UI/UX matches the "Luxury" requirement with advanced glassmorphism and motion design.
+2. **Security Architecture**: RLS policies are strictly implemented to scope data to authenticated users/admins while allowing `anon` access where necessary (RSVP flow).
+3. **Operational Readiness**: The inclusion of kitchen reports and multi-event logic makes this a production-ready operational tool, not just a "form builder."
 
-### Areas for Improvement / Next Steps
-1. **Frontend Home Page Syncing**: The `app/page.tsx` acts effectively as a UI preview template ("Live Preview"), but its data is currently hardcoded for the demo. Future iterations should fetch data to form a dynamic landing page or actively redirect to `/admin` or `/dashboard`.
-2. **Error Handling**: `error.tsx` is defined well at root-level, but deploying `components/ui/SectionErrorBoundary.tsx` more deeply into nested route layouts (`/dashboard/[eventId]`/`page.tsx`) will ensure UI stability if an isolated widget (like charting or RSVPs) fails.
-3. **Optimizing Queries**: Consider expanding custom Supabase RPC (Remote Procedure Calls) to avoid excessive Client-side/Server Component map-reduces, pushing calculations like the "Attending Rate" heavily to the SQL layer (extending the `event_summary` view).
+### ⚠️ Technical Debt & Recommendations
+1. **Linting Status**: The project currently reports 99 linting issues (mostly `react-hooks/set-state-in-effect`). These should be refactored to use derived state or better effect management to ensure React 19 stability.
+2. **Data Hydration**: Some sections of the landing page use hardcoded demo data; these should be connected to a "Live Stats" API for total authenticity.
+3. **Payment Verification**: Ensure the `api/payments/verify` route handles webhooks securely to double-check payment status if the client-side redirect fails.
 
 ---
 
 ## 🛠 Running Locally
 
-**Prerequisites:** Node.js, npm, matching Supabase instance
-
 1. **Install dependencies:**
     ```bash
     npm install
     ```
-2. **Environment Configuration:**
-    Verify your `.env.local` contains the following required variables:
+2. **Environment Setup (.env.local):**
     ```env
-    NEXT_PUBLIC_SUPABASE_URL=...
-    NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-    SUPABASE_SERVICE_ROLE_KEY=...
-    GEMINI_API_KEY=...
+    NEXT_PUBLIC_SUPABASE_URL=your_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+    SUPABASE_SERVICE_ROLE_KEY=your_service_role
+    RAZORPAY_KEY_ID=your_id
+    RAZORPAY_KEY_SECRET=your_secret
+    RESEND_API_KEY=your_resend_key
+    GEMINI_API_KEY=your_gemini_key
     ```
-3. **Database Configuration:**
-   Apply `supabase/migrations/001_initial.sql` directly to your Supabase instance to prepare tables, roles, triggers, and views. 
-
-4. **Run the app:**
+3. **Database Setup:**
+    Apply migrations in `supabase/migrations/` in sequential order.
+4. **Run Dev Server:**
     ```bash
     npm run dev
     ```
-    View the platform at `http://localhost:3000`.
+

@@ -43,14 +43,9 @@ ALTER TABLE public.caterer_access ENABLE ROW LEVEL SECURITY;
 -- ╚═══════════════════════════════════════════════════════════╝
 
 CREATE OR REPLACE FUNCTION public.is_admin()
-RETURNS boolean
-LANGUAGE sql
-STABLE
-SECURITY DEFINER
-AS $$
+RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER AS $$
   SELECT coalesce(
-    (auth.jwt() -> 'user_metadata' ->> 'email') = 'admin@achievelog.com'
-    OR (auth.jwt() ->> 'email') = 'admin@achievelog.com',
+    (auth.jwt() -> 'app_metadata' ->> 'is_admin')::boolean = true,
     false
   );
 $$;

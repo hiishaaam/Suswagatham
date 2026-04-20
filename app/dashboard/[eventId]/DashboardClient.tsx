@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import QRCode from 'qrcode'
 import { Plus, Users, Utensils, CheckCircle2, ChevronDown, ChevronUp, Copy, Download, Share2, Search, Link as LinkIcon, Loader2 } from 'lucide-react'
 import { useCountUp } from '@/hooks/useCountUp'
@@ -46,8 +46,7 @@ type Props = {
   userPhone: string
 }
 
-// Countup animation component inline
-const StatCard = ({ label, value, colorAccent = '', main = false, prefix = '' }: any) => {
+export const StatCard = React.memo(({ label, value, colorAccent = '', main = false, prefix = '' }: any) => {
   // Only animate raw numbers
   const isNum = typeof value === 'number'
   const animatedValue = useCountUp(isNum ? value : 0)
@@ -62,6 +61,22 @@ const StatCard = ({ label, value, colorAccent = '', main = false, prefix = '' }:
       </div>
     </div>
   )
+})
+StatCard.displayName = 'StatCard'
+
+const timeAgo = (dateStr: string) => {
+  const minDiff = Math.round((Date.now() - new Date(dateStr).getTime()) / 60000)
+  if (minDiff < 1) return 'Just now'
+  if (minDiff < 60) return `${minDiff}m ago`
+  const hrDiff = Math.floor(minDiff/60)
+  if (hrDiff < 24) return `${hrDiff}h ago`
+  return `${Math.floor(hrDiff/24)}d ago`
+}
+
+const maskPhone = (phone: string) => {
+  const clean = phone.replace('+91', '').trim()
+  if (clean.length < 10) return phone
+  return `+91 ${clean.slice(0, 5)} xxxxx`
 }
 
 export default function DashboardClient({ event, initialSummary, initialGuests, eventId, userPhone }: Props) {
@@ -95,11 +110,12 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
   }, [eventId])
 
 
+
   // Quick Add State
   const [manualForm, setManualForm] = useState({ family_name: '', guest_count: 1, food_preference: 'both' })
   const [isAdding, setIsAdding] = useState(false)
 
-  const handleManualAdd = async () => {
+  const handleManualAdd = useCallback(async () => {
     if (!manualForm.family_name.trim()) return alert('Name required')
     setIsAdding(true)
     try {
@@ -110,8 +126,7 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
       })
       const data = await res.json()
       if (data.success) {
-        // Optimistic update of latest guest list
-        setGuests([{
+         setGuests(prev => [{
           id: data.rsvp.id,
           family_name: manualForm.family_name,
           phone: null,
@@ -120,9 +135,8 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
           food_preference: manualForm.food_preference,
           is_manual: true,
           submitted_at: new Date().toISOString()
-        }, ...guests])
+        }, ...prev])
         
-        // Refresh summary
         const sumRes = await fetch(`/api/dashboard/${eventId}/summary`)
         const sumData = await sumRes.json()
         if (sumData.success) {
@@ -141,19 +155,19 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
     } finally {
       setIsAdding(false)
     }
-  }
+  }, [eventId, manualForm])
 
   // Sharing
   const eventUrl = typeof window !== 'undefined' ? `${window.location.origin}/events/${event.event_slug}` : ''
   
   const [copying, setCopying] = useState(false)
-  const handleCopyLink = () => {
+  const handleCopyLink = useCallback(() => {
     navigator.clipboard.writeText(eventUrl)
     setCopying(true)
     setTimeout(() => setCopying(false), 2000)
-  }
+  }, [eventUrl])
 
-  const handleDownloadQR = async () => {
+  const handleDownloadQR = useCallback(async () => {
     try {
       const url = await QRCode.toDataURL(eventUrl, { margin: 2, scale: 10, color: { dark: '#1A1208', light: '#FAF7F0' } })
       const a = document.createElement('a')
@@ -163,20 +177,10 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
     } catch (err) {
       alert('Failed to generate QR')
     }
-  }
+  }, [eventUrl, event.event_slug])
 
-  // Derived calculations
   const noReplyCount = Math.max(0, (summary?.totalTokens || 0) - (summary?.total_responded || 0))
   const progressPercent = summary?.totalTokens > 0 ? Math.min(100, Math.round(((summary?.total_responded || 0) / summary.totalTokens) * 100)) : 0
-
-  const timeAgo = (dateStr: string) => {
-    const minDiff = Math.round((Date.now() - new Date(dateStr).getTime()) / 60000)
-    if (minDiff < 1) return 'Just now'
-    if (minDiff < 60) return `${minDiff}m ago`
-    const hrDiff = Math.floor(minDiff/60)
-    if (hrDiff < 24) return `${hrDiff}h ago`
-    return `${Math.floor(hrDiff/24)}d ago`
-  }
 
   // Guest list filters & pagination
   const [searchTerm, setSearchTerm] = useState('')
@@ -184,7 +188,7 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
   const [loadingMore, setLoadingMore] = useState(false)
   const [hasMore, setHasMore] = useState(guests.length >= 20)
 
-  const handleLoadMore = async () => {
+  const handleLoadMore = useCallback(async () => {
     setLoadingMore(true)
     try {
       const res = await fetch(`/api/dashboard/${eventId}/guests?offset=${guests.length}&limit=20`)
@@ -200,20 +204,18 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
     } finally {
       setLoadingMore(false)
     }
-  }
+  }, [eventId, guests.length])
 
-  const filteredGuests = guests.filter(g => {
-    if (filter === 'coming' && !g.attending) return false
-    if (filter === 'not_coming' && g.attending) return false
-    if (searchTerm && !g.family_name.toLowerCase().includes(searchTerm.toLowerCase())) return false
-    return true
-  })
+  const filteredGuests = useMemo(() => {
+    return guests.filter(g => {
+      if (filter === 'coming' && !g.attending) return false
+      if (filter === 'not_coming' && g.attending) return false
+      if (searchTerm && !g.family_name.toLowerCase().includes(searchTerm.toLowerCase())) return false
+      return true
+    })
+  }, [guests, filter, searchTerm])
 
-  const maskPhone = (phone: string) => {
-    const clean = phone.replace('+91', '').trim()
-    if (clean.length < 10) return phone
-    return `+91 ${clean.slice(0, 5)} xxxxx`
-  }
+
 
   const handleLogout = async () => {
     const { signOut } = await import('@/lib/supabase/auth')

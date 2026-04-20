@@ -1,6 +1,5 @@
 import { createClient } from './server'
 
-const ADMIN_EMAIL = 'admin@achievelog.com'
 
 /**
  * Verifies that the request comes from an authenticated Supabase user.
@@ -33,7 +32,7 @@ export async function verifyAuth(): Promise<{
       user: {
         id: user.id,
         email: user.email || '',
-        isAdmin: user.email === ADMIN_EMAIL,
+        isAdmin: (user.app_metadata as any)?.is_admin === true,
       },
       error: null,
       status: 200,

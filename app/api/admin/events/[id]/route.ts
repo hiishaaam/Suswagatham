@@ -43,12 +43,24 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     const body = await req.json()
     const supabase = await createClient()
 
-    // remove non-updatable fields before sending to Supabase
-    const { id: _, created_at, updated_at, summary, status, user_id, ...updates } = body
+    const ALLOWED_UPDATE_FIELDS = [
+      'couple_names', 'event_date', 'venue_name', 'venue_lat', 
+      'venue_lng', 'venue_address', 'venue_parking_notes',
+      'host_whatsapp', 'show_host_contact', 'template_id', 
+      'language', 'couple_photo_url', 'invitation_text_en',
+      'invitation_text_ml', 'max_guests_default', 'rsvp_cutoff_at',
+      'custom_theme_data'
+    ] as const
+    
+    const safeUpdates = Object.fromEntries(
+      Object.entries(body).filter(([key]) => 
+        ALLOWED_UPDATE_FIELDS.includes(key as any)
+      )
+    )
 
     // RLS will ensure user can only update their own events (or all if admin)
     const { data: event, error } = await (supabase.from('events') as any)
-      .update(updates)
+      .update(safeUpdates)
       .eq('id', id)
       .select()
       .single()

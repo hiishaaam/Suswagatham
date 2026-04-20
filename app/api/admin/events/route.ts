@@ -44,6 +44,7 @@ export async function POST(req: Request) {
         show_host_contact: body.show_host_contact ?? true,
         status: 'draft',
         template_id: body.template_id || 'ivory-luxe',
+        custom_theme_data: body.custom_theme_data || null,
         language: body.language || 'english',
         couple_photo_url: body.couple_photo_url,
         invitation_text_en: body.invitation_text_en,

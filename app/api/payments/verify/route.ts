@@ -18,16 +18,42 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: 'Missing payment verification fields' }, { status: 400 })
     }
 
-    // Verify signature using HMAC SHA256
-    const body = razorpay_order_id + '|' + razorpay_payment_id
+    // Fetch existing event to check idempotency and ownership
+    const supabase = await createClient()
+    const { data: rawEvent, error: fetchErr } = await (supabase.from('events') as any)
+      .select('user_id, payment_status, razorpay_payment_id, couple_names, template_id, event_slug, event_date')
+      .eq('id', event_id)
+      .single()
+      
+    if (fetchErr || !rawEvent) {
+      return NextResponse.json({ success: false, error: 'Event not found' }, { status: 404 })
+    }
+    
+    // Auth validation check: event user must match current authenticated user unless admin
+    if (rawEvent.user_id !== auth.user.id && !auth.user.isAdmin) {
+      return NextResponse.json({ success: false, error: 'Unauthorized to modify this event' }, { status: 403 })
+    }
+
+    // Idempotency check
+    if (rawEvent.payment_status === 'paid') {
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Already processed' 
+      })
+    }
+
+    // Verify signature using HMAC SHA256 and timingSafeEqual
+    const payloadBody = razorpay_order_id + '|' + razorpay_payment_id
     const expectedSignature = crypto
       .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
-      .update(body)
+      .update(payloadBody)
       .digest('hex')
 
-    if (expectedSignature !== razorpay_signature) {
+    const sigBuffer = Buffer.from(razorpay_signature, 'hex')
+    const expectedBuffer = Buffer.from(expectedSignature, 'hex')
+    
+    if (sigBuffer.length !== expectedBuffer.length || !crypto.timingSafeEqual(sigBuffer, expectedBuffer)) {
       // Mark the event as failed payment
-      const supabase = await createClient()
       await (supabase.from('events') as any)
         .update({ payment_status: 'failed' })
         .eq('id', event_id)
@@ -36,14 +62,6 @@ export async function POST(req: Request) {
     }
 
     // Signature is valid — mark event as paid and go live
-    const supabase = await createClient()
-
-    // Fetch full event details for the email
-    const { data: rawEvent } = await supabase
-      .from('events')
-      .select('couple_names, template_id, event_slug, event_date')
-      .eq('id', event_id)
-      .single()
     const eventData = rawEvent as any
 
     const { error: updateErr } = await (supabase.from('events') as any)

@@ -4,6 +4,7 @@ import { demoEvent, TemplateProps } from './shared';
 
 export default function GardenBloom({ isPreview = true, eventDetails }: TemplateProps) {
   const [mounted, setMounted] = React.useState(false);
+   
   React.useEffect(() => setMounted(true), []);
   const data = eventDetails || demoEvent;
   
@@ -31,10 +32,14 @@ export default function GardenBloom({ isPreview = true, eventDetails }: Template
             className="absolute w-[6px] h-[6px] rounded-sm bg-[#D1B162]"
             animate={{ 
                y: ["-10vh", "110vh"],
+                
                x: [0, Math.random() * 100 - 50, Math.random() * 100 - 50],
+                
                rotate: [0, 360 * (Math.random() * 5)]
             }}
+             
             transition={{ duration: 5 + Math.random() * 5, repeat: Infinity, ease: "linear", delay: Math.random() * 5 }}
+             
             style={{ left: `${Math.random() * 100}%`, top: "-10%" }}
           />
         ))}
@@ -44,9 +49,12 @@ export default function GardenBloom({ isPreview = true, eventDetails }: Template
             className="absolute w-[4px] h-[4px] rounded-full bg-white/50"
             animate={{ 
                y: ["-10vh", "110vh"],
+                
                x: [0, Math.random() * 60 - 30]
             }}
+             
             transition={{ duration: 4 + Math.random() * 4, repeat: Infinity, ease: "linear", delay: Math.random() * 4 }}
+             
             style={{ left: `${Math.random() * 100}%`, top: "-10%" }}
           />
         ))}

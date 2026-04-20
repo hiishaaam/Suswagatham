@@ -139,6 +139,7 @@ export default function ChristianWeddingRsvp() {
 </nav>
 
 <footer className="pb-20 md:pb-12 text-center">
+{ }
 <p className="font-headline italic text-primary/40 text-sm tracking-widest">"I have found the one whom my soul loves." — Song of Solomon 3:4</p>
 </footer>
 

@@ -12,7 +12,7 @@ export default function NewEventPage() {
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false)
   const [slugStatus, setSlugStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle')
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     new_client_name: '',
     new_client_phone: '',
     couple_names: '',
@@ -30,6 +30,7 @@ export default function NewEventPage() {
     max_guests_default: 6,
     
     template_id: 'ivory-luxe',
+    custom_theme_data: null,
     couple_photo_url: '',
     invitation_text_en: '',
     invitation_text_ml: '',
@@ -40,16 +41,39 @@ export default function NewEventPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const template = params.get('template')
-    if (template) {
-      setFormData(prev => ({ ...prev, template_id: template }))
-      // Auto-skip to Step 3 if template is pre-selected and they are coming from the landing page?
-      // Actually, better to keep them at Step 1 to fill out basics first.
+    const mode = params.get('mode')
+    
+    if (mode === 'magic') {
+      const magicTheme = sessionStorage.getItem('weddwise_magic_theme')
+      const magicData = sessionStorage.getItem('weddwise_magic_data')
+      
+      if (magicTheme && magicData) {
+        const parsedTheme = JSON.parse(magicTheme)
+        const parsedData = JSON.parse(magicData)
+        
+         
+        setFormData((prev: any) => ({
+          ...prev,
+          couple_names: parsedData.couple_names || '',
+          event_slug: (parsedData.couple_names || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''),
+          event_date: parsedData.event_date || '',
+          venue_name: parsedData.venue_name || '',
+          template_id: 'custom',
+          custom_theme_data: parsedTheme
+        }))
+        
+        // Push user to step 2 automatically
+        setStep(2)
+      }
+    } else if (template) {
+      setFormData((prev: any) => ({ ...prev, template_id: template }))
     }
   }, [])
 
   // Debounced slug check
   useEffect(() => {
     if (!formData.event_slug) {
+       
       setSlugStatus('idle')
       return
     }
@@ -64,7 +88,7 @@ export default function NewEventPage() {
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
-    setFormData(prev => ({
+    setFormData((prev: any) => ({
       ...prev,
       couple_names: val,
       event_slug: val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
@@ -133,7 +157,7 @@ export default function NewEventPage() {
       })
       const data = await res.json()
       if (data.success) {
-        setFormData(prev => ({ ...prev, couple_photo_url: data.url }))
+        setFormData((prev: any) => ({ ...prev, couple_photo_url: data.url }))
       } else {
         alert('Upload failed: ' + data.error)
       }

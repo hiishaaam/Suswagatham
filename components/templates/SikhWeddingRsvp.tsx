@@ -51,6 +51,7 @@ export default function SikhWeddingRsvp() {
 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
 <div className="absolute bottom-4 left-6">
 <h2 className="font-headline text-3xl font-bold text-primary mb-1">Join the Celebration</h2>
+{ }
 <p className="text-on-surface-variant font-medium tracking-wide">AMRIT &amp; GURPREET'S UNION</p>
 </div>
 </div>
@@ -141,6 +142,7 @@ export default function SikhWeddingRsvp() {
                     Confirm Attendance
                 </button>
 <p className="text-center text-on-surface-variant/60 text-xs mt-6 px-10 leading-relaxed italic">
+                    { }
                     "Recognize the whole human race as one." — Guru Gobind Singh Ji
                 </p>
 </div>

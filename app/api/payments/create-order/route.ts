@@ -3,11 +3,6 @@ import { createClient } from '@/lib/supabase/server'
 import { verifyAuth } from '@/lib/supabase/admin-verify'
 import Razorpay from 'razorpay'
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-})
-
 // Template price map (in paisa — 100 paisa = ₹1)
 const TEMPLATE_PRICES: Record<string, number> = {
   'emerald-islamic': 200000,   // ₹2,000
@@ -16,7 +11,7 @@ const TEMPLATE_PRICES: Record<string, number> = {
   'warm-rustic': 200000,       // ₹2,000
   'ivory-garden': 200000,      // ₹2,000
 }
-const DEFAULT_PRICE = 200000 // ₹2,000
+const DEFAULT_PRICE = 200000   // ₹2,000
 
 export async function POST(req: Request) {
   try {
@@ -24,6 +19,11 @@ export async function POST(req: Request) {
     if (!auth.authorized || !auth.user) {
       return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
     }
+
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID!,
+      key_secret: process.env.RAZORPAY_KEY_SECRET!,
+    })
 
     const { event_id } = await req.json()
     if (!event_id) {

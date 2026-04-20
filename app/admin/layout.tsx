@@ -18,7 +18,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   useEffect(() => {
     const supabase = createClient()
     supabase.auth.getUser().then(({ data: { user } }) => {
-      setIsAdmin(user?.email === 'admin@achievelog.com')
+      // UI only — real authorization is server-side.
+      setIsAdmin((user?.app_metadata as any)?.is_admin === true)
       setUserEmail(user?.email || null)
     })
 
