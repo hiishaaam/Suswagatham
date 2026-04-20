@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function SikhWeddingInvitation() {
   return (
     <div className={`bg-gray-100 font-body text-gray-800`} style={{ minHeight: '100dvh' }}>
@@ -19,7 +20,7 @@ export default function SikhWeddingInvitation() {
 <main className="max-w-md mx-auto min-h-screen bg-white relative overflow-hidden shadow-2xl">
 
 <section className="relative h-[45vh] overflow-hidden" data-purpose="hero-image">
-<img alt="Sikh Wedding Invitation Card with Paisley Motifs" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmWQLnRJ4HOoTnqEiLX0b9yMXdV53j0JQCjZ7AVPJH_AMFt_exQ5ahyvC1qim_X7HN5wPmvTwQxrmMrjWYibp2N9GdxIQ5_fbwk5L8YkXszU2p6AwzIez32xbbOf58Ue4s-UWyVopXj-w7AsO_0E-hmxkeqv83XtxsUnw20anDEBEsf_8-XVCCZ-C6RFOHsIMANVMx9MDyFXIAxcpko33iu4Z5MrlUhmGs_iUfXaiCexOPRXZ6Z_VoqGscz7ga4BeQex7NH2_NCdV1"/>
+<Image alt="Sikh Wedding Invitation Card with Paisley Motifs" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmWQLnRJ4HOoTnqEiLX0b9yMXdV53j0JQCjZ7AVPJH_AMFt_exQ5ahyvC1qim_X7HN5wPmvTwQxrmMrjWYibp2N9GdxIQ5_fbwk5L8YkXszU2p6AwzIez32xbbOf58Ue4s-UWyVopXj-w7AsO_0E-hmxkeqv83XtxsUnw20anDEBEsf_8-XVCCZ-C6RFOHsIMANVMx9MDyFXIAxcpko33iu4Z5MrlUhmGs_iUfXaiCexOPRXZ6Z_VoqGscz7ga4BeQex7NH2_NCdV1" fill />
 
 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
 

@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function HinduWeddingRsvp() {
   return (
     <div className={`font-newsreader text-on-surface selection:bg-primary-container selection:text-primary`} style={{ minHeight: '100dvh' }}>
@@ -57,10 +58,10 @@ export default function HinduWeddingRsvp() {
 <main className="pt-24 pb-32 px-6 max-w-2xl mx-auto relative overflow-hidden">
 
 <div className="fixed top-20 right-[-50px] w-64 h-64 opacity-10 pointer-events-none rotate-45">
-<img alt="" className="w-full h-full object-contain" data-alt="Intricate golden mandala silhouette with delicate geometric petals representing a sacred lotus bloom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAafLAHUqcc4y8Tbgv9TcQU2b5YnxTkY7PmOFvW7aij6Wzx3_JCcdge_IKpb_7Fqm5QW9phpkc7BfcRxtPZFWA6_D0XcwQZClSq6LOYv1d2uLKJ14LBMXLhtGgllcv0iC-Ef-qwcVYniVQNEB6cZzfJeVQS0h7TiXiJDdOW75nBCyht5LelFWJbLp77FXis8IcUDN00c9hiFa7n8grF7l7EiAScOdCjVh_VgIsgkfRPpVNnl1P0Ucddtea8MU4WUfw8ehBERMrNYVl3"/>
+<Image alt="" className="w-full h-full object-contain" data-alt="Intricate golden mandala silhouette with delicate geometric petals representing a sacred lotus bloom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAafLAHUqcc4y8Tbgv9TcQU2b5YnxTkY7PmOFvW7aij6Wzx3_JCcdge_IKpb_7Fqm5QW9phpkc7BfcRxtPZFWA6_D0XcwQZClSq6LOYv1d2uLKJ14LBMXLhtGgllcv0iC-Ef-qwcVYniVQNEB6cZzfJeVQS0h7TiXiJDdOW75nBCyht5LelFWJbLp77FXis8IcUDN00c9hiFa7n8grF7l7EiAScOdCjVh_VgIsgkfRPpVNnl1P0Ucddtea8MU4WUfw8ehBERMrNYVl3" fill />
 </div>
 <div className="fixed bottom-20 left-[-50px] w-64 h-64 opacity-10 pointer-events-none -rotate-12">
-<img alt="" className="w-full h-full object-contain" data-alt="Traditional Indian floral pattern in gold line art with subtle symmetry and organic curves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjCkJxOweYhCFKUkSaKSy2SF-7-NFvdPdNUCo938RmDkMhEEXo-3tUiRdoKJY2w5pBO6IbgQ5jykg8uLPrQerzQ9E7McOiJnzXvkEMyfoCVNmW5pNYwZc7vyDS_NKOSP2pgP1lMUXJQOe90SknYFD7ZuwvGy9HWBqqe1q6-ljj8evbdujXH6AV3QqwxsbpnhoUBkxrT6GdHsvMIhZ0HKZp10KMeF-WpdPJQNI5z0A1lMxdhWLDMVYfucIQfHaDSNSHVPj6igPCx8qB"/>
+<Image alt="" className="w-full h-full object-contain" data-alt="Traditional Indian floral pattern in gold line art with subtle symmetry and organic curves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjCkJxOweYhCFKUkSaKSy2SF-7-NFvdPdNUCo938RmDkMhEEXo-3tUiRdoKJY2w5pBO6IbgQ5jykg8uLPrQerzQ9E7McOiJnzXvkEMyfoCVNmW5pNYwZc7vyDS_NKOSP2pgP1lMUXJQOe90SknYFD7ZuwvGy9HWBqqe1q6-ljj8evbdujXH6AV3QqwxsbpnhoUBkxrT6GdHsvMIhZ0HKZp10KMeF-WpdPJQNI5z0A1lMxdhWLDMVYfucIQfHaDSNSHVPj6igPCx8qB" fill />
 </div>
 
 <section className="space-y-12">

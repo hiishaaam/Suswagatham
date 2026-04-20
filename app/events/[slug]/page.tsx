@@ -1,10 +1,39 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 import GuestPage from './GuestPage'
 import { headers } from 'next/headers'
+import { unstable_cache } from 'next/cache'
 import type { Metadata } from 'next'
 
-export const dynamic = 'force-dynamic'
+const getCachedEventSummary = unstable_cache(
+  async (slug: string) => {
+    const supabase = await createClient()
+    const { data } = await supabase
+      .from('events')
+      .select('couple_names, couple_photo_url, event_date, venue_name')
+      .eq('event_slug', slug)
+      .single()
+    return data
+  },
+  ['event-summary'],
+  { revalidate: 60, tags: ['events'] }
+)
+
+const getCachedEvent = unstable_cache(
+  async (slug: string) => {
+    const supabase = await createClient()
+    const { data } = await supabase
+      .from('events')
+      .select('*')
+      .eq('event_slug', slug)
+      .eq('status', 'live')
+      .single()
+    return data
+  },
+  ['event-details'],
+  { revalidate: 60, tags: ['events'] }
+)
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -13,15 +42,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const supabase = await createClient()
-
-  const { data: rawData } = await supabase
-    .from('events')
-    .select('couple_names, couple_photo_url, event_date, venue_name')
-    .eq('event_slug', slug)
-    .single()
-
-  const data = rawData as any
+  const data = await getCachedEventSummary(slug) as any
 
   if (!data) return { title: 'Event Not Found' }
 
@@ -45,25 +66,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function EventPage({ params, searchParams }: Props) {
-  const { slug } = await params
+async function EventDynamicContent({ event, searchParams }: { event: any, searchParams: Promise<{ t?: string }> }) {
   const { t: tokenStr } = await searchParams
   
   const supabase = await createClient()
-
-  // Fetch LIVE Event
-  const { data: rawEvent } = await supabase
-    .from('events')
-    .select('*')
-    .eq('event_slug', slug)
-    .eq('status', 'live')
-    .single()
-
-  const event = rawEvent as any
-
-  if (!event) {
-    return notFound()
-  }
 
   let guestToken = null
   let existingRsvp = null
@@ -107,6 +113,26 @@ export default async function EventPage({ params, searchParams }: Props) {
     console.error('Click Tracking Error:', err)
   }
 
+  return (
+    <GuestPage 
+      event={event} 
+      guestToken={guestToken} 
+      existingRsvp={existingRsvp} 
+      tokenStr={tokenStr}
+    />
+  )
+}
+
+export default async function EventPage({ params, searchParams }: Props) {
+  const { slug } = await params
+  
+  // Fetch LIVE Event using unstable_cache
+  const event = await getCachedEvent(slug) as any
+
+  if (!event) {
+    return notFound()
+  }
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
@@ -132,12 +158,9 @@ export default async function EventPage({ params, searchParams }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <GuestPage 
-        event={event} 
-        guestToken={guestToken} 
-        existingRsvp={existingRsvp} 
-        tokenStr={tokenStr}
-      />
+      <Suspense fallback={null}>
+        <EventDynamicContent event={event} searchParams={searchParams} />
+      </Suspense>
     </div>
   )
 }

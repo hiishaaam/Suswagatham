@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { MapPin, UploadCloud, ChevronRight, ChevronLeft, Check, Loader2 } from 'lucide-react'
-import { motion, AnimatePresence } from 'motion/react'
+import { m, AnimatePresence } from 'motion/react'
+import Image from 'next/image'
 
 export default function NewEventPage() {
   const router = useRouter()
@@ -35,7 +36,8 @@ export default function NewEventPage() {
     invitation_text_en: '',
     invitation_text_ml: '',
     host_whatsapp: '',
-    show_host_contact: true
+    show_host_contact: true,
+    requires_qr_checkin: false
   })
 
   useEffect(() => {
@@ -100,7 +102,7 @@ export default function NewEventPage() {
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = (event) => {
-        const img = new Image()
+        const img = new window.Image()
         img.src = event.target?.result as string
         img.onload = () => {
           const canvas = document.createElement('canvas')
@@ -209,7 +211,7 @@ export default function NewEventPage() {
         <AnimatePresence mode="wait">
         {/* STEP 1: Basics */}
         {step === 1 && (
-          <motion.div key="step-1" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="space-y-6">
+          <m.div key="step-1" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="space-y-6">
             <h2 className="font-display text-2xl mb-6 border-b border-gold-light pb-2">Basic Information</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -285,12 +287,12 @@ export default function NewEventPage() {
                 </select>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
 
         {/* STEP 2: Venue */}
         {step === 2 && (
-          <motion.div key="step-2" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="space-y-6">
+          <m.div key="step-2" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="space-y-6">
             <h2 className="font-display text-2xl mb-6 border-b border-gold-light pb-2">Venue & Logistics</h2>
             
             <div>
@@ -365,12 +367,12 @@ export default function NewEventPage() {
               </div>
             </div>
 
-          </motion.div>
+          </m.div>
         )}
 
         {/* STEP 3: Design */}
         {step === 3 && (
-          <motion.div key="step-3" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="space-y-6">
+          <m.div key="step-3" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="space-y-6">
             <h2 className="font-display text-2xl mb-6 border-b border-gold-light pb-2">Design & Imagery</h2>
 
             <div>
@@ -411,7 +413,7 @@ export default function NewEventPage() {
                     <span className="text-sm font-semibold uppercase tracking-widest text-gold animate-pulse">Uploading...</span>
                   </div>
                 ) : formData.couple_photo_url ? (
-                  <img src={formData.couple_photo_url} alt="Couple" className="mx-auto h-32 object-cover rounded shadow-sm" />
+                  <Image src={formData.couple_photo_url} alt="Couple" width={128} height={128} className="mx-auto h-32 w-auto object-cover rounded shadow-sm" unoptimized />
                 ) : (
                   <div className="flex flex-col items-center gap-2 opacity-60 group-hover:opacity-100 transition">
                     <UploadCloud size={32} className="text-gold" />
@@ -463,7 +465,7 @@ export default function NewEventPage() {
               </div>
             </div>
 
-          </motion.div>
+          </m.div>
         )}
         </AnimatePresence>
       </div>

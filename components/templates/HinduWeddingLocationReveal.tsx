@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function HinduWeddingLocationReveal() {
   return (
     <div className={`bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary min-h-screen flex flex-col overflow-x-hidden`} style={{ minHeight: '100dvh' }}>
@@ -70,7 +71,7 @@ export default function HinduWeddingLocationReveal() {
 <div className="bg-surface-container p-6 rounded-[calc(0.25rem-1px)] foil-border">
 
 <div className="relative w-full aspect-video mb-6 rounded-sm overflow-hidden bg-surface-container-highest group">
-<img className="w-full h-full object-cover opacity-80 mix-blend-luminosity grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="stylized elegant map of an upscale urban wedding venue location with gold line accents and warm ambient lighting" data-location="Udaipur, India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGU7s3hXCvhv8WPuEo8lNL61q5pdLiCu5SuLRxJM1KxrIInwD9ysucAtgYGQ7kAaTkbMD6L_gT1Rf63VCVV92pq28iB-it9L7TkXVDtmiN7Zb3gzk6qCbTKoR839GL023kiTgqyB52XlvCmp9H-d44JrVZo98Y5J2aWqGfgwNKxtmHv_OZH3847p11P6zVaVlALf4TD3u_Sb7Em5BtdXQ7VYlVTutV_Zal8kjWCkJo6wQUGgGQSdVdHZo8y7DevWvo-B8Oc5jgOAKh"/>
+<Image className="w-full h-full object-cover opacity-80 mix-blend-luminosity grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="stylized elegant map of an upscale urban wedding venue location with gold line accents and warm ambient lighting" data-location="Udaipur, India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGU7s3hXCvhv8WPuEo8lNL61q5pdLiCu5SuLRxJM1KxrIInwD9ysucAtgYGQ7kAaTkbMD6L_gT1Rf63VCVV92pq28iB-it9L7TkXVDtmiN7Zb3gzk6qCbTKoR839GL023kiTgqyB52XlvCmp9H-d44JrVZo98Y5J2aWqGfgwNKxtmHv_OZH3847p11P6zVaVlALf4TD3u_Sb7Em5BtdXQ7VYlVTutV_Zal8kjWCkJo6wQUGgGQSdVdHZo8y7DevWvo-B8Oc5jgOAKh" fill  alt=""/>
 <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
 <div className="absolute bottom-3 left-3 bg-primary/90 px-3 py-1 rounded-sm">
 <span className="text-[10px] font-headline tracking-widest text-on-primary uppercase">Venue Location</span>
@@ -117,7 +118,7 @@ export default function HinduWeddingLocationReveal() {
 
 <div className="mt-12 flex flex-col items-center opacity-80">
 <div className="relative">
-<img className="w-24 h-24 object-contain" data-alt="close-up of a traditional brass oil lamp diya with a soft flickering warm flame against a dark maroon background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_nigzvBDJx5flNMtnSj6safkKPQAU5ej0Qy0efqTZR6nmGof0DKyXNUFeS7TyR_Kal4givYUoUAktMvbfL96Wr_J_vVcyvs-OFEZLkd24rEBGPilPRj6RYlnGmZaVoBFv8U31_-Av_Gpl8Y283FnlkngzDg4L7okMLX_I2bHgtHfQpbmzoYMkC5s-g_3JHz9zC6yab-ydri0Y1VaieW2a5ROBF8QAgIgSxonsZv08ehbIeYy0iVIoPrm6SlhV68vsT01JI_z-MQHG"/>
+<Image className="w-24 h-24 object-contain" width={96} height={96} data-alt="close-up of a traditional brass oil lamp diya with a soft flickering warm flame against a dark maroon background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_nigzvBDJx5flNMtnSj6safkKPQAU5ej0Qy0efqTZR6nmGof0DKyXNUFeS7TyR_Kal4givYUoUAktMvbfL96Wr_J_vVcyvs-OFEZLkd24rEBGPilPRj6RYlnGmZaVoBFv8U31_-Av_Gpl8Y283FnlkngzDg4L7okMLX_I2bHgtHfQpbmzoYMkC5s-g_3JHz9zC6yab-ydri0Y1VaieW2a5ROBF8QAgIgSxonsZv08ehbIeYy0iVIoPrm6SlhV68vsT01JI_z-MQHG" alt=""/>
 <div className="absolute inset-0 bg-primary/10 blur-xl rounded-full"></div>
 </div>
 <p className="font-body text-[10px] italic text-on-surface-variant tracking-[0.3em] uppercase mt-2">Shubh Vivah</p>

@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { BarChart3, Users, MousePointerClick, TrendingUp, ChevronRight } from 'lucide-react'
 
-export const dynamic = 'force-dynamic'
+
 
 export default async function AnalyticsPage() {
   const supabase = await createClient()

@@ -65,6 +65,9 @@ export interface Database {
           razorpay_order_id: string | null
           razorpay_payment_id: string | null
           amount_paid: number
+          requires_qr_checkin: boolean
+          gallery_link: string | null
+          accept_shagun: boolean
           created_at: string
           updated_at: string
         }
@@ -94,6 +97,9 @@ export interface Database {
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
           amount_paid?: number
+          requires_qr_checkin?: boolean
+          gallery_link?: string | null
+          accept_shagun?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -123,6 +129,9 @@ export interface Database {
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
           amount_paid?: number
+          requires_qr_checkin?: boolean
+          gallery_link?: string | null
+          accept_shagun?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -195,6 +204,8 @@ export interface Database {
           manual_added_by: string | null
           submitted_at: string
           updated_at: string
+          arrived: boolean
+          checked_in_at: string | null
         }
         Insert: {
           id?: string
@@ -208,6 +219,8 @@ export interface Database {
           manual_added_by?: string | null
           submitted_at?: string
           updated_at?: string
+          arrived?: boolean
+          checked_in_at?: string | null
         }
         Update: {
           id?: string
@@ -221,6 +234,8 @@ export interface Database {
           manual_added_by?: string | null
           submitted_at?: string
           updated_at?: string
+          arrived?: boolean
+          checked_in_at?: string | null
         }
       }
       link_clicks: {
@@ -275,6 +290,38 @@ export interface Database {
           caterer_phone?: string | null
           access_token?: string
           access_level?: string
+          created_at?: string
+        }
+      }
+      shagun_payments: {
+        Row: {
+          id: string
+          event_id: string
+          guest_name: string | null
+          amount: number
+          razorpay_order_id: string
+          razorpay_payment_id: string | null
+          status: 'pending' | 'success' | 'failed'
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          guest_name?: string | null
+          amount: number
+          razorpay_order_id: string
+          razorpay_payment_id?: string | null
+          status?: 'pending' | 'success' | 'failed'
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          guest_name?: string | null
+          amount?: number
+          razorpay_order_id?: string
+          razorpay_payment_id?: string | null
+          status?: 'pending' | 'success' | 'failed'
           created_at?: string
         }
       }

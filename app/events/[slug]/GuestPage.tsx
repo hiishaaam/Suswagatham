@@ -1,17 +1,23 @@
 /* eslint-disable react-hooks/refs */
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { useState, useEffect } from 'react'
+import QRCode from 'qrcode'
+import { m, AnimatePresence } from 'motion/react'
 import { Check, Loader2, MapPin, Map, Calendar, ChevronDown } from 'lucide-react'
 import { Database } from '@/lib/supabase/types'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import WeddingEnvelope from '@/components/ui/WeddingEnvelope'
-import MidnightBloom from '@/components/templates/templates/MidnightBloom'
-import KeralaGold from '@/components/templates/templates/KeralaGold'
-import SapphireNight from '@/components/templates/templates/SapphireNight'
-import GardenBloom from '@/components/templates/templates/GardenBloom'
-import MaroonRoyale from '@/components/templates/templates/MaroonRoyale'
+import dynamic from 'next/dynamic'
+import DigitalShagun from '@/components/ui/DigitalShagun'
+
+const TemplateSkeleton = () => <div className="h-[600px] w-full bg-[#0F0C07] flex items-center justify-center"><Loader2 className="animate-spin text-gold w-8 h-8" /></div>;
+
+const MidnightBloom = dynamic(() => import('@/components/templates/templates/MidnightBloom'), { loading: () => <TemplateSkeleton /> })
+const KeralaGold = dynamic(() => import('@/components/templates/templates/KeralaGold'), { loading: () => <TemplateSkeleton /> })
+const SapphireNight = dynamic(() => import('@/components/templates/templates/SapphireNight'), { loading: () => <TemplateSkeleton /> })
+const GardenBloom = dynamic(() => import('@/components/templates/templates/GardenBloom'), { loading: () => <TemplateSkeleton /> })
+const MaroonRoyale = dynamic(() => import('@/components/templates/templates/MaroonRoyale'), { loading: () => <TemplateSkeleton /> })
 import DynamicTemplate from '@/components/templates/DynamicTemplate'
 
 type Event = Database['public']['Tables']['events']['Row']
@@ -29,6 +35,16 @@ interface GuestPageProps {
 export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, previewMode = false }: GuestPageProps) {
   const [step, setStep] = useState<number>(existingRsvp ? 0 : 1)
   const [envelopeOpened, setEnvelopeOpened] = useState(false)
+  const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null)
+
+  useEffect(() => {
+    // @ts-ignore
+    if (event.requires_qr_checkin && tokenStr) {
+      QRCode.toDataURL(tokenStr, { margin: 1, scale: 8, color: { dark: '#1A1208', light: '#FAF7F0' } })
+        .then(setQrCodeUrl)
+        .catch(console.error)
+    }
+  }, [event, tokenStr])
   
   const templateEventDetails = {
     coupleNames: event.couple_names,
@@ -139,17 +155,10 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
 
       if (finalAttending) {
         setRevealedEventData(data.event)
-        try {
-           const mapRes = await fetch('/api/map-embed', {
-             method: 'POST',
-             headers: { 'Content-Type': 'application/json' },
-             body: JSON.stringify({ lat: data.event.venue_lat, lng: data.event.venue_lng })
-           })
-           const mapData = await mapRes.json()
-           if (mapData.url) setMapEmbedUrl(mapData.url)
-        } catch (e) {
-           console.error("Map embed fetch failed", e)
-        }
+        const mapUrl = data.event.venue_lat && data.event.venue_lng
+          ? `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY}&q=${data.event.venue_lat},${data.event.venue_lng}&zoom=14`
+          : ''
+        if (mapUrl) setMapEmbedUrl(mapUrl)
         setStep(3) // Success + Map
       } else {
         setStep(4) // Not attending confirmation
@@ -181,7 +190,7 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
       )}
       
       {/* We keep the tree rendered but visually hidden until the envelope opens so images can preload */}
-      <motion.div 
+      <m.div 
         animate={{ opacity: envelopeOpened ? 1 : 0 }}
         initial={{ opacity: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
@@ -244,18 +253,94 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
         </div>
       </section>
 
-      {/* 3. RSVP Flow */}
-      <section 
-        // @ts-ignore
-        ref={rsvpRef}
-        className={`bg-ivory pb-24 px-4 flex-1 transition-all duration-1000 delay-300 transform ${rsvpHasEntered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
-      >
+      {/* 2.5 Digital Shagun (opt-in) — only show during active event, not post-event */}
+      {/* @ts-ignore */}
+      {(event as any).accept_shagun && !(event as any).gallery_link && (
+        <section className="bg-ivory px-4 pb-8">
+          <div className="max-w-md mx-auto">
+            <DigitalShagun
+              eventId={event.id}
+              coupleNames={event.couple_names}
+              razorpayKeyId={process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || ''}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* 3. RSVP Flow OR Post-Event Portal */}
+      {/* @ts-ignore */}
+      {(event as any).gallery_link ? (
+        /* ── POST-EVENT PORTAL ────────────────────────────────── */
+        <section
+          // @ts-ignore
+          ref={rsvpRef}
+          className={`bg-ivory pb-24 px-6 flex-1 transition-all duration-1000 delay-300 transform ${rsvpHasEntered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+        >
+          <m.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            className="max-w-md mx-auto text-center"
+          >
+            {/* Ornamental divider */}
+            <div className="flex items-center justify-center mb-12">
+              <div className="h-px bg-gold/40 flex-1 max-w-[60px]"></div>
+              <div className="w-3 h-3 border border-gold rotate-45 mx-5"></div>
+              <div className="h-px bg-gold/40 flex-1 max-w-[60px]"></div>
+            </div>
+
+            {/* Flower icon */}
+            <div className="text-5xl mb-6 select-none" aria-hidden>🌸</div>
+
+            <h2 className="font-display text-[32px] leading-tight text-ink mb-4 italic tracking-wide">
+              Thank you for celebrating with us
+            </h2>
+            <p className="font-body text-[15px] text-muted leading-relaxed mb-12">
+              The joy you brought to our special day is something we will cherish forever. We&apos;ve put together all the memories — just for you.
+            </p>
+
+            {/* Gallery CTA */}
+            <a
+              href={(event as any).gallery_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              id="gallery-cta-link"
+              className="group relative block w-full overflow-hidden rounded-sm shadow-[0_8px_30px_rgba(197,165,89,0.35)] active:scale-[0.98] transition-transform"
+            >
+              {/* Shimmer layer */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none"></div>
+              <div className="bg-gradient-to-br from-[#C5A559] via-[#D4B96A] to-[#A8873C] text-ink px-6 py-6 flex flex-col items-center gap-2">
+                <span className="text-[11px] font-bold uppercase tracking-[3px] text-ink/70">Official Memory Album</span>
+                <span className="font-display text-[22px] font-bold tracking-wide">View the Photo Gallery</span>
+                <span className="text-2xl mt-1" aria-hidden>→</span>
+              </div>
+            </a>
+
+            <p className="text-[10px] uppercase tracking-widest text-muted/50 mt-6">
+              Opens in a new tab
+            </p>
+
+            {/* Bottom ornament */}
+            <div className="flex items-center justify-center mt-16 mb-4">
+              <div className="h-px bg-gold/30 flex-1 max-w-[40px]"></div>
+              <div className="w-2 h-2 border border-gold/50 rotate-45 mx-4"></div>
+              <div className="h-px bg-gold/30 flex-1 max-w-[40px]"></div>
+            </div>
+          </m.div>
+        </section>
+      ) : (
+        /* ── NORMAL RSVP FLOW ─────────────────────────────────── */
+        <section 
+          // @ts-ignore
+          ref={rsvpRef}
+          className={`bg-ivory pb-24 px-4 flex-1 transition-all duration-1000 delay-300 transform ${rsvpHasEntered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+        >
         <div className="max-w-md mx-auto relative min-h-[400px]">
           <AnimatePresence mode="wait">
 
             {/* STEP 0: Existing RSVP View */}
             {step === 0 && existingRsvp && (
-              <motion.div
+              <m.div
                 key="step-0"
                 initial={{ opacity: 0, translateY: 8, filter: 'blur(4px)' }}
                 animate={{ opacity: 1, translateY: 0, filter: 'blur(0px)' }}
@@ -286,19 +371,29 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                     Thank you for letting us know.
                   </p>
                 )}
-                <motion.button
+
+                {/* QR Ticket Display */}
+                {/* @ts-ignore */}
+                {existingRsvp.attending && event.requires_qr_checkin && qrCodeUrl && (
+                  <div className="mb-8 p-4 border border-gold-light/50 bg-ivory/50 rounded-sm">
+                    <p className="text-[11px] font-bold uppercase tracking-widest text-gold mb-3">Your Entrance Ticket</p>
+                    <img src={qrCodeUrl} alt="QR Code" className="w-40 h-40 mx-auto rounded-sm mix-blend-multiply" />
+                    <p className="text-[10px] uppercase tracking-widest text-muted mt-3">Please show this code at the venue</p>
+                  </div>
+                )}
+                <m.button
                   whileTap={{ scale: 0.97 }}
                   onClick={() => setStep(1)}
                   className="w-full py-4 border border-gold text-gold font-body text-[13px] font-semibold tracking-[2px] uppercase rounded-sm hover:bg-gold/5"
                 >
                   Update My Response
-                </motion.button>
-              </motion.div>
+                </m.button>
+              </m.div>
             )}
 
             {/* STEP 1: Attendance */}
             {step === 1 && (
-              <motion.div
+              <m.div
                 key="step-1"
                 initial={{ opacity: 0, translateY: 8, filter: 'blur(4px)' }}
                 animate={{ opacity: 1, translateY: 0, filter: 'blur(0px)' }}
@@ -308,27 +403,27 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
               >
                 <h2 className="font-display text-[28px] text-ink mb-8 tracking-wide">Will you be joining us?</h2>
                 <div className="space-y-4">
-                  <motion.button
+                  <m.button
                     whileTap={{ scale: 0.97 }}
                     onClick={() => handleAttendanceSelect(true)}
                     className="w-full flex items-center justify-center min-h-[72px] border border-gold/40 bg-white hover:bg-gold/5 text-ink font-display text-[22px] italic transition-colors rounded-sm shadow-sm"
                   >
                     Yes, I&apos;ll be there
-                  </motion.button>
-                  <motion.button
+                  </m.button>
+                  <m.button
                     whileTap={{ scale: 0.97 }}
                     onClick={() => handleAttendanceSelect(false)}
                     className="w-full flex items-center justify-center min-h-[72px] border border-muted/30 bg-white hover:bg-muted/5 text-muted font-display text-[22px] italic transition-colors rounded-sm shadow-sm"
                   >
                     I cannot attend
-                  </motion.button>
+                  </m.button>
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
             {/* STEP 2: Details */}
             {step === 2 && (
-              <motion.div
+              <m.div
                 key="step-2"
                 initial={{ opacity: 0, translateY: 8, filter: 'blur(4px)' }}
                 animate={{ opacity: 1, translateY: 0, filter: 'blur(0px)' }}
@@ -401,7 +496,7 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                   </div>
                 )}
 
-                <motion.button
+                <m.button
                   whileTap={{ scale: previewMode ? 1 : 0.97 }}
                   onClick={() => submitRsvp(true)}
                   disabled={isLoading || previewMode}
@@ -412,27 +507,27 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                       : 'bg-gold text-ink hover:bg-gold/90 transition-colors disabled:opacity-70'}`}
                 >
                   {isLoading ? <Loader2 className="animate-spin text-ink" size={24} aria-label="Loading..." role="status" /> : (previewMode ? "RSVP available when live" : "Send RSVP")}
-                </motion.button>
-              </motion.div>
+                </m.button>
+              </m.div>
             )}
 
             {/* STEP 3: Map & Success Reveal */}
             {step === 3 && revealedEventData && (
-              <motion.div
+              <m.div
                 key="step-3"
                 initial={{ clipPath: 'inset(0 0 100% 0)' }}
                 animate={{ clipPath: 'inset(0 0 0 0)' }}
                 transition={{ duration: 0.7, ease: [0.77, 0, 0.175, 1] }} // smooth curtain wipe
                 className="bg-white border border-gold p-6 md:p-8 rounded-sm shadow-card"
               >
-                <motion.div 
+                <m.div 
                   initial={{ scale: 0, rotate: -45 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10, delay: 0.1 }}
                   className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6 relative"
                 >
                   <svg className="text-success stroke-success z-10 relative" width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <motion.polyline 
+                    <m.polyline 
                       initial={{ pathLength: 0 }}
                       animate={{ pathLength: 1 }}
                       transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
@@ -442,7 +537,7 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                   
                   {/* Joyous Particle Pop */}
                   {[...Array(6)].map((_, i) => (
-                    <motion.div
+                    <m.div
                       key={i}
                       className="absolute w-2 h-2 bg-success rounded-full"
                       initial={{ scale: 0, x: 0, y: 0 }}
@@ -454,9 +549,24 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                       transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                     />
                   ))}
-                </motion.div>
+                </m.div>
                 
-                <h2 className="font-display text-[32px] text-ink mb-6 text-center italic tracking-wide">
+                {/* QR Ticket Display */}
+                {/* @ts-ignore */}
+                {event.requires_qr_checkin && qrCodeUrl && (
+                  <div className="mb-10 text-center">
+                    <h2 className="font-display text-[26px] text-ink mb-2 italic tracking-wide">
+                      Your Entrance Ticket
+                    </h2>
+                    <div className="inline-block p-4 border border-gold-light/50 bg-ivory/50 rounded-sm mb-2 shadow-sm">
+                      <img src={qrCodeUrl} alt="QR Code" className="w-48 h-48 mx-auto rounded-sm mix-blend-multiply" />
+                    </div>
+                    <p className="text-[11px] uppercase tracking-widest text-muted">Please show this code at the venue</p>
+                    <div className="w-10 h-px bg-gold/40 mx-auto mt-8 mb-8"></div>
+                  </div>
+                )}
+                
+                <h2 className="font-display text-[26px] text-ink mb-6 text-center italic tracking-wide">
                   Here&apos;s how to find us
                 </h2>
 
@@ -513,12 +623,12 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                     <Calendar size={16} aria-hidden="true" /> Calendar
                   </a>
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
             {/* STEP 4: Not Attending */}
             {step === 4 && (
-              <motion.div
+              <m.div
                 key="step-4"
                 initial={{ opacity: 0, translateY: 8, filter: 'blur(4px)' }}
                 animate={{ opacity: 1, translateY: 0, filter: 'blur(0px)' }}
@@ -538,16 +648,17 @@ export default function GuestPage({ event, guestToken, existingRsvp, tokenStr, p
                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                   </svg>
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
           </AnimatePresence>
         </div>
       </section>
+      )} {/* end gallery_link ternary */}
         
         {/* End of Card Wrapper */}
         </div>
-      </motion.div>
+      </m.div>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import Link from 'next/link';
 
 interface PhoneMockupProps {
@@ -15,7 +15,7 @@ interface PhoneMockupProps {
 export default function PhoneMockup({ children, isActive, onClick, label, category, price, id }: PhoneMockupProps) {
   return (
     <div className="flex flex-col items-center shrink-0 group">
-      <motion.div
+      <m.div
         layout
         onClick={onClick}
         whileHover={{ scale: 1.02, y: -5 }}
@@ -61,7 +61,7 @@ export default function PhoneMockup({ children, isActive, onClick, label, catego
              </div>
           </div>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Presentation Below Phone (Reference Style) */}
       <div className="mt-8 flex flex-col items-center text-center">

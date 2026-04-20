@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { m, AnimatePresence } from 'motion/react';
 import { Sparkles, Loader2, Wand2, ArrowRight, CheckCircle2 } from 'lucide-react';
 import DynamicTemplate, { DynamicTheme } from '@/components/templates/DynamicTemplate';
 
@@ -65,7 +65,7 @@ export default function MagicCreatePage() {
           
           {/* STEP 1: INPUT */}
           {step === 'input' && (
-            <motion.div 
+            <m.div 
               key="input"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -139,12 +139,12 @@ export default function MagicCreatePage() {
                   <Sparkles size={16} className="group-hover:animate-pulse" /> Design My Invitations
                 </button>
               </div>
-            </motion.div>
+            </m.div>
           )}
 
           {/* STEP 2: GENERATING (LOADING) */}
           {step === 'generating' && (
-            <motion.div 
+            <m.div 
               key="generating"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -152,12 +152,12 @@ export default function MagicCreatePage() {
               className="flex flex-col items-center justify-center min-h-[50vh]"
             >
               <div className="relative mb-12">
-                <motion.div 
+                <m.div 
                   animate={{ rotate: 360 }} 
                   transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                   className="w-24 h-24 border-2 border-gold/10 border-t-gold rounded-full"
                 />
-                <motion.div 
+                <m.div 
                   animate={{ rotate: -360 }} 
                   transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
                   className="absolute inset-2 border border-white/10 border-b-ivory/50 rounded-full"
@@ -166,7 +166,7 @@ export default function MagicCreatePage() {
               </div>
               
               <div className="h-8 relative overflow-hidden flex justify-center items-center w-full max-w-sm">
-                <motion.div 
+                <m.div 
                   animate={{ y: ["0%", "-33%", "-66%"] }}
                   transition={{ duration: 6, times: [0, 0.5, 1], ease: "easeInOut" }}
                   className="font-display text-2xl italic text-gold absolute top-0 flex flex-col gap-8 items-center"
@@ -174,14 +174,14 @@ export default function MagicCreatePage() {
                   <span>Analyzing venue aesthetics...</span>
                   <span>Curating typography pairings...</span>
                   <span>Finalizing bespoke palettes...</span>
-                </motion.div>
+                </m.div>
               </div>
-            </motion.div>
+            </m.div>
           )}
 
           {/* STEP 3: RESULTS */}
           {step === 'results' && (
-            <motion.div 
+            <m.div 
               key="results"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -189,7 +189,7 @@ export default function MagicCreatePage() {
               className="w-full"
             >
                <div className="text-center mb-16">
-                 <motion.h2 
+                 <m.h2 
                    initial={{ opacity: 0, y: 20 }}
                    animate={{ opacity: 1, y: 0 }}
                    transition={{ delay: 0.2 }}
@@ -197,20 +197,20 @@ export default function MagicCreatePage() {
                  >
                    { }
                    We've prepared <span className="italic text-gold">3 variations</span>.
-                 </motion.h2>
-                 <motion.p 
+                 </m.h2>
+                 <m.p 
                    initial={{ opacity: 0 }}
                    animate={{ opacity: 1 }}
                    transition={{ delay: 0.4 }}
                    className="text-ivory/60 text-sm uppercase tracking-widest font-bold"
                  >
                    Select the design that speaks to your celebration
-                 </motion.p>
+                 </m.p>
                </div>
 
                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                  {generatedThemes.map((theme, idx) => (
-                   <motion.div
+                   <m.div
                      key={theme.theme_id || idx}
                      initial={{ opacity: 0, y: 40 }}
                      animate={{ opacity: 1, y: 0 }}
@@ -228,9 +228,9 @@ export default function MagicCreatePage() {
                           <div className="font-display text-xl text-ivory mt-1">{theme.theme_name}</div>
                         </div>
                         {selectedThemeId === theme.theme_id && (
-                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="bg-gold text-ink rounded-full p-1 shadow-sm">
+                          <m.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="bg-gold text-ink rounded-full p-1 shadow-sm">
                             <CheckCircle2 size={16} />
-                          </motion.div>
+                          </m.div>
                         )}
                       </div>
                       
@@ -244,11 +244,11 @@ export default function MagicCreatePage() {
                           ceremonyType: 'Wedding'
                         }} 
                       />
-                   </motion.div>
+                   </m.div>
                  ))}
                </div>
 
-               <motion.div 
+               <m.div 
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 1 }}
@@ -268,8 +268,8 @@ export default function MagicCreatePage() {
                  >
                    Continue with Selected Design <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                  </button>
-               </motion.div>
-            </motion.div>
+               </m.div>
+            </m.div>
           )}
 
         </AnimatePresence>

@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { signInWithEmail } from '@/lib/supabase/auth'
 import { AlertCircle, ArrowRight, Mail, Lock, Eye, EyeOff } from 'lucide-react'
 
@@ -43,7 +43,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-ivory flex flex-col items-center justify-center p-6 relative">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ type: 'spring', duration: 0.45, bounce: 0 }}
@@ -71,14 +71,14 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: -4, filter: 'blur(2px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               className="bg-red-50 border border-red-100 text-red-600 text-xs font-semibold p-3 rounded-xl mb-6 flex items-start gap-2"
             >
               <AlertCircle size={16} className="mt-0.5 shrink-0" />
               <span>{error}</span>
-            </motion.div>
+            </m.div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -153,7 +153,7 @@ export default function LoginPage() {
             </p>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </div>
   )
 }

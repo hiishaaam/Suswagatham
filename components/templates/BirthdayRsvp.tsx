@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function BirthdayRsvp() {
   return (
     <div className={`bg-background text-on-background min-h-screen pb-32`} style={{ minHeight: '100dvh' }}>
@@ -33,7 +34,7 @@ export default function BirthdayRsvp() {
 <header className="bg-[#ffffd3] dark:bg-yellow-900/20 w-full top-0 sticky flex justify-between items-center px-6 py-4 w-full z-50">
 <div className="flex items-center gap-3">
 <div className="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
-<img alt="Lion Avatar" className="w-8 h-8" data-alt="Whimsical watercolor illustration of a friendly baby lion with a soft orange mane and a sweet smiling face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdo-7FN0oTlDd6S2WzVK_VtnDRi70dDnu2YMaFrYAOCDBXpsGZvLx-eeE4K6Lt6dWaajdMKJEiR35dUg_KKrt4a0Zh6f7k7FxU0yrDyIwIjgOnDQZcLSqK4WWc1b9p_Jzs8DEk7ds86Is_5aG-Z55WJRGzb1uWH1TN4LbIhfx9lTshz_UQDt7ykfwZNsoyGCukLQv3je0HYGlqZJYSht9cCbWshimFNCsPEQJqk2vc6QczR68vxHF9i3VzNIl6aJ54tVMsnBgykHWQ"/>
+<Image alt="Lion Avatar" className="w-8 h-8" data-alt="Whimsical watercolor illustration of a friendly baby lion with a soft orange mane and a sweet smiling face" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdo-7FN0oTlDd6S2WzVK_VtnDRi70dDnu2YMaFrYAOCDBXpsGZvLx-eeE4K6Lt6dWaajdMKJEiR35dUg_KKrt4a0Zh6f7k7FxU0yrDyIwIjgOnDQZcLSqK4WWc1b9p_Jzs8DEk7ds86Is_5aG-Z55WJRGzb1uWH1TN4LbIhfx9lTshz_UQDt7ykfwZNsoyGCukLQv3je0HYGlqZJYSht9cCbWshimFNCsPEQJqk2vc6QczR68vxHF9i3VzNIl6aJ54tVMsnBgykHWQ"/>
 </div>
 { }
 <span className="text-2xl font-black text-[#a74727] dark:text-orange-300 font-plus-jakarta-sans font-bold tracking-tight">Roar! You're Invited</span>
@@ -45,10 +46,10 @@ export default function BirthdayRsvp() {
 <main className="max-w-md mx-auto px-6 pt-8 relative overflow-hidden">
 
 <div className="absolute -top-10 -left-12 opacity-80 pointer-events-none transform -rotate-12">
-<img alt="Monkey Illustration" className="w-40 h-40" data-alt="Cute watercolor baby monkey hanging from a green vine with a playful expression and soft brown fur textures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1CYPDEmDfFnQEBcb7G2xu7PX_DqYi9_ZAYqiTrQXXS8f3R7GyI9md5d4Xt8J0moIYZCCY0SCLwR81zQ_Qqv2ZnkXr6w0U1EQQYVXQMdTTxg6HUC_lhT0vio9TpJr5LaESOTObeHRApXE00D134NT8WRoufrZgmPaPibhOMO58OmKtRsq4g0SeTdac4KC3Uyh0knZFu7uAmaJZ3_qCt5a_Zty_-EXqlCco1Zg5lIqkwFt2QtdDdveqqXDtaKJr4_mdCOU9pflgTxTU"/>
+<Image alt="Monkey Illustration" className="w-40 h-40" data-alt="Cute watercolor baby monkey hanging from a green vine with a playful expression and soft brown fur textures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1CYPDEmDfFnQEBcb7G2xu7PX_DqYi9_ZAYqiTrQXXS8f3R7GyI9md5d4Xt8J0moIYZCCY0SCLwR81zQ_Qqv2ZnkXr6w0U1EQQYVXQMdTTxg6HUC_lhT0vio9TpJr5LaESOTObeHRApXE00D134NT8WRoufrZgmPaPibhOMO58OmKtRsq4g0SeTdac4KC3Uyh0knZFu7uAmaJZ3_qCt5a_Zty_-EXqlCco1Zg5lIqkwFt2QtdDdveqqXDtaKJr4_mdCOU9pflgTxTU"/>
 </div>
 <div className="absolute top-1/2 -right-16 opacity-80 pointer-events-none transform rotate-12">
-<img alt="Lion Illustration" className="w-48 h-48" data-alt="Whimsical watercolor lion peeking from behind a tropical leaf with soft sun-drenched lighting and vibrant orange colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHYZnlefLUHZMm6ppUA2_sieq9cxP8Nk-nTurz57CU1NdLTmfOz87KCdjDhkb2KY3BH425rP0IUcS_ixrK7UmlAYQEK_N58DNYk1qnAYRpZwM3eWPFKY_FW6exPrZNew_rE3e7WpPUrM9MV596Eyl9mCFR-mh5-PAGfRuy0khTzh9J4BKSrn_r0u5J1mOybpkaBlXsqcuuSoCa5c3mlKVLdVX83_XVPXtTdy7phGjaGmtyATVJFFfwOqUz4_qam34hwWlDzkyzaAon"/>
+<Image alt="Lion Illustration" className="w-48 h-48" data-alt="Whimsical watercolor lion peeking from behind a tropical leaf with soft sun-drenched lighting and vibrant orange colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHYZnlefLUHZMm6ppUA2_sieq9cxP8Nk-nTurz57CU1NdLTmfOz87KCdjDhkb2KY3BH425rP0IUcS_ixrK7UmlAYQEK_N58DNYk1qnAYRpZwM3eWPFKY_FW6exPrZNew_rE3e7WpPUrM9MV596Eyl9mCFR-mh5-PAGfRuy0khTzh9J4BKSrn_r0u5J1mOybpkaBlXsqcuuSoCa5c3mlKVLdVX83_XVPXtTdy7phGjaGmtyATVJFFfwOqUz4_qam34hwWlDzkyzaAon"/>
 </div>
 
 <div className="relative z-10 space-y-8">
@@ -131,8 +132,8 @@ export default function BirthdayRsvp() {
 
 <div className="fixed bottom-0 left-0 w-full pointer-events-none opacity-20 h-32 overflow-hidden -z-10">
 <div className="flex justify-between items-end">
-<img alt="Jungle Leaf" className="w-32 h-32 -mb-8 -ml-8" data-alt="Abstract watercolor palm leaf in shades of emerald green and lime with soft blended edges" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJlnGAYMoB_jNlNltZkBm5HumWQ9shrj1zG4BI7PVpSmRA3MHG6fSYiillPwOFUNZ0pUgLZIziq_wovOnEB01JP6s0QOSbl7j2pwnPf7uTmQjtrmp6P3sSdw0UOAF1ro9X9ZlfWG7CSfKWYJoH3e3UtVJTsnb23J6SPaVx94dFyxDXLtwxaF_Ut9ewSph6TZPAbVU4oUxJ-_q_IpGjWFE2APxMaJqLzi_Lge2Cf4p4QTR2Qp_J2n9m9vMceSBdo-a0O7qgS0N_XLCl"/>
-<img alt="Jungle Leaf" className="w-32 h-32 -mb-8 -mr-8" data-alt="Small group of tropical watercolor leaves in soft greens and yellows, styled like an editorial storybook illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWIjBCxsLHAOo4WqBP4RlRbHvAhioJfEhmEzYh_tg9rkQELNRbe8NCNxmjRt-fFB6jEbfyDobD5PYqflBWKSncsWW43ggXKj-QuhVXMmUpcmhExEU5A2tLwG0vOh-IL5902C5M6s73oy3TYKwkhV1MERAcKEqaO1Pdc6gCtECuw4SSYT9p637FHCjgrupFk2DVYk6-HSgZK04IRtLLLc_p7gcOX3fqaqoPu23ONJZD-NWw9NCDRDHfSHZZOKmwcOWyxbwqS3JA2vBq"/>
+<Image alt="Jungle Leaf" className="w-32 h-32 -mb-8 -ml-8" data-alt="Abstract watercolor palm leaf in shades of emerald green and lime with soft blended edges" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJlnGAYMoB_jNlNltZkBm5HumWQ9shrj1zG4BI7PVpSmRA3MHG6fSYiillPwOFUNZ0pUgLZIziq_wovOnEB01JP6s0QOSbl7j2pwnPf7uTmQjtrmp6P3sSdw0UOAF1ro9X9ZlfWG7CSfKWYJoH3e3UtVJTsnb23J6SPaVx94dFyxDXLtwxaF_Ut9ewSph6TZPAbVU4oUxJ-_q_IpGjWFE2APxMaJqLzi_Lge2Cf4p4QTR2Qp_J2n9m9vMceSBdo-a0O7qgS0N_XLCl"/>
+<Image alt="Jungle Leaf" className="w-32 h-32 -mb-8 -mr-8" data-alt="Small group of tropical watercolor leaves in soft greens and yellows, styled like an editorial storybook illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWIjBCxsLHAOo4WqBP4RlRbHvAhioJfEhmEzYh_tg9rkQELNRbe8NCNxmjRt-fFB6jEbfyDobD5PYqflBWKSncsWW43ggXKj-QuhVXMmUpcmhExEU5A2tLwG0vOh-IL5902C5M6s73oy3TYKwkhV1MERAcKEqaO1Pdc6gCtECuw4SSYT9p637FHCjgrupFk2DVYk6-HSgZK04IRtLLLc_p7gcOX3fqaqoPu23ONJZD-NWw9NCDRDHfSHZZOKmwcOWyxbwqS3JA2vBq"/>
 </div>
 </div>
 

@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function SikhWeddingLocationReveal() {
   return (
     <div className={`bg-background font-body text-on-background min-h-screen pb-24`} style={{ minHeight: '100dvh' }}>
@@ -71,7 +72,7 @@ export default function SikhWeddingLocationReveal() {
 </div>
 
 <div className="w-full h-48 rounded-lg overflow-hidden mb-6 relative">
-<img alt="Stylized map showing venue location" className="w-full h-full object-cover grayscale brightness-50 contrast-125" data-alt="Modern artistic map representation of an urban area with gold and navy blue accents and a wedding icon marker" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC22r12jY8zWTXSP9ijnujvXEj1EsqlCC74zKRb8ov2RB11TyXej0zpvoMXPsekNI2ngB8OiU8WqFDF4oZiiX_ZqQeLtuSKoMBq0KwQqVgPUjXMKl4m7HPCUuxIeI93IITJ-dUXq7jtnoIv5gaNND8Gz_RPMLnsLYrBqkwVUlHNkosCKZFt5KjN0Kuo7RBRFrJxKm6VrIGEDv6iv0JXwoPyo3O0_dcfdc8y5XNDGh1QLfF2ybqguajsKITBK6NKmFadoSQNi6Iy76we"/>
+<Image alt="Stylized map showing venue location" className="w-full h-full object-cover grayscale brightness-50 contrast-125" data-alt="Modern artistic map representation of an urban area with gold and navy blue accents and a wedding icon marker" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC22r12jY8zWTXSP9ijnujvXEj1EsqlCC74zKRb8ov2RB11TyXej0zpvoMXPsekNI2ngB8OiU8WqFDF4oZiiX_ZqQeLtuSKoMBq0KwQqVgPUjXMKl4m7HPCUuxIeI93IITJ-dUXq7jtnoIv5gaNND8Gz_RPMLnsLYrBqkwVUlHNkosCKZFt5KjN0Kuo7RBRFrJxKm6VrIGEDv6iv0JXwoPyo3O0_dcfdc8y5XNDGh1QLfF2ybqguajsKITBK6NKmFadoSQNi6Iy76we" fill />
 <div className="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
 <div className="absolute inset-0 flex items-center justify-center">
 <div className="bg-primary text-on-primary px-4 py-2 rounded-full font-bold shadow-lg flex items-center gap-2">

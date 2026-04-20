@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { m, AnimatePresence } from 'motion/react';
 
 interface TemplateDetailPanelProps {
   template: any;
@@ -10,7 +10,7 @@ export default function TemplateDetailPanel({ template, onPreviewClick }: Templa
   return (
     <div className="w-full max-w-4xl mx-auto mt-16 px-6">
       <AnimatePresence mode="wait">
-        <motion.div
+        <m.div
           key={template.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -46,7 +46,7 @@ export default function TemplateDetailPanel({ template, onPreviewClick }: Templa
                Preview Live Demo
              </button>
           </div>
-        </motion.div>
+        </m.div>
       </AnimatePresence>
     </div>
   );

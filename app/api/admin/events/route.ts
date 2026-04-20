@@ -51,6 +51,7 @@ export async function POST(req: Request) {
         invitation_text_ml: body.invitation_text_ml,
         max_guests_default: body.max_guests_default || 6,
         rsvp_cutoff_at: body.rsvp_cutoff_at || null,
+        requires_qr_checkin: body.requires_qr_checkin || false,
       })
       .select()
       .single()

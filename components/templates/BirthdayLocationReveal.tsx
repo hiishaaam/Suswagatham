@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function BirthdayLocationReveal() {
   return (
     <div className={`bg-background font-body text-on-background min-h-screen overflow-x-hidden relative`} style={{ minHeight: '100dvh' }}>
@@ -51,11 +52,11 @@ export default function BirthdayLocationReveal() {
 <div className="flex items-end justify-center -space-x-8">
 
 <div className="w-32 h-32 relative z-10 transform -rotate-3 hover:rotate-0 transition-transform">
-<img alt="Cute baby elephant" className="w-full h-full object-contain drop-shadow-sm" data-alt="cute watercolor baby elephant with happy expression, soft pastel blue and grey tones, whimsical storybook illustration style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoDs4GO_tfk7773jn8gtJoAbgnB9Xthly7O4yrGQ0bDyUbHjxLgYTat88IsvEqQZeJ6rI6XVbydBTLk-mR9albzHQdVFDSjK8ZGqmpCQ73DI8QlXMLXxBCSe-XXz0e0hJ4IXI9hequWqXIYBkin4pKoyDX79eICLCp3ngfDM2qce8FNw0w0toByR63VUjGy29Jbuf2D4yKClBwEsX8w1LKIUnX4hPM3XZh2JFoX4e1A1WA0oV3fo7Yn_a3tui_6MgPQWSkC2-CFT8g"/>
+<Image alt="Cute baby elephant" className="w-full h-full object-contain drop-shadow-sm" data-alt="cute watercolor baby elephant with happy expression, soft pastel blue and grey tones, whimsical storybook illustration style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoDs4GO_tfk7773jn8gtJoAbgnB9Xthly7O4yrGQ0bDyUbHjxLgYTat88IsvEqQZeJ6rI6XVbydBTLk-mR9albzHQdVFDSjK8ZGqmpCQ73DI8QlXMLXxBCSe-XXz0e0hJ4IXI9hequWqXIYBkin4pKoyDX79eICLCp3ngfDM2qce8FNw0w0toByR63VUjGy29Jbuf2D4yKClBwEsX8w1LKIUnX4hPM3XZh2JFoX4e1A1WA0oV3fo7Yn_a3tui_6MgPQWSkC2-CFT8g" fill />
 </div>
 
 <div className="w-40 h-40 relative z-20 transform rotate-6 hover:rotate-0 transition-transform">
-<img alt="Cheerful baby lion" className="w-full h-full object-contain drop-shadow-sm" data-alt="happy watercolor baby lion with a fluffy orange mane, cheering with paws up, soft textures, whimsical children's book aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCZkUtuePvUbywW6cb3y6A_YagThP0pMM_CMCbi7VJvnomWGPcdHG90ZGkd8lMtveJaF7py6QtlR68XZsZb2-sBnFiWN7kM9FgZuL02QYR_VOZ-dEU6Uj-DfbYlsWk0swLFhAbiuiMmPTz3MIiBHe21Gi6ArNsiEMeJERdKASCtC0z0EXTUUddNYL8lcarFP53Jk1Lnj-OhTLg9f-d8U8KKIzS8dScSmmPRvSa5hwCnUkBaFsQcAe3_EpWeTcyFOaXzT5OKuXTW1gR"/>
+<Image alt="Cheerful baby lion" className="w-full h-full object-contain drop-shadow-sm" data-alt="happy watercolor baby lion with a fluffy orange mane, cheering with paws up, soft textures, whimsical children's book aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCZkUtuePvUbywW6cb3y6A_YagThP0pMM_CMCbi7VJvnomWGPcdHG90ZGkd8lMtveJaF7py6QtlR68XZsZb2-sBnFiWN7kM9FgZuL02QYR_VOZ-dEU6Uj-DfbYlsWk0swLFhAbiuiMmPTz3MIiBHe21Gi6ArNsiEMeJERdKASCtC0z0EXTUUddNYL8lcarFP53Jk1Lnj-OhTLg9f-d8U8KKIzS8dScSmmPRvSa5hwCnUkBaFsQcAe3_EpWeTcyFOaXzT5OKuXTW1gR" fill />
 </div>
 </div>
 </div>
@@ -80,7 +81,7 @@ export default function BirthdayLocationReveal() {
 
 <div className="bg-surface-container-highest rounded-xl h-48 relative overflow-hidden shadow-[0_10px_40px_-10px_rgba(56,57,42,0.06)]">
 <div className="absolute inset-0 bg-secondary-container/20">
-<img alt="Map location" className="w-full h-full object-cover grayscale-[20%] opacity-80" data-alt="a bright and friendly stylized map showing local park area with green spaces and colorful icons for a children's party location" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBADcWL6EzTwHLt3oXNPC8wyuXwAuprCbdq-QgrCkHrWcLkLNSjqIlcD3GCSxLyV-qy5lc50Ta5dJBKI06xlDK5Q28173VdujuRNqMj8w0KVrnQ8qgztwvKhOoqTLbcXSMqk-NNPZbS7rUKUYPgUGg5Tsmb_z1pHcqpa8kl6CKrI8EAfvq3tjbmp-Ss_aH8CQkpQCnnqzR12P-TP-kx6Cmv9PUwWcvMv8WAoH-OIuTDbgK_1rJ7ViM4bux38_UqBTiZWuGj5E_LSbsm"/>
+<Image alt="Map location" className="w-full h-full object-cover grayscale-[20%] opacity-80" data-alt="a bright and friendly stylized map showing local park area with green spaces and colorful icons for a children's party location" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBADcWL6EzTwHLt3oXNPC8wyuXwAuprCbdq-QgrCkHrWcLkLNSjqIlcD3GCSxLyV-qy5lc50Ta5dJBKI06xlDK5Q28173VdujuRNqMj8w0KVrnQ8qgztwvKhOoqTLbcXSMqk-NNPZbS7rUKUYPgUGg5Tsmb_z1pHcqpa8kl6CKrI8EAfvq3tjbmp-Ss_aH8CQkpQCnnqzR12P-TP-kx6Cmv9PUwWcvMv8WAoH-OIuTDbgK_1rJ7ViM4bux38_UqBTiZWuGj5E_LSbsm" fill />
 </div>
 <div className="absolute bottom-4 left-4 right-4">
 <button className="w-full bg-primary text-on-primary py-3 rounded-full font-bold shadow-lg flex items-center justify-center gap-2 hover:scale-105 transition-transform active:scale-95">

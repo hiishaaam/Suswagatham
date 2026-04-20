@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function MuslimWeddingRsvp() {
   return (
     <div className={`bg-background text-on-surface font-body islamic-pattern min-h-screen flex flex-col items-center selection:bg-primary-container selection:text-primary`} style={{ minHeight: '100dvh' }}>
@@ -141,10 +142,10 @@ export default function MuslimWeddingRsvp() {
 
 <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
 <div className="absolute -right-20 top-40 w-96 h-96 opacity-10 rotate-12">
-<img className="w-full h-full object-contain" data-alt="Intricate Islamic geometric mandala pattern in gold foil on a dark emerald background for luxury royal wedding theme" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHme0D8onqJR3eFyC0d1PanDQQFw0W8BC9OMOPAwszrnx0B7jYkwgbDhZuE4TWkIYWk_7oO7ZmjiT_emPSswuV6ENPne5Mu1fhJD8kXXyRq4bnPGoC0f0F1fFQ14aX9Mtk4g2ZfhJOcYp16XG4NZS6gzMsXOvvq_Jb8eQ3l3L8_L9pb4Aqe9sVl2cIeCCTTjT4JwCUNnSOFHJ-3oWAS0HBQ788N_Z1tU3ycPe3rzn_8kS6_Uf0dMAYtvxWQE9COy2sTjJCqWrY5J33"/>
+<Image className="w-full h-full object-contain" data-alt="Intricate Islamic geometric mandala pattern in gold foil on a dark emerald background for luxury royal wedding theme" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHme0D8onqJR3eFyC0d1PanDQQFw0W8BC9OMOPAwszrnx0B7jYkwgbDhZuE4TWkIYWk_7oO7ZmjiT_emPSswuV6ENPne5Mu1fhJD8kXXyRq4bnPGoC0f0F1fFQ14aX9Mtk4g2ZfhJOcYp16XG4NZS6gzMsXOvvq_Jb8eQ3l3L8_L9pb4Aqe9sVl2cIeCCTTjT4JwCUNnSOFHJ-3oWAS0HBQ788N_Z1tU3ycPe3rzn_8kS6_Uf0dMAYtvxWQE9COy2sTjJCqWrY5J33" fill  alt=""/>
 </div>
 <div className="absolute -left-20 bottom-40 w-80 h-80 opacity-10 -rotate-12">
-<img className="w-full h-full object-contain" data-alt="Delicate Arabic calligraphy scroll art in faint gold color against deep forest green architectural background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYWNXjfemIqeIgUekC1RnTQexG2nnw70ZmYpicSEf8SHdIsjzKyKYX2zIV1eB1OuP5Q1ZKUqevpU2GOk8PRhkp_E1mjoaveEaL3oEDJlVtDs1-kRgcybBZTxFDgTgxR1P1YbZdPDPVGFe29NeG9FYX5aC656WQe2Zv3pq-nCV1JWrBaglZaf8B6HPxrK2OAXOGOSspCEVyUJWhH6b8G84RyohNesfQzsmsCVMcPr9bVtLXmxUSZICY9RHZ8OELaja0LYWZQLhBMToH"/>
+<Image className="w-full h-full object-contain" data-alt="Delicate Arabic calligraphy scroll art in faint gold color against deep forest green architectural background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYWNXjfemIqeIgUekC1RnTQexG2nnw70ZmYpicSEf8SHdIsjzKyKYX2zIV1eB1OuP5Q1ZKUqevpU2GOk8PRhkp_E1mjoaveEaL3oEDJlVtDs1-kRgcybBZTxFDgTgxR1P1YbZdPDPVGFe29NeG9FYX5aC656WQe2Zv3pq-nCV1JWrBaglZaf8B6HPxrK2OAXOGOSspCEVyUJWhH6b8G84RyohNesfQzsmsCVMcPr9bVtLXmxUSZICY9RHZ8OELaja0LYWZQLhBMToH" fill  alt=""/>
 </div>
 </div>
 

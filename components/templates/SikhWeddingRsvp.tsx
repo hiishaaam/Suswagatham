@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function SikhWeddingRsvp() {
   return (
     <div className={`bg-background text-on-background font-body paisley-pattern min-h-screen pb-32`} style={{ minHeight: '100dvh' }}>
@@ -47,7 +48,7 @@ export default function SikhWeddingRsvp() {
 <main className="pt-24 px-6 max-w-2xl mx-auto">
 
 <div className="relative w-full h-48 rounded-xl overflow-hidden mb-8 shadow-2xl border border-secondary-container/20">
-<img alt="Sikh wedding ceremony" className="w-full h-full object-cover opacity-60" data-alt="Close-up of ornate gold Sikh wedding jewelry and vibrant red fabric with intricate embroidery on a royal blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARxJ0w5dXP0qqZDddcaReFMbrVybiKD092k3wRNDt5Nh_CTk9J4c4ULSuBjyCb4lDJIanCeN2Iy9inS3mxnwuVQfzKlGQkYUSJ3yDOKBAFvjytL4YlZzhIwg93LJzuBvUSDD_qJMQErBvOy4A8BYx2bpJAum7SPq7B5Fna7Gp_dCJXbWNS_e0-5N3jT7iRox2XcihumBVpwa6CQWaT4P2CeRy1JFoWhHmSWGwhrf0HLuTJXkWCYOcLxVFWS8vlvNtsawQyOfLad7pw"/>
+<Image alt="Sikh wedding ceremony" className="w-full h-full object-cover opacity-60" data-alt="Close-up of ornate gold Sikh wedding jewelry and vibrant red fabric with intricate embroidery on a royal blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARxJ0w5dXP0qqZDddcaReFMbrVybiKD092k3wRNDt5Nh_CTk9J4c4ULSuBjyCb4lDJIanCeN2Iy9inS3mxnwuVQfzKlGQkYUSJ3yDOKBAFvjytL4YlZzhIwg93LJzuBvUSDD_qJMQErBvOy4A8BYx2bpJAum7SPq7B5Fna7Gp_dCJXbWNS_e0-5N3jT7iRox2XcihumBVpwa6CQWaT4P2CeRy1JFoWhHmSWGwhrf0HLuTJXkWCYOcLxVFWS8vlvNtsawQyOfLad7pw" fill />
 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
 <div className="absolute bottom-4 left-6">
 <h2 className="font-headline text-3xl font-bold text-primary mb-1">Join the Celebration</h2>

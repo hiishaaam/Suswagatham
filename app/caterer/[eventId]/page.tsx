@@ -1,9 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { notFound } from 'next/navigation'
 import CatererView from './CatererView'
-
-export const dynamic = 'force-dynamic'
-
 type Props = {
   params: Promise<{ eventId: string }>
   searchParams: Promise<{ access?: string }>
@@ -47,38 +44,23 @@ export default async function CatererPage({ params, searchParams }: Props) {
     )
   }
 
-  // 2. Fetch event
-  const { data: rawEvent, error: eventErr } = await supabase
-    .from('events')
-    .select('id, couple_names, event_date, venue_name, rsvp_cutoff_at')
-    .eq('id', eventId)
-    .single()
+  const [
+    { data: rawEvent, error: eventErr },
+    { data: rawSummary },
+    { data: rawSubEvents },
+    { data: rawRsvps }
+  ] = await Promise.all([
+    supabase.from('events').select('id, couple_names, event_date, venue_name, rsvp_cutoff_at').eq('id', eventId).single(),
+    (supabase.from('event_summary') as any).select('*').eq('event_id', eventId).single(),
+    supabase.from('sub_events').select('*').eq('event_id', eventId).order('display_order', { ascending: true }),
+    (supabase.from('rsvps') as any).select('guest_count, food_preference, sub_event_id').eq('event_id', eventId).eq('attending', true)
+  ])
 
   const event = rawEvent as any
   if (eventErr || !event) return notFound()
 
-  // 3. Fetch summary
-  const { data: rawSummary } = await (supabase.from('event_summary') as any)
-    .select('*')
-    .eq('event_id', eventId)
-    .single()
   const summary = rawSummary as any || {}
-
-  // 4. Fetch sub-events and their aggregations
-  const { data: rawSubEvents } = await supabase
-    .from('sub_events')
-    .select('*')
-    .eq('event_id', eventId)
-    .order('display_order', { ascending: true })
-
   const subEventsData = rawSubEvents as any[] || []
-
-  // Fetch all RSVPs for this event to do manual aggregation per sub-event if needed
-  const { data: rawRsvps } = await (supabase.from('rsvps') as any)
-    .select('guest_count, food_preference, sub_event_id')
-    .eq('event_id', eventId)
-    .eq('attending', true)
-
   const rsvpsData = rawRsvps as any[] || []
 
   const subEvents = subEventsData.map(se => {

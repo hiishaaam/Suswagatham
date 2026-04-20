@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'motion/react'
+import { m, AnimatePresence } from 'motion/react'
 import { signUpWithEmail } from '@/lib/supabase/auth'
 import { AlertCircle, ArrowRight, Check, Eye, EyeOff, User, Mail, Lock, CheckCircle2 } from 'lucide-react'
 
@@ -75,7 +75,7 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen bg-ivory flex flex-col items-center justify-center p-6 relative">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ type: 'spring', duration: 0.45, bounce: 0 }}
@@ -98,7 +98,7 @@ export default function SignupPage() {
           <AnimatePresence mode="wait">
             {/* STEP 1: Registration Form */}
             {step === 1 && (
-              <motion.div
+              <m.div
                 key="signup-form"
                 initial={{ opacity: 0, scale: 0.98, filter: 'blur(2px)' }}
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
@@ -111,14 +111,14 @@ export default function SignupPage() {
                 </div>
 
                 {error && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: -4, filter: 'blur(2px)' }}
                     animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                     className="bg-red-50 border border-red-100 text-red-600 text-xs font-semibold p-3 rounded-xl mb-6 flex items-start gap-2"
                   >
                     <AlertCircle size={16} className="mt-0.5 shrink-0" />
                     <span>{error}</span>
-                  </motion.div>
+                  </m.div>
                 )}
 
                 <form onSubmit={handleSignup} className="space-y-4">
@@ -190,7 +190,7 @@ export default function SignupPage() {
 
                     {/* Password strength indicators */}
                     {password.length > 0 && (
-                      <motion.div
+                      <m.div
                         initial={{ opacity: 0, height: 0, filter: 'blur(2px)' }}
                         animate={{ opacity: 1, height: 'auto', filter: 'blur(0px)' }}
                         className="mt-3 grid grid-cols-2 gap-1.5 ml-1"
@@ -206,7 +206,7 @@ export default function SignupPage() {
                             {label}
                           </div>
                         ))}
-                      </motion.div>
+                      </m.div>
                     )}
                   </div>
 
@@ -256,12 +256,12 @@ export default function SignupPage() {
                     </Link>
                   </p>
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
             {/* STEP 2: Success */}
             {step === 2 && (
-              <motion.div
+              <m.div
                 key="success"
                 initial={{ opacity: 0, scale: 0.95, filter: 'blur(4px)' }}
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
@@ -279,11 +279,11 @@ export default function SignupPage() {
                   <div className="h-3 w-3 rounded-full border-2 border-gold/30 border-t-gold animate-spin" />
                   Redirecting to login...
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>
-      </motion.div>
+      </m.div>
     </div>
   )
 }

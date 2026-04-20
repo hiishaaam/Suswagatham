@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function BirthdayInvitation() {
   return (
     <div className={`bg-[#FFF9E5] text-[#4A4A4A] min-h-screen flex flex-col items-center`} style={{ minHeight: '100dvh' }}>
@@ -31,7 +32,7 @@ export default function BirthdayInvitation() {
 
 <section className="mb-8 flex justify-center" data-purpose="hero-image-container">
 <div className="relative w-full aspect-square max-w-[320px] rounded-3xl overflow-hidden shadow-xl border-8 border-white transform -rotate-1">
-<img alt="Watercolor illustrations of a lion, monkey, and elephant with balloons for Leo's 2nd birthday" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcqOKyG4hTRNH6QReJlM-W4KMKh_NxyAOc-txrvdCOi2X_F2hxYlyVWbIdhZ635m7lFzCjSHN-005KJe43w50XIYYdtJSCXozeRg0v9qZYg1rKL-e-9xvjskm6il4pDmp0hzhtZnj9fRZajinXw_-sDDEM6ufDW4bpNVQj2TCxC83FghQ-ilryoaEvC2WHsR1NIWSqy16suxuwuO8OBsXiOcPevde1DVPr1hsNLyrMqrcGN9CQ7HHKnatdiM_QlxxhvvRGOUXrdut2"/>
+<Image alt="Watercolor illustrations of a lion, monkey, and elephant with balloons for Leo's 2nd birthday" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcqOKyG4hTRNH6QReJlM-W4KMKh_NxyAOc-txrvdCOi2X_F2hxYlyVWbIdhZ635m7lFzCjSHN-005KJe43w50XIYYdtJSCXozeRg0v9qZYg1rKL-e-9xvjskm6il4pDmp0hzhtZnj9fRZajinXw_-sDDEM6ufDW4bpNVQj2TCxC83FghQ-ilryoaEvC2WHsR1NIWSqy16suxuwuO8OBsXiOcPevde1DVPr1hsNLyrMqrcGN9CQ7HHKnatdiM_QlxxhvvRGOUXrdut2" fill />
 </div>
 </section>
 

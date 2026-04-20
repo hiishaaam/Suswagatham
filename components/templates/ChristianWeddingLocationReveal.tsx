@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function ChristianWeddingLocationReveal() {
   return (
     <div className={`bg-background text-on-background font-body selection:bg-primary-container/30 overflow-x-hidden`} style={{ minHeight: '100dvh' }}>
@@ -44,10 +45,10 @@ export default function ChristianWeddingLocationReveal() {
 <main className="relative min-h-screen pt-24 pb-32 px-6 paper-texture">
 
 <div className="absolute -top-10 -left-10 w-64 h-64 opacity-40 watercolor-wreath z-0">
-<img alt="Soft pastel pink and sage green watercolor floral wreath with delicate eucalyptus leaves" className="w-full h-full object-contain" data-alt="Soft pastel pink and sage green watercolor floral wreath with delicate eucalyptus leaves and ethereal morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyZF06hGn1wss5F_QZCkqIoRyokHQ2HLbMM7v6cAw69zxAIGzs5TA43DX0XTBQ3-4BXjhJJ2pCrhSUjt26QfkAtys8cvbJh4jwIYycU9J5Uf3NHuDna4idjpBSV8KcjOLr-pOZnZSX8bKBeA5Od7t2EnY78BVIG96o22_BbQRpYcBGEDlhRuZOs_FSvaLS_mYJ2v6H-24CzLDtnnvwWwPdlH6KcLWE6NGF7-82dMB_Xn7JrBKXcKZWhwjoyKidD-m1Vvlm2fLeVKWE"/>
+<Image alt="Soft pastel pink and sage green watercolor floral wreath with delicate eucalyptus leaves" className="w-full h-full object-contain" data-alt="Soft pastel pink and sage green watercolor floral wreath with delicate eucalyptus leaves and ethereal morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyZF06hGn1wss5F_QZCkqIoRyokHQ2HLbMM7v6cAw69zxAIGzs5TA43DX0XTBQ3-4BXjhJJ2pCrhSUjt26QfkAtys8cvbJh4jwIYycU9J5Uf3NHuDna4idjpBSV8KcjOLr-pOZnZSX8bKBeA5Od7t2EnY78BVIG96o22_BbQRpYcBGEDlhRuZOs_FSvaLS_mYJ2v6H-24CzLDtnnvwWwPdlH6KcLWE6NGF7-82dMB_Xn7JrBKXcKZWhwjoyKidD-m1Vvlm2fLeVKWE" fill />
 </div>
 <div className="absolute -bottom-10 -right-10 w-80 h-80 opacity-30 watercolor-wreath z-0 scale-x-[-1]">
-<img alt="Elegant botanical watercolor arrangement with soft rose petals and sage greenery" className="w-full h-full object-contain" data-alt="Elegant botanical watercolor arrangement with soft rose petals and sage greenery, floating on a textured white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD929oi2apCWpNtqgY62HcdeEN8AA3fFbn_8iJv0uR1ddPtMdl-fbcdGxWzbcbSHG676cHrw0F5CVAUXeoD4KDEeamvysKYkQdAkDr3TDwj0vmyM6ZJZuQIZF5bOB8LnV5aJhwHrUt9f7196YadFURF96HhocbO81eBK8VvzfGwT0XoCA6kZu69Ln4N1AI3EXAUbVfXaeYL_h_FwgBY7-eMh4pmicahKBxTgh6fuiaqxR-Mlir8wSk3oz8sPYSBVw4Eii9KhH-VlT8q"/>
+<Image alt="Elegant botanical watercolor arrangement with soft rose petals and sage greenery" className="w-full h-full object-contain" data-alt="Elegant botanical watercolor arrangement with soft rose petals and sage greenery, floating on a textured white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD929oi2apCWpNtqgY62HcdeEN8AA3fFbn_8iJv0uR1ddPtMdl-fbcdGxWzbcbSHG676cHrw0F5CVAUXeoD4KDEeamvysKYkQdAkDr3TDwj0vmyM6ZJZuQIZF5bOB8LnV5aJhwHrUt9f7196YadFURF96HhocbO81eBK8VvzfGwT0XoCA6kZu69Ln4N1AI3EXAUbVfXaeYL_h_FwgBY7-eMh4pmicahKBxTgh6fuiaqxR-Mlir8wSk3oz8sPYSBVw4Eii9KhH-VlT8q" fill />
 </div>
 
 <section className="relative z-10 text-center mb-12">
@@ -69,7 +70,7 @@ export default function ChristianWeddingLocationReveal() {
 <h3 className="font-label uppercase tracking-widest text-[10px] text-secondary">The Ceremony</h3>
 </div>
 <div className="aspect-video rounded-2xl overflow-hidden bg-surface-container mb-4 grayscale">
-<img className="w-full h-full object-cover opacity-60" data-alt="Minimalist architectural map of a serene city square featuring a historic stone church at the center" data-location="Charleston" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVXJcZRDHCZtKAsrGgTE1tBpw0fSa1vwHZLAMEfLQUMC4sZSyOudgsIbo3Pl90PO-5L8GvgVsSmqjwiGIf6xoGavr53iL9N8REFMU8O-UqBE-lp9S8uoQdIuth4twSQUZzCPs79uPmyapJhWE8aoYrfHSxhs5GzmCpeebV2PiAzID7hebA8pz2eWo_jXLR7PiOyBaZxej61YtOhUDO1RVtO1mhg3irHUYV41BoiJ_axuno3tskGOag7qP-vgHDR7SkFIXjbK_fz59S"/>
+<Image className="w-full h-full object-cover opacity-60" data-alt="Minimalist architectural map of a serene city square featuring a historic stone church at the center" data-location="Charleston" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVXJcZRDHCZtKAsrGgTE1tBpw0fSa1vwHZLAMEfLQUMC4sZSyOudgsIbo3Pl90PO-5L8GvgVsSmqjwiGIf6xoGavr53iL9N8REFMU8O-UqBE-lp9S8uoQdIuth4twSQUZzCPs79uPmyapJhWE8aoYrfHSxhs5GzmCpeebV2PiAzID7hebA8pz2eWo_jXLR7PiOyBaZxej61YtOhUDO1RVtO1mhg3irHUYV41BoiJ_axuno3tskGOag7qP-vgHDR7SkFIXjbK_fz59S" fill  alt=""/>
 </div>
 <div className="flex flex-col gap-1">
 <p className="font-headline text-lg text-on-surface">St. Jude’s Cathedral</p>
@@ -95,7 +96,7 @@ export default function ChristianWeddingLocationReveal() {
 </button>
 </div>
 <div className="w-20 h-20 rounded-full border border-outline-variant/20 flex items-center justify-center p-1 overflow-hidden">
-<img className="w-full h-full object-cover rounded-full" data-alt="Close-up of a luxury wedding table setting with white roses and silver cutlery under soft warm light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA37iyBHOtIVe6OU7ziAO3WRFIgSdxGFUhOYvHkVTuJBNEfLhl2scPwRYSFt1gVV0ZfcKyFiCisZxAP9riUDksI4mEbRl6XnT2dcO5ZabyLjYpRvKqBn4_bbSZrwqD9oKHEux8blQuHSvxSPfOCqfDxu2Uf9GrTJWHG36btCZkWQC849Jqtbf_r_Eifn674cPgvjg4vjz__CRzkl7blMMWuLlPzCsPdm3I_ox5N5OEI6d8KsRCOylctMQ03Mo7y_OaufH5raI6yM450"/>
+<Image className="w-full h-full object-cover rounded-full" data-alt="Close-up of a luxury wedding table setting with white roses and silver cutlery under soft warm light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA37iyBHOtIVe6OU7ziAO3WRFIgSdxGFUhOYvHkVTuJBNEfLhl2scPwRYSFt1gVV0ZfcKyFiCisZxAP9riUDksI4mEbRl6XnT2dcO5ZabyLjYpRvKqBn4_bbSZrwqD9oKHEux8blQuHSvxSPfOCqfDxu2Uf9GrTJWHG36btCZkWQC849Jqtbf_r_Eifn674cPgvjg4vjz__CRzkl7blMMWuLlPzCsPdm3I_ox5N5OEI6d8KsRCOylctMQ03Mo7y_OaufH5raI6yM450" fill  alt=""/>
 </div>
 </div>
 </div>
