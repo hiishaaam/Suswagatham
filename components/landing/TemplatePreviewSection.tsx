@@ -17,7 +17,7 @@ const TEMPLATES = [
     id: 'emerald-islamic', 
     name: 'Emerald Islamic', 
     category: 'MUSLIM',
-    price: '₹2,500',
+    price: '₹1',
     desc: 'Deep purple and gold elegance perfectly tailored for Muslim weddings (Nikah & Valima).', 
     features: ['Floating animated gold confetti', 'Live countdown timer', 'Fixed WhatsApp RSVP button'], 
     component: MidnightBloom 
@@ -26,7 +26,7 @@ const TEMPLATES = [
     id: 'ivory-luxe', 
     name: 'Ivory Luxe', 
     category: 'HINDU',
-    price: '₹2,000',
+    price: '₹1',
     desc: 'Traditional ivory and red with ornate gold details, ideal for Hindu Kerala weddings.', 
     features: ['Dual circular photo layout', 'Scrollable multiple event chips', 'Traditional Sadya RSVP formatting'], 
     component: KeralaGold
@@ -35,7 +35,7 @@ const TEMPLATES = [
     id: 'amethyst-dream', 
     name: 'Amethyst Dream', 
     category: 'ALL FAITHS',
-    price: '₹2,500',
+    price: '₹1',
     desc: 'Classic and luxurious styling with rich maroon hues for Christian ceremonies.', 
     features: ['Watermark cross background', 'Full-width hero photo overlay', 'Detailed guest counter stepper'], 
     component: MaroonRoyale 
@@ -44,7 +44,7 @@ const TEMPLATES = [
     id: 'warm-rustic', 
     name: 'Warm Rustic', 
     category: 'CHRISTIAN',
-    price: '₹2,500',
+    price: '₹1',
     desc: 'Modern destination wedding vibes with sleek typography and deep blues.', 
     features: ['Spinning circular photo ring', 'Animated star background', 'Built-in music player UI'], 
     component: SapphireNight 
@@ -53,7 +53,7 @@ const TEMPLATES = [
     id: 'ivory-garden', 
     name: 'Ivory Garden', 
     category: 'ALL FAITHS',
-    price: '₹2,000',
+    price: '₹1',
     desc: 'Soft pastels and watercolor florals for outdoor garden parties and receptions.', 
     features: ['Blush watercolor header', 'Polaroid-style photo frame', 'Soft pastel RSVP form tiles'], 
     component: GardenBloom 
