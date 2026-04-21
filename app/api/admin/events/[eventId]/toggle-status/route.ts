@@ -2,14 +2,14 @@ import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import { verifyAuth } from '@/lib/supabase/admin-verify'
 
-export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function POST(req: Request, { params }: { params: Promise<{ eventId: string }> }) {
   try {
     const auth = await verifyAuth()
     if (!auth.authorized) {
       return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
     }
 
-    const { id } = await params
+    const { eventId: id } = await params
     const supabase = await createClient()
 
     // Get current status — RLS enforces ownership

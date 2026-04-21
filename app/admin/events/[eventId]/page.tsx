@@ -7,9 +7,9 @@ import { Copy, Check, Upload, Plus, CheckCircle2, ChevronRight, Loader2, Save, M
 import { m, AnimatePresence } from 'motion/react'
 import PaymentModal from '@/components/PaymentModal'
 import WhatsAppDistributor from '@/components/WhatsAppDistributor'
-export default function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default function EventDetailPage({ params }: { params: Promise<{ eventId: string }> }) {
   const unwrappedParams = use(params)
-  const id = unwrappedParams.id
+  const id = unwrappedParams.eventId
   
   const [event, setEvent] = useState<any>(null)
   const [tokens, setTokens] = useState<any[]>([])
