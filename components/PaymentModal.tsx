@@ -183,7 +183,7 @@ export default function PaymentModal({ isOpen, onClose, eventId, coupleNames, te
                       </div>
                       <div className="text-right">
                         <p className="text-[10px] text-muted uppercase tracking-widest font-bold mb-1">Amount</p>
-                        <p className="font-display text-3xl text-ink">₹2,000</p>
+                        <p className="font-display text-3xl text-ink">₹1</p>
                       </div>
                     </div>
                   </div>
@@ -237,7 +237,7 @@ export default function PaymentModal({ isOpen, onClose, eventId, coupleNames, te
                     ) : (
                       <>
                         <CreditCard size={18} />
-                        Pay ₹2,000 & Go Live
+                        Pay ₹1 & Go Live
                       </>
                     )}
                   </button>
