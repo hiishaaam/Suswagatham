@@ -3,14 +3,14 @@ import { NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { verifyAuth } from '@/lib/supabase/admin-verify'
 
-export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(req: Request, { params }: { params: Promise<{ eventId: string }> }) {
   try {
     const auth = await verifyAuth()
     if (!auth.authorized) {
       return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
     }
 
-    const { id } = await params
+    const { eventId: id } = await params
     const supabase = await createClient()
 
     // RLS will ensure user can only see their own events (or all if admin)
@@ -33,14 +33,14 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
   }
 }
 
-export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PUT(req: Request, { params }: { params: Promise<{ eventId: string }> }) {
   try {
     const auth = await verifyAuth()
     if (!auth.authorized) {
       return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
     }
 
-    const { id } = await params
+    const { eventId: id } = await params
     const body = await req.json()
     const supabase = await createClient()
 
@@ -79,14 +79,14 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ eventId: string }> }) {
   try {
     const auth = await verifyAuth()
     if (!auth.authorized) {
       return NextResponse.json({ success: false, error: auth.error }, { status: auth.status })
     }
 
-    const { id } = await params
+    const { eventId: id } = await params
     const supabase = await createClient()
 
     // Cascade delete: rsvps → guest_tokens → link_clicks → caterer_access → sub_events → event
