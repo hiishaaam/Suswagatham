@@ -2,16 +2,19 @@
 
 import React, { useState, useRef, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { sendOTP, verifyOTP } from '@/lib/supabase/auth'
-import { AlertCircle, ArrowRight } from 'lucide-react'
+import { sendOTP, verifyOTP, signInWithEmail } from '@/lib/supabase/auth'
+import { AlertCircle, ArrowRight, Mail, Phone } from 'lucide-react'
 
 function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirectPath = searchParams.get('redirect') || '/dashboard'
 
+  const [authMode, setAuthMode] = useState<'email' | 'phone'>('email')
   const [step, setStep] = useState<1 | 2>(1)
   const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -27,6 +30,29 @@ function LoginContent() {
     return () => clearTimeout(timer)
   }, [countdown])
 
+  // ── Email Login ──
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError(null)
+
+    if (!email || !password) {
+      setError('Please enter your email and password')
+      return
+    }
+
+    setIsLoading(true)
+    const { error: signInError } = await signInWithEmail(email, password)
+    setIsLoading(false)
+
+    if (signInError) {
+      setError(signInError)
+    } else {
+      router.push(redirectPath)
+      router.refresh()
+    }
+  }
+
+  // ── Phone OTP Login ──
   const handlePhoneSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
@@ -106,11 +132,18 @@ function LoginContent() {
     if (otpError) setError(otpError)
   }
 
+  const switchMode = (mode: 'email' | 'phone') => {
+    setAuthMode(mode)
+    setError(null)
+    setStep(1)
+    setOtp(['', '', '', '', '', ''])
+  }
+
   return (
     <div className="min-h-screen bg-ivory flex items-center justify-center p-6 selection:bg-gold/30">
       <div className="w-full max-w-[400px] bg-white border border-gold-light rounded-sm shadow-card p-10 flex flex-col items-center">
         
-        {/* Logo matching theme */}
+        {/* Logo */}
         <div className="flex items-center gap-2 mb-8">
           <div className="text-gold font-display text-sm font-bold flex items-center justify-center w-8 h-8 rounded border border-gold/50 bg-gold/10">
             W
@@ -118,14 +151,40 @@ function LoginContent() {
           <span className="font-display text-2xl font-bold text-ink tracking-wide">WeddWise</span>
         </div>
 
-        <div className="w-full border-t border-gold-light/40 mb-8 pt-4 text-center">
+        <div className="w-full border-t border-gold-light/40 mb-6 pt-4 text-center">
           <h1 className="font-display text-4xl text-ink italic mb-3">Welcome back</h1>
           <p className="font-body text-sm text-muted">
-            {step === 1 
-              ? "Enter your mobile number to access your wedding dashboard"
-              : `We've sent a 6-digit code to +91 ${phone}`
+            {authMode === 'email' 
+              ? "Sign in with your email to access your wedding dashboard"
+              : step === 1 
+                ? "Enter your mobile number to access your wedding dashboard"
+                : `We've sent a 6-digit code to +91 ${phone}`
             }
           </p>
+        </div>
+
+        {/* Auth Mode Toggle */}
+        <div className="w-full flex rounded-sm overflow-hidden border border-gold-light mb-6">
+          <button
+            onClick={() => switchMode('email')}
+            className={`flex-1 py-2.5 text-[11px] font-bold uppercase tracking-widest flex justify-center items-center gap-1.5 transition-colors ${
+              authMode === 'email' 
+                ? 'bg-ink text-gold' 
+                : 'bg-white text-muted hover:bg-ivory'
+            }`}
+          >
+            <Mail size={13} /> Email
+          </button>
+          <button
+            onClick={() => switchMode('phone')}
+            className={`flex-1 py-2.5 text-[11px] font-bold uppercase tracking-widest flex justify-center items-center gap-1.5 transition-colors border-l border-gold-light ${
+              authMode === 'phone' 
+                ? 'bg-ink text-gold' 
+                : 'bg-white text-muted hover:bg-ivory'
+            }`}
+          >
+            <Phone size={13} /> Phone OTP
+          </button>
         </div>
 
         {error && (
@@ -135,7 +194,49 @@ function LoginContent() {
           </div>
         )}
 
-        {step === 1 ? (
+        {/* ── EMAIL LOGIN ── */}
+        {authMode === 'email' && (
+          <form className="w-full" onSubmit={handleEmailSubmit}>
+            <div className="mb-4">
+              <label className="block text-[11px] font-bold uppercase tracking-widest text-ink mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full border border-gold-light bg-ivory px-4 py-3 text-ink font-body placeholder:text-muted/40 focus:outline-none focus:border-gold transition-colors rounded-sm"
+                disabled={isLoading}
+              />
+            </div>
+            <div className="mb-8">
+              <label className="block text-[11px] font-bold uppercase tracking-widest text-ink mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border border-gold-light bg-ivory px-4 py-3 text-ink font-body placeholder:text-muted/40 focus:outline-none focus:border-gold transition-colors rounded-sm"
+                disabled={isLoading}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading || !email || !password}
+              className="w-full bg-gold text-[#0F0C07] px-6 py-4 text-[12px] font-bold uppercase tracking-widest rounded-sm hover:bg-gold-light transition-colors shadow-sm disabled:opacity-50 flex justify-center items-center gap-2"
+            >
+              {isLoading ? 'Signing in...' : 'Sign In'} 
+              {!isLoading && <ArrowRight size={16} />}
+            </button>
+          </form>
+        )}
+
+        {/* ── PHONE OTP LOGIN ── */}
+        {authMode === 'phone' && step === 1 && (
           <form className="w-full" onSubmit={handlePhoneSubmit}>
             <div className="mb-8">
               <label className="block text-[11px] font-bold uppercase tracking-widest text-ink mb-2">
@@ -166,7 +267,10 @@ function LoginContent() {
               {!isLoading && <ArrowRight size={16} />}
             </button>
           </form>
-        ) : (
+        )}
+
+        {/* ── OTP VERIFICATION STEP ── */}
+        {authMode === 'phone' && step === 2 && (
           <div className="w-full">
             <div className="flex justify-between gap-2 mb-8">
               {otp.map((digit, index) => (

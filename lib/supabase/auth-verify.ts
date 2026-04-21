@@ -16,40 +16,60 @@ export async function verifyDashboardAuth(eventId: string) {
   )
 
   const { data: { user } } = await supabaseAuth.auth.getUser()
-  if (!user || !user.phone) {
+  if (!user) {
+    return { authorized: false, error: 'Unauthorized', status: 401, phone: null }
+  }
+
+  // Identify the user — they might have logged in via phone or email
+  const userPhone = user.phone || null
+  const userEmail = user.email || null
+
+  if (!userPhone && !userEmail) {
     return { authorized: false, error: 'Unauthorized', status: 401, phone: null }
   }
 
   const supabase = await createClient()
-  const { data: rawEvent, error } = await supabase
+
+  // Strategy 1: Check if the user owns this event directly (via user_id from Supabase Auth)
+  const { data: ownedEvent } = await supabase
     .from('events')
-    .select(`
-      id,
-      clients (
-        phone
-      )
-    `)
+    .select('id')
     .eq('id', eventId)
+    .eq('user_id', user.id)
     .single()
 
-  const event = rawEvent as any
-
-  if (error || !event) {
-    return { authorized: false, error: 'Event not found', status: 404, phone: user.phone }
+  if (ownedEvent) {
+    return { authorized: true, error: null, status: 200, phone: userPhone || userEmail || '' }
   }
 
-  const clientData = Array.isArray(event.clients) ? event.clients[0] : event.clients
-  
-  // Normalize both phones to 10-digit format before comparing.
-  // Supabase stores phone in E.164 (+91XXXXXXXXXX), clients.phone is 10 digits.
-  if (!clientData?.phone) {
-    return { authorized: false, error: 'No client phone configured', status: 403, phone: user.phone }
+  // Strategy 2: Fall back to phone-match against client record
+  if (userPhone) {
+    const { data: rawEvent, error } = await supabase
+      .from('events')
+      .select(`
+        id,
+        clients (
+          phone
+        )
+      `)
+      .eq('id', eventId)
+      .single()
+
+    const event = rawEvent as any
+
+    if (error || !event) {
+      return { authorized: false, error: 'Event not found', status: 404, phone: userPhone }
+    }
+
+    const clientData = Array.isArray(event.clients) ? event.clients[0] : event.clients
+    
+    if (clientData?.phone) {
+      const normalize = (p: string) => p.replace(/^\+91/, '').replace(/\D/g, '')
+      if (normalize(clientData.phone) === normalize(userPhone)) {
+        return { authorized: true, error: null, status: 200, phone: userPhone }
+      }
+    }
   }
 
-  const normalize = (p: string) => p.replace(/^\+91/, '').replace(/\D/g, '')
-  if (normalize(clientData.phone) !== normalize(user.phone)) {
-    return { authorized: false, error: 'Forbidden. Phone mismatch.', status: 403, phone: user.phone }
-  }
-
-  return { authorized: true, error: null, status: 200, phone: user.phone }
+  return { authorized: false, error: 'Access denied. You do not own this event.', status: 403, phone: userPhone || userEmail || '' }
 }
