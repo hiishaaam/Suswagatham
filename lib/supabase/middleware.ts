@@ -36,8 +36,8 @@ export async function updateSession(request: NextRequest) {
   // /admin (except /admin/login which we keep for legacy), /dashboard
   const isProtectedRoute = (
     (path.startsWith('/admin') && !path.startsWith('/admin/login'))
-    || path.startsWith('/dashboard')
-    || path.startsWith('/api/admin') && !path.startsWith('/api/admin/login')
+    || (path.startsWith('/dashboard') && !path.startsWith('/dashboard/login'))
+    || (path.startsWith('/api/admin') && !path.startsWith('/api/admin/login'))
   )
 
   if (isProtectedRoute && !user) {
@@ -46,9 +46,12 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(redirectUrl)
   }
 
-  // If the user is logged in and visits /login or /signup, redirect to /admin
+  // If the user is logged in and visits login pages, redirect them to their respective destinations
   if (user && (path === '/login' || path === '/signup')) {
     return NextResponse.redirect(new URL('/admin', request.url))
+  }
+  if (user && path === '/dashboard/login') {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
   return supabaseResponse
