@@ -35,8 +35,8 @@ export default async function DashboardIndex() {
       .limit(1)
       .single()
       
-    if (ownedEvent && ownedEvent.id) {
-      redirect(`/dashboard/${ownedEvent.id}`)
+    if (ownedEvent && (ownedEvent as any).id) {
+      redirect(`/dashboard/${(ownedEvent as any).id}`)
     }
   }
 
@@ -56,8 +56,8 @@ export default async function DashboardIndex() {
       .limit(1)
       .single()
 
-    if (clientEvent && clientEvent.event_id) {
-      redirect(`/dashboard/${clientEvent.event_id}`)
+    if (clientEvent && (clientEvent as any).event_id) {
+      redirect(`/dashboard/${(clientEvent as any).event_id}`)
     }
 
     // Alternative exact match check
@@ -66,12 +66,12 @@ export default async function DashboardIndex() {
       .select('event_id, phone')
 
     const matchedClient = allClients?.find(c => {
-      if (!c.phone) return false
-      return normalize(c.phone) === normalizedUserPhone
+      if (!(c as any).phone) return false
+      return normalize((c as any).phone) === normalizedUserPhone
     })
 
-    if (matchedClient && matchedClient.event_id) {
-      redirect(`/dashboard/${matchedClient.event_id}`)
+    if (matchedClient && (matchedClient as any).event_id) {
+      redirect(`/dashboard/${(matchedClient as any).event_id}`)
     }
   }
 
