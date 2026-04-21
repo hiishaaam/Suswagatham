@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValue } from 'motion/react';
+import { m, useScroll, useTransform, useMotionValue } from 'motion/react';
 import Image from 'next/image';
 
 const MOCK_TEMPLATES = [
@@ -27,7 +27,7 @@ export default function TemplatesShowcase() {
   return (
     <section className="py-32 bg-[#F6F4F0] relative overflow-hidden" id="templates">
       <div className="max-w-7xl mx-auto px-6 mb-12">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -42,18 +42,18 @@ export default function TemplatesShowcase() {
             <span className="w-1 h-1 bg-gold rounded-full" />
             <span className="uppercase tracking-widest text-sm">Drag to explore</span>
           </p>
-        </motion.div>
+        </m.div>
       </div>
 
       <div className="w-full h-full overflow-hidden" ref={containerRef}>
-        <motion.div
+        <m.div
           drag="x"
           dragConstraints={{ right: 0, left: -width }}
           whileTap={{ cursor: "grabbing" }}
           className="flex gap-8 px-6 md:px-12 cursor-grab"
         >
           {MOCK_TEMPLATES.map((template, idx) => (
-            <motion.div 
+            <m.div 
               key={template.id}
               className="flex flex-col items-center flex-none"
               initial={{ opacity: 0, x: 50 }}
@@ -74,7 +74,7 @@ export default function TemplatesShowcase() {
 
                 <div className="relative w-full h-full bg-ivory overflow-hidden rounded-[36px] custom-scrollbar">
                    {/* We load the screenshot full width natively to maintain crisp pixel density instead of object-cover scaling */ }
-                   <motion.img 
+                   <m.img 
                       src={template.image} 
                       alt={template.name}
                       className="w-full h-auto min-h-full"
@@ -93,9 +93,9 @@ export default function TemplatesShowcase() {
                   {template.category}
                 </span>
               </div>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
 
       {/* Fade overlay for right side */}

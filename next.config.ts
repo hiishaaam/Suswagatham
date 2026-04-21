@@ -16,6 +16,18 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_SUPABASE_URL 
           ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname 
           : '*.supabase.co',
@@ -29,6 +41,7 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
   },
+  
   webpack: (config, {dev}) => {
     // HMR is disabled in AI Studio via DISABLE_HMR env var.
     // Do not modify - file watching is disabled to prevent flickering during agent edits.

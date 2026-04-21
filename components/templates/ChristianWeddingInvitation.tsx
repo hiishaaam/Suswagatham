@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function ChristianWeddingInvitation() {
   return (
     <div className={`font-sans text-slate-800`} style={{ minHeight: '100dvh' }}>
@@ -19,7 +20,7 @@ export default function ChristianWeddingInvitation() {
 <main className="invitation-container bg-white flex flex-col relative overflow-hidden">
 
 <section className="relative w-full h-[60vh]" data-purpose="hero-image-container">
-<img alt="Elegant Christian Wedding Invitation Card with floral wreath and cross" className="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLAmKmX7Puef966TMahQ_-stcmTp4-TP0rkYTvKaM65RBLS7Da0mKooUC8gKBZtC3MZwW44bFIyZY_p7jIARyca9td6PVsmfet3yB1IM1Qv5nw2flbVPfmjdm6YE2Z60AFkxNXMlnTy0fDZ1YicdMKo8hTwi0RCc-V1pKPinbTJk7IfinlLuulbSqq-X6JHX3hckfq9SL-62yJAgYzm1jvYXa2SlJ85GJeiWnuwpvSLIKLWw33I-cvmiZDpca-FArSYri07U7Xjbk9"/>
+<Image alt="Elegant Christian Wedding Invitation Card with floral wreath and cross" className="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLAmKmX7Puef966TMahQ_-stcmTp4-TP0rkYTvKaM65RBLS7Da0mKooUC8gKBZtC3MZwW44bFIyZY_p7jIARyca9td6PVsmfet3yB1IM1Qv5nw2flbVPfmjdm6YE2Z60AFkxNXMlnTy0fDZ1YicdMKo8hTwi0RCc-V1pKPinbTJk7IfinlLuulbSqq-X6JHX3hckfq9SL-62yJAgYzm1jvYXa2SlJ85GJeiWnuwpvSLIKLWw33I-cvmiZDpca-FArSYri07U7Xjbk9" fill />
 
 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white"></div>
 </section>

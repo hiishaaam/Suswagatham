@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react'
+import { m, useScroll, useTransform, AnimatePresence } from 'motion/react'
 import { Users, QrCode, ChefHat, BarChart3, Calendar, Share2, CheckCircle2, ArrowRight, Check, Star } from 'lucide-react'
 import { useCountUp } from '@/hooks/useCountUp'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
@@ -15,7 +15,7 @@ const AnimatedStat = ({ value, label, suffix = '' }: { value: string | number, l
   const animatedValue = useCountUp(isNum && hasEntered ? value as number : 0)
   
   return (
-    <motion.div 
+    <m.div 
       ref={ref as React.RefObject<HTMLDivElement>} 
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
@@ -29,13 +29,13 @@ const AnimatedStat = ({ value, label, suffix = '' }: { value: string | number, l
       <div className="font-body text-[12px] uppercase text-ink/70 font-bold tracking-widest">
         {label}
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 
 // Fade in up wrapper
 const FadeInUp = ({ children, delay = 0, className = '' }: any) => (
-  <motion.div
+  <m.div
     initial={{ opacity: 0, y: 40 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-100px" }}
@@ -43,7 +43,7 @@ const FadeInUp = ({ children, delay = 0, className = '' }: any) => (
     className={className}
   >
     {children}
-  </motion.div>
+  </m.div>
 )
 
 export default function LandingPage() {
@@ -63,12 +63,12 @@ export default function LandingPage() {
       
       {/* GLOBAL BACKGROUND MESH (For the entire page to give glassmorphism something to blur) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-ivory">
-        <motion.div 
+        <m.div 
           animate={{ rotate: 360, scale: [1, 1.2, 1] }} 
           transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
           className="absolute -top-[20%] -right-[10%] w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-gold/20 blur-[150px] rounded-full mix-blend-multiply"
         />
-        <motion.div 
+        <m.div 
           animate={{ rotate: -360, x: [0, -100, 0], y: [0, 100, 0] }} 
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[40%] -left-[20%] w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] bg-gold/15 blur-[120px] rounded-full mix-blend-multiply"
@@ -78,7 +78,7 @@ export default function LandingPage() {
       {/* 1. Navigation (Clear iOS Glass) */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-black/10 backdrop-blur-[40px] shadow-[0_10px_30px_rgba(0,0,0,0.1)] py-3 border-b border-white/20' : 'bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -88,9 +88,9 @@ export default function LandingPage() {
               W
             </div>
             <span className={`font-display text-xl md:text-2xl font-bold tracking-wide transition-colors duration-500 ${scrolled ? 'text-ink' : 'text-ivory'}`}>WeddWise</span>
-          </motion.div>
+          </m.div>
           
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
@@ -99,9 +99,9 @@ export default function LandingPage() {
             <Link href="#features" className="hover:text-gold transition-colors hover:scale-105 transform duration-300 drop-shadow-sm">Features</Link>
             <Link href="#how-it-works" className="hover:text-gold transition-colors hover:scale-105 transform duration-300 drop-shadow-sm">How It Works</Link>
             <Link href="#pricing" className="hover:text-gold transition-colors hover:scale-105 transform duration-300 drop-shadow-sm">Pricing</Link>
-          </motion.div>
+          </m.div>
 
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -116,7 +116,7 @@ export default function LandingPage() {
                 <div className="absolute inset-0 h-full w-0 bg-gold transition-all duration-300 ease-out group-hover:w-full z-0"></div>
               </button>
             </Link>
-          </motion.div>
+          </m.div>
         </div>
       </nav>
 
@@ -125,17 +125,17 @@ export default function LandingPage() {
         <ParticleField />
         
         {/* Animated Radial glow */}
-        <motion.div 
+        <m.div 
           animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] bg-gold/20 rounded-full blur-[140px] pointer-events-none"
         />
 
-        <motion.div 
+        <m.div 
           style={{ y: heroY, opacity }}
           className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto"
         >
-          <motion.h1 
+          <m.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.3 }}
@@ -146,18 +146,18 @@ export default function LandingPage() {
               Feels Expected
               <span className="absolute bottom-2 left-0 w-full h-[1px] bg-gold/50 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out origin-left"></span>
             </span>
-          </motion.h1>
+          </m.h1>
 
-          <motion.p 
+          <m.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
             className="font-body text-ivory/60 text-base md:text-lg max-w-2xl mx-auto mb-12 leading-relaxed"
           >
             Beautiful digital invitations, token-based RSVP tracking, real-time headcount dashboards, and caterer kitchen reports — all built for the grandeur of Indian weddings.
-          </motion.p>
+          </m.p>
 
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.7 }}
@@ -173,9 +173,9 @@ export default function LandingPage() {
                 <span>View Live Demo</span>
               </button>
             </Link>
-          </motion.div>
+          </m.div>
           
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
@@ -183,19 +183,19 @@ export default function LandingPage() {
           >
              <div className="flex items-center gap-1 text-gold">
                {[1,2,3,4,5].map(i => (
-                 <motion.div key={i} animate={{ rotateY: 360 }} transition={{ duration: 2, delay: i * 0.2, repeat: Infinity, repeatDelay: 5 }}>
+                 <m.div key={i} animate={{ rotateY: 360 }} transition={{ duration: 2, delay: i * 0.2, repeat: Infinity, repeatDelay: 5 }}>
                    <Star size={14} className="fill-gold" />
-                 </motion.div>
+                 </m.div>
                ))}
              </div>
              <p className="text-[10px] uppercase tracking-[0.2em] text-ivory/60 font-bold">
                Trusted by 50+ Kerala wedding families
              </p>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
 
         {/* Clear iOS Glass Cards */}
-        <motion.div 
+        <m.div 
           initial={{ opacity: 0, x: -50, y: 20, rotate: -5 }}
           animate={{ opacity: 1, x: 0, y: [0, -15, 0], rotate: -12 }}
           transition={{ 
@@ -210,16 +210,16 @@ export default function LandingPage() {
           <div className="text-[10px] uppercase tracking-widest text-gold font-bold relative z-10">Attending</div>
           <div className="font-display text-4xl text-ivory relative z-10 drop-shadow-md">48 <span className="text-lg text-ivory/50">/ 120</span></div>
           <div className="h-1.5 w-full bg-black/40 rounded-full mt-2 overflow-hidden shadow-inner relative z-10 border border-white/5">
-            <motion.div 
+            <m.div 
               initial={{ width: 0 }}
               animate={{ width: "40%" }}
               transition={{ duration: 1.5, delay: 2, ease: "easeOut" }}
               className="h-full bg-gold rounded-full shadow-[0_0_10px_rgba(201,168,76,0.8)]"
             />
           </div>
-        </motion.div>
+        </m.div>
 
-        <motion.div 
+        <m.div 
           initial={{ opacity: 0, x: 50, y: -20, rotate: 5 }}
           animate={{ opacity: 1, x: 0, y: [0, 15, 0], rotate: 8 }}
           transition={{ 
@@ -233,16 +233,16 @@ export default function LandingPage() {
         >
            <div className="flex justify-between items-center relative z-10">
              <div className="text-ivory font-bold text-sm drop-shadow-md">Menon Family</div>
-             <motion.div 
+             <m.div 
                animate={{ scale: [1, 1.05, 1] }} 
                transition={{ duration: 2, repeat: Infinity }}
                className="bg-black/20 border border-success/30 backdrop-blur-md text-success text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold shadow-sm"
              >
                Confirmed
-             </motion.div>
+             </m.div>
            </div>
            <div className="text-ivory/60 text-xs font-medium relative z-10">4 Guests &middot; Non-Veg</div>
-        </motion.div>
+        </m.div>
 
       </section>
 
@@ -284,7 +284,7 @@ export default function LandingPage() {
               { icon: Calendar, title: 'Multi-Sub-Event', desc: 'Track Reception, Haldi, and Sangeet separately in one event.' },
               { icon: Share2, title: 'WhatsApp Integration', desc: 'One-click share links perfectly formatted for endless WhatsApp forwarding.' },
             ].map((f, i) => (
-              <motion.div 
+              <m.div 
                 key={i}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -298,7 +298,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="font-display text-2xl text-ink font-bold mb-3 relative z-10 group-hover:text-gold transition-colors">{f.title}</h3>
                 <p className="text-ink/70 text-sm leading-relaxed relative z-10 font-medium">{f.desc}</p>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -320,7 +320,7 @@ export default function LandingPage() {
 
           <div className="relative mt-10">
             <div className="hidden md:block absolute top-[40px] left-[10%] w-[80%] h-[2px] bg-white/5 rounded-full">
-              <motion.div 
+              <m.div 
                 initial={{ width: "0%" }}
                 whileInView={{ width: "100%" }}
                 viewport={{ once: true }}
@@ -335,7 +335,7 @@ export default function LandingPage() {
                  { step: '02', title: 'Invite Guests', desc: 'Generate unique token links per family, share seamlessly via WhatsApp' },
                  { step: '03', title: 'Track Live', desc: 'Watch RSVPs arrive in real-time, generate instant kitchen reports' },
                ].map((s, i) => (
-                 <motion.div 
+                 <m.div 
                    key={i}
                    initial={{ opacity: 0, y: 30 }}
                    whileInView={{ opacity: 1, y: 0 }}
@@ -343,15 +343,15 @@ export default function LandingPage() {
                    transition={{ duration: 0.8, delay: i * 0.3 }}
                    className="relative flex flex-col items-center text-center group bg-black/10 backdrop-blur-[40px] border border-white/10 p-8 rounded-[40px] shadow-2xl hover:bg-white/5 hover:border-gold/30 transition-all"
                  >
-                   <motion.div 
+                   <m.div 
                      whileHover={{ scale: 1.1, rotate: 5 }}
                      className="w-20 h-20 bg-white/5 backdrop-blur-[40px] border border-white/20 rounded-3xl flex items-center justify-center font-display text-3xl italic text-gold mb-8 relative z-10 shadow-lg transition-all duration-300 group-hover:border-gold"
                    >
                      {s.step}
-                   </motion.div>
+                   </m.div>
                    <h3 className="font-body font-bold text-lg text-ivory uppercase tracking-widest mb-4 transition-colors drop-shadow-md">{s.title}</h3>
                    <p className="text-ivory/60 text-sm leading-relaxed max-w-xs">{s.desc}</p>
-                 </motion.div>
+                 </m.div>
                ))}
             </div>
           </div>
@@ -362,7 +362,7 @@ export default function LandingPage() {
       <section className="py-32 px-6 overflow-hidden relative z-10">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
           
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -383,7 +383,7 @@ export default function LandingPage() {
                 {text:'Venue map revealed only after RSVP', delay: 0.2},
                 {text:'Works perfectly on any mobile device', delay: 0.3}
               ].map((item, i) => (
-                <motion.div 
+                <m.div 
                   key={i} 
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -395,11 +395,11 @@ export default function LandingPage() {
                      <Check size={14} className="text-gold group-hover:text-white transition-colors" />
                    </div>
                    <p className="font-body text-ink/80 text-lg group-hover:text-ink transition-colors font-medium mt-0.5">{item.text}</p>
-                </motion.div>
+                </m.div>
               ))}
             </div>
 
-            <motion.div 
+            <m.div 
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -411,10 +411,10 @@ export default function LandingPage() {
                   Explore Guest Flow <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
                 </button>
               </Link>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
 
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
@@ -423,7 +423,7 @@ export default function LandingPage() {
           >
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[600px] bg-gold/20 blur-[120px] rounded-full pointer-events-none"></div>
 
-            <motion.div 
+            <m.div 
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               className="w-[320px] h-[650px] bg-white/10 backdrop-blur-[40px] border-[0.5px] border-white/40 rounded-[44px] shadow-[0_30px_80px_rgba(0,0,0,0.1)] relative overflow-hidden flex flex-col group p-2"
@@ -435,11 +435,11 @@ export default function LandingPage() {
                  
                  <div className="flex-1 overflow-y-auto bg-ivory hide-scrollbar flex flex-col items-center">
                    <div className="w-full h-72 bg-gradient-to-b from-ink to-[#2A1F12] flex flex-col items-center justify-end pb-8 relative shrink-0 overflow-hidden">
-                     <motion.div 
+                     <m.div 
                        animate={{ rotate: 360 }}
                        transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
                        className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] opacity-20" style={{ backgroundImage: 'radial-gradient(var(--color-gold) 1px, transparent 1px)', backgroundSize: '24px 24px' }}
-                     ></motion.div>
+                     ></m.div>
                      <h1 className="font-display text-4xl italic text-ivory relative z-10 drop-shadow-md">Rahul & Priya</h1>
                      <div className="w-16 h-[2px] bg-gold my-4 relative z-10"></div>
                      <div className="text-[10px] text-gold uppercase tracking-widest relative z-10 font-bold drop-shadow-md">Kochi &middot; Dec 28</div>
@@ -448,18 +448,18 @@ export default function LandingPage() {
                    <div className="p-6 flex-1 flex flex-col w-full">
                      <h2 className="font-display text-3xl text-ink mb-6 text-center leading-snug pt-4">Will you be<br/>joining us?</h2>
                      <div className="space-y-4 mt-auto mb-4 w-full">
-                       <motion.div whileHover={{ scale: 1.02 }} className="w-full py-4 border border-gold/40 bg-gold/5 backdrop-blur-[40px] text-ink font-display text-xl italic rounded-2xl shadow-sm flex justify-center items-center cursor-pointer hover:bg-gold/20 hover:border-gold transition-all">
+                       <m.div whileHover={{ scale: 1.02 }} className="w-full py-4 border border-gold/40 bg-gold/5 backdrop-blur-[40px] text-ink font-display text-xl italic rounded-2xl shadow-sm flex justify-center items-center cursor-pointer hover:bg-gold/20 hover:border-gold transition-all">
                          Yes, I&apos;ll be there
-                       </motion.div>
-                       <motion.div whileHover={{ scale: 1.02 }} className="w-full py-4 border-[0.5px] border-ink/20 bg-black/5 backdrop-blur-[40px] text-ink/70 font-display text-xl italic rounded-2xl shadow-sm flex justify-center items-center cursor-pointer hover:bg-black/10 transition-all">
+                       </m.div>
+                       <m.div whileHover={{ scale: 1.02 }} className="w-full py-4 border-[0.5px] border-ink/20 bg-black/5 backdrop-blur-[40px] text-ink/70 font-display text-xl italic rounded-2xl shadow-sm flex justify-center items-center cursor-pointer hover:bg-black/10 transition-all">
                          I cannot attend
-                       </motion.div>
+                       </m.div>
                      </div>
                    </div>
                  </div>
                </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </section>
 
@@ -487,28 +487,28 @@ export default function LandingPage() {
 
                <div className="relative z-10 bg-white/30 backdrop-blur-[60px] border-[0.5px] border-white/60 p-6 rounded-3xl shadow-xl">
                  <div className="text-[10px] uppercase tracking-widest text-ink/70 font-bold mb-2">Total Confirmed</div>
-                 <motion.div 
+                 <m.div 
                    initial={{ opacity: 0 }}
                    whileInView={{ opacity: 1 }}
                    viewport={{ once: true }}
                    className="font-display text-[70px] leading-none text-gold mb-6 drop-shadow-sm"
                  >
                    <AnimatedStat value={248} label="" />
-                 </motion.div>
+                 </m.div>
                  
                  <div className="flex justify-between text-[10px] font-bold uppercase text-ink mb-2">
                    <span>142 Veg</span>
                    <span>106 Non-Veg</span>
                  </div>
                  <div className="h-4 w-full flex rounded-full overflow-hidden shadow-inner bg-black/10 border border-black/5">
-                    <motion.div 
+                    <m.div 
                       initial={{ width: 0 }}
                       whileInView={{ width: '57%' }}
                       viewport={{ once: true }}
                       transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
                       className="h-full bg-gradient-to-r from-success/80 to-success"
                     />
-                    <motion.div 
+                    <m.div 
                       initial={{ width: 0 }}
                       whileInView={{ width: '43%' }}
                       viewport={{ once: true }}
@@ -534,7 +534,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto items-stretch">
             
             {/* Basic Tier */}
-            <motion.div 
+            <m.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -552,10 +552,10 @@ export default function LandingPage() {
                 <li className="flex items-center gap-3"><span className="bg-white/10 backdrop-blur-md p-1.5 rounded-full"><Check size={14} className="text-gold" /></span> Standard template</li>
               </ul>
               <button className="w-full mt-auto py-4 bg-white/5 backdrop-blur-[40px] border border-white/10 text-ivory font-bold uppercase text-[11px] tracking-widest rounded-2xl hover:bg-gold hover:text-[#0F0C07] hover:border-gold transition-all shadow-lg">Start Free</button>
-            </motion.div>
+            </m.div>
 
             {/* Premium Tier */}
-            <motion.div 
+            <m.div 
               initial={{ opacity: 0, scale: 0.95, y: 30 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
@@ -581,10 +581,10 @@ export default function LandingPage() {
                 <span className="relative z-10">Upgrade Event</span>
                 <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:animate-[shine_1.5s]"></div>
               </button>
-            </motion.div>
+            </m.div>
 
             {/* Enterprise Tier */}
-            <motion.div 
+            <m.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -602,7 +602,7 @@ export default function LandingPage() {
                 <li className="flex items-center gap-3"><span className="bg-white/10 backdrop-blur-md p-1.5 rounded-full"><Check size={14} className="text-gold" /></span> Custom domain</li>
               </ul>
               <button className="w-full mt-auto py-4 bg-white/5 backdrop-blur-[40px] border border-white/10 text-ivory font-bold uppercase text-[11px] tracking-widest rounded-2xl hover:bg-gold hover:text-[#0F0C07] hover:border-gold transition-all shadow-lg">Contact Us</button>
-            </motion.div>
+            </m.div>
 
           </div>
         </div>
@@ -623,7 +623,7 @@ export default function LandingPage() {
               { quote: "Our guests loved the digital invite. Being able to see the venue map directly without an app was perfect for older relatives.", name: "The Menon Family", loc: "Kochi" },
               { quote: "Managing multiple events like Haldi and Reception separately saved us so much confusion and food waste.", name: "Rahul & Priya", loc: "Trivandrum" }
             ].map((t, i) => (
-              <motion.div 
+              <m.div 
                 key={i}
                 initial={{ opacity: 0, scale: 0.9, y: 30 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -643,7 +643,7 @@ export default function LandingPage() {
                     <Star size={12} className="fill-gold text-gold" /><Star size={12} className="fill-gold text-gold" /><Star size={12} className="fill-gold text-gold" />
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -652,7 +652,7 @@ export default function LandingPage() {
       {/* 10. Final CTA Section (Ultimate Clear IOS Glass) */}
       <section className="py-32 px-6 relative z-10 flex items-center justify-center min-h-[60vh] overflow-hidden -mt-20">
         
-        <motion.div 
+        <m.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -670,23 +670,23 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-5 justify-center relative z-10">
             <Link href="/admin/events/new" className="w-full sm:w-auto">
-              <motion.button 
+              <m.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-full sm:w-auto bg-[#0F0C07]/80 backdrop-blur-[40px] border border-white/20 text-gold px-10 py-5 text-[12px] font-bold uppercase tracking-widest rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.2)] flex items-center justify-center gap-3 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] hover:bg-[#0F0C07] hover:border-gold/30 transition-all"
               >
                 Create Your Event <ArrowRight size={16} />
-              </motion.button>
+              </m.button>
             </Link>
-            <motion.button 
+            <m.button 
               whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.4)" }}
               whileTap={{ scale: 0.95 }}
               className="w-full sm:w-auto border-[0.5px] border-ink/30 bg-white/20 backdrop-blur-[40px] text-ink px-10 py-5 text-[12px] font-bold uppercase tracking-widest rounded-2xl shadow-sm hover:border-ink/50 transition-all"
             >
               Talk to Us
-            </motion.button>
+            </m.button>
           </div>
-        </motion.div>
+        </m.div>
       </section>
 
       {/* 11. Footer (Dark) */}

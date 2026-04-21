@@ -1,8 +1,12 @@
 'use client'
 
 import { ReactNode } from "react"
+import { LazyMotion, domAnimation } from "motion/react"
 
 export function Providers({ children }: { children: ReactNode }) {
-  // Stub for Context matching minimal Providers stub requirement
-  return <>{children}</>
+  return (
+    <LazyMotion features={domAnimation}>
+      {children}
+    </LazyMotion>
+  )
 }

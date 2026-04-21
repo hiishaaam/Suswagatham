@@ -1,9 +1,6 @@
 import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-
-export const runtime = 'edge'
-
 export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 

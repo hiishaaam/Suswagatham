@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { m, AnimatePresence } from 'motion/react'
 import { X, MessageCircle, Copy, CheckCircle2, ExternalLink, Send } from 'lucide-react'
 
 interface WhatsAppDistributorProps {
@@ -76,14 +76,14 @@ We look forward to celebrating with you! 💕`
 
   return (
     <AnimatePresence>
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4"
         onClick={(e) => e.target === e.currentTarget && onClose()}
       >
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.95, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 10 }}
@@ -109,7 +109,7 @@ We look forward to celebrating with you! 💕`
           {/* Progress bar */}
           {sentCount > 0 && (
             <div className="h-1 bg-gray-100 shrink-0">
-              <motion.div
+              <m.div
                 className="h-full bg-[#25D366]"
                 initial={{ width: 0 }}
                 animate={{ width: `${(sentCount / tokens.length) * 100}%` }}
@@ -139,7 +139,7 @@ We look forward to celebrating with you! 💕`
               tokens.map((token) => {
                 const isSent = sentTokens.has(token.id)
                 return (
-                  <motion.div
+                  <m.div
                     key={token.id}
                     layout
                     className={`flex items-center justify-between p-4 rounded-xl border transition-all ${
@@ -186,7 +186,7 @@ We look forward to celebrating with you! 💕`
                         )}
                       </button>
                     </div>
-                  </motion.div>
+                  </m.div>
                 )
               })
             )}
@@ -198,8 +198,8 @@ We look forward to celebrating with you! 💕`
               Each guest receives a unique, personalized RSVP link
             </p>
           </div>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </AnimatePresence>
   )
 }

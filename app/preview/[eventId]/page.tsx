@@ -2,7 +2,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { notFound } from 'next/navigation'
 import GuestPage from '@/app/events/[slug]/GuestPage'
 
-export const dynamic = 'force-dynamic'
+
 
 type Props = {
   params: Promise<{ eventId: string }>

@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function HinduWeddingInvitation() {
   return (
     <div className={`bg-maroon-dark min-h-screen font-serif text-gold-light selection:bg-gold-dark selection:text-white`} style={{ minHeight: '100dvh' }}>
@@ -30,7 +31,7 @@ export default function HinduWeddingInvitation() {
 
 <section className="w-full relative z-10 mb-8" data-purpose="central-invitation-image">
 <div className="card-border invitation-shadow rounded-sm overflow-hidden bg-maroon">
-<img alt="Traditional Hindu wedding invitation card featuring deep maroon paper and gold foil" className="w-full h-auto block" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5WSCydcbYNFaN6_1MPDjAL9A_F9Th7XmcoofqC8kc-GfmKHHW70yohHbnEl43cZcrMFyorXpFkcLKj4Pr4pM-pctV8kqrfq1kCOqkVI-_UmKbcFHG6W3bCep5M9eoS2Kj4wzgG8QmLRSw8mtMfGuv_hirE8XlU9A9fcUgBUVyv4zsefF7IBEsXXQ0Y2sPZijWZJTHkv4cOETNFVEtsXPA4g4RKwm9QoQ3-5p59enM1i09L_Iljj4-e0a_sxk3VPtAA0FyvcJV1cs2"/>
+<Image alt="Traditional Hindu wedding invitation card featuring deep maroon paper and gold foil" className="w-full h-auto block" loading="lazy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5WSCydcbYNFaN6_1MPDjAL9A_F9Th7XmcoofqC8kc-GfmKHHW70yohHbnEl43cZcrMFyorXpFkcLKj4Pr4pM-pctV8kqrfq1kCOqkVI-_UmKbcFHG6W3bCep5M9eoS2Kj4wzgG8QmLRSw8mtMfGuv_hirE8XlU9A9fcUgBUVyv4zsefF7IBEsXXQ0Y2sPZijWZJTHkv4cOETNFVEtsXPA4g4RKwm9QoQ3-5p59enM1i09L_Iljj4-e0a_sxk3VPtAA0FyvcJV1cs2" fill />
 </div>
 </section>
 

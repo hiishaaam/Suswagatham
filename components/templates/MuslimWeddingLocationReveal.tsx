@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function MuslimWeddingLocationReveal() {
   return (
     <div className={`bg-background text-on-surface min-h-screen relative islamic-pattern selection:bg-primary/30`} style={{ minHeight: '100dvh' }}>
@@ -63,7 +64,7 @@ export default function MuslimWeddingLocationReveal() {
 
 <div className="w-full bg-surface-container-lowest rounded-sm border border-outline-variant/30 overflow-hidden mb-8 shadow-inner">
 <div className="h-48 relative">
-<img className="w-full h-full object-cover grayscale brightness-50 contrast-125" data-alt="high-quality stylized map view showing a route to a luxurious royal palace ballroom with gold markers and emerald theme" data-location="Grand Sultan Ballroom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDN8N-YxoB6aZ9EJHJDC7zJWw38FZ0A01rDWw4cqsSDhv4HlBTc0nmSnPhvQtrgHQN7HqfOTWKVhRLefwH4oa3-DTw6AH5g8EbQsIClyVhjySOOQryI4wzETmnEvXHdqs9653OwISVFUZDv9he8AGEER955fxmGoi-SKTHnyLaAyi252gE4fv4F8HApM2iJHaXsH3dOG8bNZtXF2IKEQtUrmmN-WC9yGBxUxEN0TxJQwE2W_IePXd18b6J6TapuVRhL5QHy1ty6ddA"/>
+<Image className="w-full h-full object-cover grayscale brightness-50 contrast-125" data-alt="high-quality stylized map view showing a route to a luxurious royal palace ballroom with gold markers and emerald theme" data-location="Grand Sultan Ballroom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDN8N-YxoB6aZ9EJHJDC7zJWw38FZ0A01rDWw4cqsSDhv4HlBTc0nmSnPhvQtrgHQN7HqfOTWKVhRLefwH4oa3-DTw6AH5g8EbQsIClyVhjySOOQryI4wzETmnEvXHdqs9653OwISVFUZDv9he8AGEER955fxmGoi-SKTHnyLaAyi252gE4fv4F8HApM2iJHaXsH3dOG8bNZtXF2IKEQtUrmmN-WC9yGBxUxEN0TxJQwE2W_IePXd18b6J6TapuVRhL5QHy1ty6ddA" fill  alt=""/>
 <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
 <div className="absolute bottom-4 left-4 flex items-center gap-2">
 <span className="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>

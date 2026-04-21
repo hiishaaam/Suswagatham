@@ -6,6 +6,11 @@ export default function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return
+    }
+    if (window.innerWidth < 768) return
+
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -109,7 +114,7 @@ export default function ParticleField() {
       const cy = canvas.height / 2
       
       // Create a grid/spiral of particles for structural "field" look
-      const amount = Math.min((canvas.width * canvas.height) / 5000, 600)
+      const amount = Math.min((canvas.width * canvas.height) / 5000, 80)
       for (let i = 0; i < amount; i++) {
         // distribute them in a galaxy spiral / spherical map
         const radius = Math.random() * Math.max(canvas.width, canvas.height) * 0.6
@@ -146,8 +151,8 @@ export default function ParticleField() {
     }
 
     window.addEventListener('resize', resize)
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('mouseleave', handleMouseLeave)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    window.addEventListener('mouseleave', handleMouseLeave, { passive: true })
 
     resize()
     animate()
@@ -156,7 +161,7 @@ export default function ParticleField() {
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseleave', handleMouseLeave)
-      cancelAnimationFrame(animationFrameId)
+      if (animationFrameId) cancelAnimationFrame(animationFrameId)
     }
   }, [])
 

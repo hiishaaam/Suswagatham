@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { verifyAuth } from '@/lib/supabase/admin-verify'
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -49,7 +50,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       'host_whatsapp', 'show_host_contact', 'template_id', 
       'language', 'couple_photo_url', 'invitation_text_en',
       'invitation_text_ml', 'max_guests_default', 'rsvp_cutoff_at',
-      'custom_theme_data'
+      'custom_theme_data', 'requires_qr_checkin', 'gallery_link', 'accept_shagun'
     ] as const
     
     const safeUpdates = Object.fromEntries(
@@ -66,6 +67,11 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       .single()
 
     if (error) throw error
+
+    // Bust the guest page cache so changes (shagun toggle, QR, gallery link) appear instantly
+    if (event.event_slug) {
+      revalidatePath(`/events/${event.event_slug}`)
+    }
 
     return NextResponse.json({ success: true, event })
   } catch (error: any) {

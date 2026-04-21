@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { m, AnimatePresence } from 'motion/react'
 import { Check } from 'lucide-react'
 
 interface WeddingEnvelopeProps {
@@ -31,7 +31,7 @@ export default function WeddingEnvelope({ coupleNames, date, onOpenComplete }: W
   return (
     <AnimatePresence>
       {!isLeaving && (
-        <motion.div
+        <m.div
           exit={{ opacity: 0, scale: 1.2, filter: 'blur(10px)' }}
           transition={{ duration: 1, ease: 'easeInOut' }}
           className="fixed inset-0 z-50 flex items-center justify-center bg-[#0F0C07] overflow-hidden perspective-[1200px]"
@@ -42,7 +42,7 @@ export default function WeddingEnvelope({ coupleNames, date, onOpenComplete }: W
             <div className="w-[60vh] h-[60vh] bg-gold/10 blur-[120px] rounded-full mix-blend-screen" />
           </div>
 
-          <motion.div 
+          <m.div 
             initial={{ y: 50, opacity: 0, rotateX: 10 }}
             animate={{ y: 0, opacity: 1, rotateX: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
@@ -55,7 +55,7 @@ export default function WeddingEnvelope({ coupleNames, date, onOpenComplete }: W
             </div>
 
             {/* THE CARD (Slides up and slightly scales up) */}
-            <motion.div
+            <m.div
               animate={isOpen ? { 
                 y: -140, 
                 z: 20, 
@@ -83,7 +83,7 @@ export default function WeddingEnvelope({ coupleNames, date, onOpenComplete }: W
                   <div className="w-8 h-px bg-gold/40"></div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
 
             {/* ENVELOPE FRONT POCKET (Left/Right/Bottom flaps simulated as one piece for robustness) */}
             <div 
@@ -102,7 +102,7 @@ export default function WeddingEnvelope({ coupleNames, date, onOpenComplete }: W
             </div>
 
             {/* WAX SEAL */}
-            <motion.div 
+            <m.div 
               animate={isOpen ? { opacity: 0, scale: 1.5 } : { opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
               className="absolute left-1/2 top-[45%] -translate-x-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#751A1A] shadow-[0_5px_15px_rgba(0,0,0,0.4),inset_0_2px_4px_rgba(255,255,255,0.3)] flex items-center justify-center border-2 border-[#540d0d]"
@@ -110,10 +110,10 @@ export default function WeddingEnvelope({ coupleNames, date, onOpenComplete }: W
               <span className="font-display text-white/80 text-xl md:text-2xl italic tracking-tighter drop-shadow-md">
                 {coupleNames.charAt(0)}
               </span>
-            </motion.div>
+            </m.div>
 
             {/* ENVELOPE TOP FLAP */}
-            <motion.div
+            <m.div
               animate={isOpen ? { rotateX: 160, zIndex: 0 } : { rotateX: 0, zIndex: 20 }}
               transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
               style={{ transformOrigin: 'top', backfaceVisibility: 'hidden' }}
@@ -129,18 +129,18 @@ export default function WeddingEnvelope({ coupleNames, date, onOpenComplete }: W
               >
                   <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent"></div>
               </div>
-            </motion.div>
+            </m.div>
             
             {/* INSTRUCTIONS */}
-            <motion.div 
+            <m.div 
               animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
               className="absolute -bottom-16 left-1/2 -translate-x-1/2 text-white/50 text-[10px] uppercase tracking-[0.2em] whitespace-nowrap animate-pulse"
             >
               Tap to open
-            </motion.div>
+            </m.div>
 
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       )}
     </AnimatePresence>
   )

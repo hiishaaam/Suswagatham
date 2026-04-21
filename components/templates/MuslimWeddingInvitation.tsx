@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function MuslimWeddingInvitation() {
   return (
     <div className={`bg-emerald-950 text-white min-h-screen flex flex-col items-center overflow-x-hidden font-sans pb-12`} style={{ minHeight: '100dvh' }}>
@@ -18,7 +19,7 @@ export default function MuslimWeddingInvitation() {
 
 <header className="relative w-full aspect-square md:max-w-md" data-purpose="hero-image-container">
 
-<img alt="Regal Muslim Wedding Invitation with Gold Calligraphy" className="w-full h-full object-cover shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAatZTpZXeo4VqlHdcgoG7i3vdffWkF0hhXFwiEJEjxlIEac_H8qScBvLQiIfPfTHKY4g1nt1_LzM6uvQ1Hp4T-pECJO1r06acn3nYO-XOtfAvNVSG_OnOLTB5cOGrH4lymFJc7PMivkLQ5AsgwOi1KKwmzfxfE8H1pbQPgMriVzjw_ZQuvxDUBpatwHelnKMo53B0iDYhts5EwQZFBu4VmnFiZ1Ls2t_lntCD3iVr0Mus9Kdm_fUvpSsVG0yt_ibCYOwYFHM8e1Gim"/>
+<Image alt="Regal Muslim Wedding Invitation with Gold Calligraphy" className="w-full h-full object-cover shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAatZTpZXeo4VqlHdcgoG7i3vdffWkF0hhXFwiEJEjxlIEac_H8qScBvLQiIfPfTHKY4g1nt1_LzM6uvQ1Hp4T-pECJO1r06acn3nYO-XOtfAvNVSG_OnOLTB5cOGrH4lymFJc7PMivkLQ5AsgwOi1KKwmzfxfE8H1pbQPgMriVzjw_ZQuvxDUBpatwHelnKMo53B0iDYhts5EwQZFBu4VmnFiZ1Ls2t_lntCD3iVr0Mus9Kdm_fUvpSsVG0yt_ibCYOwYFHM8e1Gim" fill />
 
 <div className="absolute inset-0 bg-gradient-to-t from-emerald-950 via-transparent to-transparent opacity-80"></div>
 </header>

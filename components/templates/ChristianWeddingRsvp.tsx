@@ -2,6 +2,7 @@
 import React from 'react';
 import Script from 'next/script';
 
+import Image from 'next/image';
 export default function ChristianWeddingRsvp() {
   return (
     <div className={`bg-background font-body text-on-background min-h-screen relative scrolling-bg`} style={{ minHeight: '100dvh' }}>
@@ -43,10 +44,10 @@ export default function ChristianWeddingRsvp() {
 </nav>
 
 <div className="fixed -top-10 -left-10 w-64 h-64 opacity-60 pointer-events-none z-0">
-<img className="w-full h-full object-contain" data-alt="soft watercolor painting of pastel pink peonies and sage green leaves forming a delicate corner frame on white paper texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2Gp9wbej63BzmLusq5JR2t_FtTw0aJIsof_cEdwtkN0BpHTl1fmKbj8YIvFvgPosnnl-c8-FRI3S97uaSVHfYEtDdPhdeeAOWh_-w-yTvS98ZWxhv39SzLOOYCHOvZxjAweQG0ulNDZj6YJopFx7YPGRAIZH46qESYjHD0RaZjv6AwW4SAheEQauL2DXGScUaWHB1YPIDqBEf_afkzXKh94rbJy3jeByXCtqs3FZrALUa_GP5a7DoAMRLJvd-FB8e2VrYpw1dZd6Q"/>
+<Image className="w-full h-full object-contain" data-alt="soft watercolor painting of pastel pink peonies and sage green leaves forming a delicate corner frame on white paper texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2Gp9wbej63BzmLusq5JR2t_FtTw0aJIsof_cEdwtkN0BpHTl1fmKbj8YIvFvgPosnnl-c8-FRI3S97uaSVHfYEtDdPhdeeAOWh_-w-yTvS98ZWxhv39SzLOOYCHOvZxjAweQG0ulNDZj6YJopFx7YPGRAIZH46qESYjHD0RaZjv6AwW4SAheEQauL2DXGScUaWHB1YPIDqBEf_afkzXKh94rbJy3jeByXCtqs3FZrALUa_GP5a7DoAMRLJvd-FB8e2VrYpw1dZd6Q" fill  alt=""/>
 </div>
 <div className="fixed -bottom-10 -right-10 w-80 h-80 opacity-60 pointer-events-none z-0">
-<img className="w-full h-full object-contain" data-alt="asymmetric watercolor painting of soft pink roses and silver-green eucalyptus branches in a dreamy ethereal style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjWh03GRaGwDYFnwpgsi6a0jOra6W3BO5c8jJcY7L47-bErPRvL1R0Bbx2eu_Qt2PUL4tpZKE94eFcpJNV0lMWuA0_tznNxg2Q9S2BqQUFRkFnb5brr1WnQ0yMjZeZdz6lHbfDw0oHgIo4Mncv3aYmk4fPr4UwRDf3d-06OboWaugGmLSbX2ZJ3U57vo-R2fvUIZc54nw3dox7EecbjceQWhj3cRoMRkGoW2zupge-YIGBRopJWTeJFxsjyvr3fKUDjk6XNPnoCg5u"/>
+<Image className="w-full h-full object-contain" data-alt="asymmetric watercolor painting of soft pink roses and silver-green eucalyptus branches in a dreamy ethereal style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjWh03GRaGwDYFnwpgsi6a0jOra6W3BO5c8jJcY7L47-bErPRvL1R0Bbx2eu_Qt2PUL4tpZKE94eFcpJNV0lMWuA0_tznNxg2Q9S2BqQUFRkFnb5brr1WnQ0yMjZeZdz6lHbfDw0oHgIo4Mncv3aYmk4fPr4UwRDf3d-06OboWaugGmLSbX2ZJ3U57vo-R2fvUIZc54nw3dox7EecbjceQWhj3cRoMRkGoW2zupge-YIGBRopJWTeJFxsjyvr3fKUDjk6XNPnoCg5u" fill  alt=""/>
 </div>
 
 <main className="relative z-10 pt-32 pb-40 px-6 max-w-2xl mx-auto flex flex-col items-center">

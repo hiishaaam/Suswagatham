@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { m, AnimatePresence } from 'motion/react'
 import { CreditCard, Loader2, CheckCircle2, X, ShieldCheck } from 'lucide-react'
 
 declare global {
@@ -123,14 +123,14 @@ export default function PaymentModal({ isOpen, onClose, eventId, coupleNames, te
 
   return (
     <AnimatePresence>
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4"
         onClick={(e) => e.target === e.currentTarget && status !== 'loading' && status !== 'processing' && onClose()}
       >
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.95, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 10 }}
@@ -155,7 +155,7 @@ export default function PaymentModal({ isOpen, onClose, eventId, coupleNames, te
             <AnimatePresence mode="wait">
               {/* SUCCESS STATE */}
               {status === 'success' ? (
-                <motion.div
+                <m.div
                   key="success"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -170,9 +170,9 @@ export default function PaymentModal({ isOpen, onClose, eventId, coupleNames, te
                     <div className="h-3 w-3 rounded-full border-2 border-gold/30 border-t-gold animate-spin" />
                     Refreshing...
                   </div>
-                </motion.div>
+                </m.div>
               ) : (
-                <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <m.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   {/* Event card summary */}
                   <div className="bg-ivory/80 border border-gold-light/40 rounded-xl p-5 mb-6">
                     <div className="flex justify-between items-start">
@@ -196,13 +196,13 @@ export default function PaymentModal({ isOpen, onClose, eventId, coupleNames, te
 
                   {/* Error */}
                   {status === 'error' && errorMsg && (
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="bg-red-50 border border-red-100 text-red-600 text-xs font-semibold p-3 rounded-xl mb-4"
                     >
                       {errorMsg}
-                    </motion.div>
+                    </m.div>
                   )}
 
                   {/* What you get */}
@@ -241,12 +241,12 @@ export default function PaymentModal({ isOpen, onClose, eventId, coupleNames, te
                       </>
                     )}
                   </button>
-                </motion.div>
+                </m.div>
               )}
             </AnimatePresence>
           </div>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </AnimatePresence>
   )
 }

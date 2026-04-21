@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import QRCode from 'qrcode'
-import { Plus, Users, Utensils, CheckCircle2, ChevronDown, ChevronUp, Copy, Download, Share2, Search, Link as LinkIcon, Loader2 } from 'lucide-react'
+import { Plus, Users, Utensils, CheckCircle2, ChevronDown, ChevronUp, Copy, Download, Share2, Search, Link as LinkIcon, Loader2, Scan, Heart } from 'lucide-react'
 import { useCountUp } from '@/hooks/useCountUp'
 import { SectionErrorBoundary } from '@/components/ui/SectionErrorBoundary'
-import { motion, AnimatePresence } from 'motion/react'
+import { m, AnimatePresence } from 'motion/react'
 
 // Types
 type EventInfo = {
@@ -14,6 +14,20 @@ type EventInfo = {
   event_date: string
   status: string
   event_slug: string
+  requires_qr_checkin?: boolean
+  accept_shagun?: boolean
+}
+
+type ShagunTransaction = {
+  id: string
+  guest_name: string
+  amount: number
+  created_at: string
+}
+
+type ShagunData = {
+  total: number
+  transactions: ShagunTransaction[]
 }
 
 type Summary = {
@@ -44,6 +58,7 @@ type Props = {
   initialGuests: Guest[]
   eventId: string
   userPhone: string
+  shagunData?: { total: number; transactions: ShagunTransaction[] } | null
 }
 
 export const StatCard = React.memo(({ label, value, colorAccent = '', main = false, prefix = '' }: any) => {
@@ -79,7 +94,7 @@ const maskPhone = (phone: string) => {
   return `+91 ${clean.slice(0, 5)} xxxxx`
 }
 
-export default function DashboardClient({ event, initialSummary, initialGuests, eventId, userPhone }: Props) {
+export default function DashboardClient({ event, initialSummary, initialGuests, eventId, userPhone, shagunData }: Props) {
   const [summary, setSummary] = useState<Summary>(initialSummary)
   const [guests, setGuests] = useState<Guest[]>(initialGuests)
   const [isManualExpanded, setIsManualExpanded] = useState(false)
@@ -297,7 +312,7 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
         </button>
         <AnimatePresence>
         {isManualExpanded && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="overflow-hidden">
+          <m.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2, ease: "easeInOut" }} className="overflow-hidden">
           <div className="p-5 pt-0 border-t border-gold-light/20 bg-ivory/20">
             <div className="space-y-4 mt-4">
               <div>
@@ -337,7 +352,7 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
               </button>
             </div>
           </div>
-          </motion.div>
+          </m.div>
         )}
         </AnimatePresence>
       </div>
@@ -413,6 +428,49 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
       </div>
       </SectionErrorBoundary>
 
+      {/* Shagun Financials Section */}
+      {shagunData && (
+        <SectionErrorBoundary>
+        <div className="bg-white rounded-2xl shadow-card border border-gold-light overflow-hidden">
+          <div className="bg-gradient-to-r from-[#C5A559]/10 via-[#D4B96A]/5 to-transparent px-6 py-5 border-b border-gold-light/40">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gold/10 rounded-full flex items-center justify-center">
+                <Heart size={18} className="text-gold" />
+              </div>
+              <div>
+                <h3 className="font-display text-lg font-semibold">Shagun Collected</h3>
+                <p className="text-[10px] text-muted uppercase tracking-widest">Digital Gifts via Razorpay</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-6">
+            <div className="text-center mb-6 py-4 bg-ivory rounded-xl">
+              <p className="text-[10px] uppercase tracking-widest text-muted font-bold mb-1">Total Collected</p>
+              <p className="font-display text-4xl text-gold font-bold">₹{shagunData.total.toLocaleString('en-IN')}</p>
+            </div>
+
+            {shagunData.transactions.length > 0 ? (
+              <div className="space-y-2">
+                <p className="text-[10px] uppercase tracking-widest text-muted font-bold mb-3">Recent Gifts</p>
+                {shagunData.transactions.map(txn => (
+                  <div key={txn.id} className="flex items-center justify-between py-3 px-4 bg-ivory rounded-xl">
+                    <div>
+                      <p className="font-bold text-sm">{txn.guest_name}</p>
+                      <p className="text-[10px] text-muted">{new Date(txn.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                    </div>
+                    <p className="font-display text-lg font-bold text-gold">₹{txn.amount.toLocaleString('en-IN')}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-muted font-display italic text-lg py-4">No gifts received yet</p>
+            )}
+          </div>
+        </div>
+        </SectionErrorBoundary>
+      )}
+
       {/* Bottom Sticky Share Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gold-light p-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50">
         <div className="max-w-2xl mx-auto flex flex-col gap-3">
@@ -431,6 +489,14 @@ export default function DashboardClient({ event, initialSummary, initialGuests, 
                <Download size={16} /> QR Code
              </button>
           </div>
+          {event.requires_qr_checkin && (
+            <a 
+              href={`/admin/events/${eventId}/scanner`}
+              className="w-full bg-gold text-white font-bold uppercase tracking-widest py-4 rounded-xl flex justify-center items-center gap-2 active:scale-[0.98] transition-transform"
+            >
+              <Scan size={18} /> Open QR Scanner
+            </a>
+          )}
         </div>
       </div>
 

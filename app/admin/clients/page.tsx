@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Mail, Search, Users2, ChevronRight, User } from 'lucide-react'
 
-export const dynamic = 'force-dynamic'
+
 
 export default async function ClientsPage() {
   const supabase = await createClient()
