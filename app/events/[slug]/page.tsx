@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import GuestPage from './GuestPage'
@@ -8,7 +9,7 @@ import type { Metadata } from 'next'
 
 const getCachedEventSummary = unstable_cache(
   async (slug: string) => {
-    const supabase = await createClient()
+    const supabase = createAdminClient()
     const { data } = await supabase
       .from('events')
       .select('couple_names, couple_photo_url, event_date, venue_name')
@@ -22,7 +23,7 @@ const getCachedEventSummary = unstable_cache(
 
 const getCachedEvent = unstable_cache(
   async (slug: string) => {
-    const supabase = await createClient()
+    const supabase = createAdminClient()
     const { data } = await supabase
       .from('events')
       .select('*')

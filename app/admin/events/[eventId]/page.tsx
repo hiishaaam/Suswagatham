@@ -430,6 +430,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ eventId:
         tokens={tokens}
         eventSlug={event.event_slug}
         coupleNames={event.couple_names}
+        invitationText={event.invitation_text_en}
       />
     </div>
   )
