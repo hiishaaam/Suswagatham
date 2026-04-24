@@ -25,6 +25,20 @@ export default function DigitalShagun({ eventId, coupleNames, razorpayKeyId }: D
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const loadRazorpayScript = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (window.Razorpay) {
+        resolve(true)
+        return
+      }
+      const script = document.createElement('script')
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+      script.onload = () => resolve(true)
+      script.onerror = () => resolve(false)
+      document.body.appendChild(script)
+    })
+  }
+
   const handlePay = async () => {
     if (!amount || amount < 1) {
       setError('Please enter a valid amount')
@@ -35,6 +49,9 @@ export default function DigitalShagun({ eventId, coupleNames, razorpayKeyId }: D
     setError(null)
 
     try {
+      const loaded = await loadRazorpayScript()
+      if (!loaded) throw new Error('Failed to load payment gateway')
+
       // 1. Create order
       const res = await fetch('/api/shagun/create-order', {
         method: 'POST',

@@ -10,9 +10,10 @@ interface WhatsAppDistributorProps {
   tokens: any[]
   eventSlug: string
   coupleNames: string
+  invitationText?: string
 }
 
-export default function WhatsAppDistributor({ isOpen, onClose, tokens, eventSlug, coupleNames }: WhatsAppDistributorProps) {
+export default function WhatsAppDistributor({ isOpen, onClose, tokens, eventSlug, coupleNames, invitationText }: WhatsAppDistributorProps) {
   const [sentTokens, setSentTokens] = useState<Set<string>>(new Set())
   const [copiedId, setCopiedId] = useState<string | null>(null)
 
@@ -24,7 +25,21 @@ export default function WhatsAppDistributor({ isOpen, onClose, tokens, eventSlug
 
   const getWhatsAppMessage = (token: any) => {
     const link = getInviteLink(token)
-    const message = `✨ *You're Invited!* ✨
+    
+    if (invitationText && invitationText.trim() !== '') {
+      return `✨ *You're Invited!* ✨
+
+Dear *${token.family_name}*,
+
+${invitationText}
+
+Please RSVP using your personal link:
+🔗 ${link}
+
+We look forward to celebrating with you! 💕`
+    }
+
+    return `✨ *You're Invited!* ✨
 
 Dear *${token.family_name}*,
 
@@ -34,8 +49,6 @@ Please RSVP using your personal invitation link:
 🔗 ${link}
 
 We look forward to celebrating with you! 💕`
-
-    return message
   }
 
   const getWhatsAppUrl = (token: any) => {

@@ -250,7 +250,8 @@ export default function EventDetailPage({ params }: { params: Promise<{ eventId:
       <AnimatePresence mode="wait">
       {/* OVERVIEW TAB */}
       {activeTab === 'overview' && (
-        <m.div key="overview" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <m.div key="overview" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.15, ease: 'easeOut' }} className="space-y-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {[
             { label: 'Link Opens', value: event.summary?.total_clicks || 0 },
             { label: 'RSVP Responses', value: event.summary?.total_responded || 0 },
@@ -266,6 +267,49 @@ export default function EventDetailPage({ params }: { params: Promise<{ eventId:
               <div className={`font-display text-4xl ${stat.color || 'text-ink'}`}>{stat.value}</div>
             </div>
           ))}
+          </div>
+
+          {/* Shagun Collected Section */}
+          {event.accept_shagun && event.shagunData && (
+            <div className="bg-white rounded-sm shadow-card border border-gold-light overflow-hidden">
+              <div className="bg-gradient-to-r from-[#C5A559]/10 via-[#D4B96A]/5 to-transparent px-6 py-5 border-b border-gold-light/40">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gold/10 rounded-full flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                    </div>
+                    <div>
+                      <h3 className="font-display text-lg font-semibold text-ink">Shagun Collected</h3>
+                      <p className="text-[10px] text-muted uppercase tracking-widest">Digital Gifts via Razorpay</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] text-muted uppercase tracking-widest font-bold">Total</p>
+                    <p className="font-display text-3xl text-gold font-bold">₹{event.shagunData.total.toLocaleString('en-IN')}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6">
+                {event.shagunData.transactions.length > 0 ? (
+                  <div className="space-y-2">
+                    <p className="text-[10px] uppercase tracking-widest text-muted font-bold mb-3">Recent Gifts</p>
+                    {event.shagunData.transactions.map((txn: any) => (
+                      <div key={txn.id} className="flex items-center justify-between py-3 px-4 bg-ivory rounded-sm border border-gold-light/30">
+                        <div>
+                          <p className="font-bold text-sm text-ink">{txn.guest_name}</p>
+                          <p className="text-[10px] text-muted">{new Date(txn.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                        </div>
+                        <p className="font-display text-lg font-bold text-gold">₹{txn.amount.toLocaleString('en-IN')}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-center text-muted font-display italic text-lg py-6">No gifts received yet</p>
+                )}
+              </div>
+            </div>
+          )}
         </m.div>
       )}
 
@@ -430,6 +474,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ eventId:
         tokens={tokens}
         eventSlug={event.event_slug}
         coupleNames={event.couple_names}
+        invitationText={event.invitation_text_en}
       />
     </div>
   )

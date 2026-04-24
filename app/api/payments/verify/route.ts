@@ -68,7 +68,7 @@ export async function POST(req: Request) {
       .update({
         payment_status: 'paid',
         razorpay_payment_id,
-        amount_paid: 200000, // paisa
+        amount_paid: 100, // paisa
         status: 'live',
       })
       .eq('id', event_id)
@@ -78,7 +78,7 @@ export async function POST(req: Request) {
     // Send emails (fire-and-forget — don't block the response)
     if (auth.user.email && eventData) {
       const templateName = eventData.template_id?.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) || 'Premium'
-      const receipt = paymentReceiptEmail(eventData.couple_names, '₹2,000', templateName, eventData.event_slug)
+      const receipt = paymentReceiptEmail(eventData.couple_names, '₹1', templateName, eventData.event_slug)
       sendEmail({ to: auth.user.email, subject: receipt.subject, html: receipt.html }).catch(() => {})
 
       const liveEmail = eventLiveEmail(eventData.couple_names, eventData.event_slug, eventData.event_date)

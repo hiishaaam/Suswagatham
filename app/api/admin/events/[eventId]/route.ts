@@ -27,7 +27,27 @@ export async function GET(req: Request, { params }: { params: Promise<{ eventId:
       .eq('event_id', id)
       .single()
 
-    return NextResponse.json({ success: true, event: { ...(event as any), summary } })
+    // Fetch shagun payments if accept_shagun is enabled
+    let shagunData = null
+    if ((event as any).accept_shagun) {
+      const { data: rawShagun } = await (supabase.from('shagun_payments') as any)
+        .select('id, guest_name, amount, status, created_at')
+        .eq('event_id', id)
+        .eq('status', 'success')
+        .order('created_at', { ascending: false })
+
+      shagunData = {
+        total: (rawShagun || []).reduce((sum: number, s: any) => sum + (s.amount || 0), 0),
+        transactions: (rawShagun || []).map((s: any) => ({
+          id: s.id,
+          guest_name: s.guest_name || 'Anonymous',
+          amount: s.amount,
+          created_at: s.created_at,
+        }))
+      }
+    }
+
+    return NextResponse.json({ success: true, event: { ...(event as any), summary, shagunData } })
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 })
   }

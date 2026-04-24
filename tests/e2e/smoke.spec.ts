@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Revenue Guard: Payment Verification', () => {
   
-  test('API Endpoint refuses mock orders under ₹2,000 threshold (Business Logic Constraint)', async ({ request }) => {
+  test('API Endpoint refuses mock orders under ₹1 threshold (Business Logic Constraint)', async ({ request }) => {
     // Tests that the core API restricts underpayments securely
     const response = await request.post('/api/payments/create-order', {
       data: {

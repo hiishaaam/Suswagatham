@@ -5,13 +5,13 @@ import Razorpay from 'razorpay'
 
 // Template price map (in paisa — 100 paisa = ₹1)
 const TEMPLATE_PRICES: Record<string, number> = {
-  'emerald-islamic': 200000,   // ₹2,000
-  'ivory-luxe': 200000,        // ₹2,000
-  'amethyst-dream': 200000,    // ₹2,000
-  'warm-rustic': 200000,       // ₹2,000
-  'ivory-garden': 200000,      // ₹2,000
+  'emerald-islamic': 100,   // ₹1
+  'ivory-luxe': 100,        // ₹1
+  'amethyst-dream': 100,    // ₹1
+  'warm-rustic': 100,       // ₹1
+  'ivory-garden': 100,      // ₹1
 }
-const DEFAULT_PRICE = 200000   // ₹2,000
+const DEFAULT_PRICE = 100   // ₹1
 
 export async function POST(req: Request) {
   try {

@@ -107,7 +107,7 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex items-center gap-4"
           >
-             <Link href="/admin/login" className={`hidden sm:block text-[11px] font-bold uppercase tracking-widest hover:text-gold transition-colors drop-shadow-sm ${scrolled ? 'text-ink' : 'text-ivory'}`}>
+             <Link href="/dashboard/login" className={`hidden sm:block text-[11px] font-bold uppercase tracking-widest hover:text-gold transition-colors drop-shadow-sm ${scrolled ? 'text-ink' : 'text-ivory'}`}>
                Login
              </Link>
              <Link href="/admin">
